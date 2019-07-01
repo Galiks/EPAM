@@ -7,6 +7,37 @@ namespace OneTask
     {
         private static readonly Random random = new Random();
 
+        static void Main(string[] args)
+        {
+            var array = CreateInt32Array();
+            PrintArray(array);
+            Console.WriteLine();
+            Array.Sort(array);
+            PrintArray(array);
+            Console.Read();
+        }
+
+        /// <summary>
+        /// Task 1.1
+        /// </summary>
+        private static void GetAreaOfRectangle()
+        {
+            Console.Write("Enter side A of rectangle: ");
+            string sideA = Console.ReadLine();
+            Console.Write("Enter side B of rectangle: ");
+            string sideB = Console.ReadLine();
+            bool checkSideOnValidation = Int32.TryParse(sideA, out int realDoubleSideA) & Int32.TryParse(sideB, out int realDoubleSideB);
+            if (checkSideOnValidation)
+            {
+                Console.WriteLine($"Area of rectangle: {realDoubleSideA * realDoubleSideB}");
+            }
+            else
+            {
+                Console.WriteLine("Incorrect number");
+            }
+        }
+
+        #region Methods for another tasks
         private static void StartProgramm()
         {
             while (true)
@@ -17,7 +48,7 @@ namespace OneTask
                 switch (command.Key)
                 {
                     case ConsoleKey.D1:
-                        TaskOnePointOne();
+                        GetAreaOfRectangle();
                         break;
                     case ConsoleKey.D2:
                         TaskOnePointTwo();
@@ -30,12 +61,6 @@ namespace OneTask
                         break;
                 }
             }
-        }
-
-        static void Main(string[] args)
-        {
-
-            Console.Read();
         }
 
         private static void TaskOnePointTwelve()
@@ -189,34 +214,6 @@ namespace OneTask
             Console.WriteLine(GetMinElementInArray(array));
         }
 
-        private static void TaskOnePointSix()
-        {
-            Console.WriteLine("Сommands are entered from the keyboard!");
-            Font font = new Font();
-            while (true)
-            {
-                Console.WriteLine($"Параметры надписи: {font.GetSignatureSettings()}");
-                Console.WriteLine("Введите:\n\t 1: bold\n\t 2: italic \n\t 3: underline");
-                var command = Console.ReadKey();
-                Console.WriteLine();
-                switch (command.Key)
-                {
-                    case ConsoleKey.D1:
-                        font.SetBold();
-                        break;
-                    case ConsoleKey.D2:
-                        font.SetItalic();
-                        break;
-                    case ConsoleKey.D3:
-                        font.SetUnderline();
-                        break;
-                    default:
-                        Console.WriteLine("Incorrect command");
-                        break;
-                }
-            }
-        }
-
         private static void TaskOnePointFive()
         {
             int sumOfNumber = 0;
@@ -287,23 +284,6 @@ namespace OneTask
             else
             {
                 Console.WriteLine("Incorrect format of number");
-            }
-        }
-
-        private static void TaskOnePointOne()
-        {
-            Console.Write("Enter side A of rectangle: ");
-            string sideA = Console.ReadLine();
-            Console.Write("Enter side B of rectangle: ");
-            string sideB = Console.ReadLine();
-            bool checkSideOnValidation = Int32.TryParse(sideA, out int realDoubleSideA) & Int32.TryParse(sideB, out int realDoubleSideB);
-            if (checkSideOnValidation)
-            {
-                Console.WriteLine($"Area of rectangle: {realDoubleSideA * realDoubleSideB}");
-            }
-            else
-            {
-                Console.WriteLine("Incorrect number");
             }
         }
 
@@ -487,6 +467,7 @@ namespace OneTask
                 }
             }
             return minElement;
-        }
+        } 
+        #endregion
     }
 }
