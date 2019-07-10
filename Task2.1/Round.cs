@@ -34,8 +34,11 @@ namespace Task2._1
         /// </summary>
         public double Radius
         {
-            get { return radius; }
-            set
+            get
+            {
+                return radius;
+            }
+            private set
             {
                 if (value > 0)
                 {
