@@ -58,7 +58,7 @@ namespace Task2._3
         public DateTime DayOfBirthday
         {
             get { return dayOfBirthday; }
-            set
+            private set
             {
                 MyException.IsNotNowDate(value);
                 dayOfBirthday = value;
@@ -78,27 +78,32 @@ namespace Task2._3
         /// </summary>
         /// <param name="firstName">Имя</param>
         /// <param name="lastName">Фамилия</param>
-        /// <param name="surName">Отчество</param>
+        /// <param name="middleName">Отчество</param>
         /// <param name="dob">Дата рождения</param>
-        public User(string firstName, string lastName, string surName, DateTime dob)
+        public User(string firstName, string lastName, string middleName, DateTime dob)
         {
             FirstName = firstName;
             LastName = lastName;
-            MiddleName = surName;
+            MiddleName = middleName;
             DayOfBirthday = dob;
-            Age = GetAge();
+            Age = GetYear(DayOfBirthday);
         }
 
-        private int GetAge()
+        /// <summary>
+        /// Возвращает количество лет со дня, указанного в параметре
+        /// </summary>
+        /// <param name="dateTime">начало отсчёта</param>
+        /// <returns>количество лет</returns>
+        protected int GetYear(DateTime dateTime)
         {
             DateTime today = DateTime.Today;
             if (today.Month > DayOfBirthday.Month)
             {
-                return today.Year - DayOfBirthday.Year;
+                return today.Year - dateTime.Year;
             }
             else
             {
-                return today.Year - DayOfBirthday.Year - 1;
+                return today.Year - dateTime.Year - 1;
             }
         }
 

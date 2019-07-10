@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task2._3
 {
-    static class MyException
+    public static class MyException
     {
         public static void IsLetterOnly(string str)
         {

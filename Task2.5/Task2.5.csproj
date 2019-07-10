@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E623590-C369-44C4-8C8D-2E5D96061545}</ProjectGuid>
+    <ProjectGuid>{488A1CA1-FE9A-4290-A004-AF4451477055}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Task2._1</RootNamespace>
-    <AssemblyName>Task2.1</AssemblyName>
+    <RootNamespace>Task2._5</RootNamespace>
+    <AssemblyName>Task2.5</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,13 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Circle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Task2.3\Task2.3.csproj">
+      <Project>{3e18b983-f288-4bc8-9bf9-00b2b7888a21}</Project>
+      <Name>Task2.3</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

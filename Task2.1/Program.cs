@@ -10,7 +10,7 @@ namespace Task2._1
     {
         static void Main(string[] args)
         {
-            Round round = new Round(5, 5, -1);
+            Circle round = new Circle(5, 5, -1);
             Console.WriteLine(round.GetArea);
             Console.WriteLine(round.GetCircumference);
             Console.WriteLine(round.Center);

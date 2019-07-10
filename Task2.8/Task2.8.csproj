@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E623590-C369-44C4-8C8D-2E5D96061545}</ProjectGuid>
+    <ProjectGuid>{B38AB214-FC7D-4A02-BADE-D894680766E4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Task2._1</RootNamespace>
-    <AssemblyName>Task2.1</AssemblyName>
+    <RootNamespace>Task2._8</RootNamespace>
+    <AssemblyName>Task2.8</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,10 +42,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point.cs" />
+    <Compile Include="Battlefields\Battlefield.cs" />
+    <Compile Include="Battlefields\Bigfield.cs" />
+    <Compile Include="Battlefields\Mediumfield.cs" />
+    <Compile Include="Battlefields\Smallfield.cs" />
+    <Compile Include="Bonuses\Apple.cs" />
+    <Compile Include="Bonuses\Bonus.cs" />
+    <Compile Include="Bonuses\Cherry.cs" />
+    <Compile Include="Bonuses\Shaurma.cs" />
+    <Compile Include="General Model\FixedObject.cs" />
+    <Compile Include="General Model\Game.cs" />
+    <Compile Include="General Model\Point.cs" />
+    <Compile Include="General Model\Unit.cs" />
+    <Compile Include="Monsters\Bear.cs" />
+    <Compile Include="Monsters\Dragon.cs" />
+    <Compile Include="Monsters\Eagle.cs" />
+    <Compile Include="Monsters\Monster.cs" />
+    <Compile Include="Monsters\Wolf.cs" />
+    <Compile Include="Obstacles\Obstacle.cs" />
+    <Compile Include="Obstacles\Stone.cs" />
+    <Compile Include="Obstacles\Tree.cs" />
+    <Compile Include="Player\BattleHare.cs" />
+    <Compile Include="Player\BattleSnail.cs" />
+    <Compile Include="Player\BattleSnake.cs" />
+    <Compile Include="Player\Hero.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Circle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task2._1
 {
-    public class Round
+    public class Circle
     {
         /// <summary>
         /// Задумалсяна этом месте. Стоит ли каждый раз пересчитывать значение или же можно сохранить его, а потом использовать
@@ -66,7 +66,7 @@ namespace Task2._1
         /// <param name="pointX">Точка центра окружности на оси X</param>
         /// <param name="pointY">Точка центра окружности на оси Y</param>
         /// <param name="radius">Радиус окружности</param>
-        public Round(double pointX, double pointY, double radius)
+        public Circle(double pointX, double pointY, double radius)
         {
             Center = new Point(pointX, pointY);
             Radius = radius;

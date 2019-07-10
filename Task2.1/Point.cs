@@ -26,5 +26,12 @@ namespace Task2._1
         {
             return $"X = {PointX}; Y = {PointY}";
         }
+
+        public static Point operator -(Point a, Point b)
+        {
+            var pointX = b.PointX - a.PointX;
+            var pointY = b.PointY - a.PointY;
+            return new Point(pointX, pointY);
+        }
     }
 }
