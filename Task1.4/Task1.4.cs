@@ -36,22 +36,29 @@ namespace Task1._4
         private static void CreateXMASTree(int heightOfXMASSTree)
         {
             Console.WriteLine("X-MAS TREE");
-            for (int j = 1; j < heightOfXMASSTree; j++)
+            if (heightOfXMASSTree > 0)
             {
-                SetRandomColourForConsole();
-                int indent = 0;
-                int centerOfTriangle = heightOfXMASSTree / 2;
-                for (int i = 1; i <= j; i++)
+                for (int j = 1; j < heightOfXMASSTree; j++)
                 {
-                    if (i % 2 != 0)
+                    SetRandomColourForConsole();
+                    int indent = 0;
+                    int centerOfTriangle = heightOfXMASSTree / 2;
+                    for (int i = 1; i <= j; i++)
                     {
-                        string side = new string(' ', centerOfTriangle - indent);
-                        Console.WriteLine(side + new String('*', i));
-                        indent++;
+                        if (i % 2 != 0)
+                        {
+                            string side = new string(' ', centerOfTriangle - indent);
+                            Console.WriteLine(side + new String('*', i));
+                            indent++;
+                        }
                     }
                 }
+                Console.ForegroundColor = ConsoleColor.White; 
             }
-            Console.ForegroundColor = ConsoleColor.White;
+            else
+            {
+                Console.WriteLine("Incorrect number");
+            }
         }
 
         /// <summary>
