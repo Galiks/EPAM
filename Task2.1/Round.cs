@@ -29,6 +29,7 @@ namespace Task2._1
                 center = value;
             }
         }
+
         /// <summary>
         /// Возвращает или изменяет радиус окружности
         /// </summary>
