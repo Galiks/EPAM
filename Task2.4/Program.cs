@@ -10,6 +10,10 @@ namespace Task2._4
     {
         static void Main(string[] args)
         {
+            MyString myString = new MyString(new char[] { 'H', 'E', 'L', 'L', 'O' });
+            Console.WriteLine(myString);
+            string line = "HELLO";
+            Console.ReadKey();
         }
     }
 }
