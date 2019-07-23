@@ -119,7 +119,7 @@ namespace ZeroTask
             {
                 if (realNumber > 0)
                 {
-                    Console.WriteLine(GetStringOfNumbers(realNumber));
+                    Console.WriteLine(GetStringOfNumberForBigNumber(realNumber));
                 }
                 else
                 {

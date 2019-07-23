@@ -20,7 +20,7 @@ namespace OneTask
         /// <summary>
         /// Task 1.1
         /// </summary>
-        private static void GetAreaOfRectangle()
+        private static void PrintAreaOfRectangle()
         {
             Console.Write("Enter side A of rectangle: ");
             string sideA = Console.ReadLine();
@@ -48,7 +48,7 @@ namespace OneTask
                 switch (command.Key)
                 {
                     case ConsoleKey.D1:
-                        GetAreaOfRectangle();
+                        PrintAreaOfRectangle();
                         break;
                     case ConsoleKey.D2:
                         TaskOnePointTwo();
