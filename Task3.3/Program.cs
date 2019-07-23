@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Task3._3
 {
@@ -7,20 +8,47 @@ namespace Task3._3
     {
         static void Main(string[] args)
         {
-            DynamicArray<int> dynamicArray = new DynamicArray<int>();
+            List<int> list = new List<int>() { 1, 2, 3};
+            DynamicArray<int> dynamicArray = new DynamicArray<int>(list);
 
-            for (int i = 0; i < 20; i++)
+            StringBuilder stringBuilder = new StringBuilder();
+
+            Console.WriteLine(stringBuilder.Length);
+            Console.WriteLine(stringBuilder.Capacity);
+
+            for (int i = 0; i < 10; i++)
             {
-                dynamicArray.Add(i);
+                stringBuilder.Append(i.ToString());
             }
 
-            Console.WriteLine(dynamicArray.Length);
-            Console.WriteLine(dynamicArray.Capacity);
-
-            foreach (var item in dynamicArray)
+            for (int i = 0; i < 6; i++)
             {
-                Console.WriteLine(item);
+                stringBuilder.Append(i.ToString());
             }
+
+            Console.WriteLine();
+            Console.WriteLine(stringBuilder.Length);
+            Console.WriteLine(stringBuilder.Capacity);
+
+            for (int i = 0; i < 1; i++)
+            {
+                stringBuilder.Append(i.ToString());
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(stringBuilder.Length);
+            Console.WriteLine(stringBuilder.Capacity);
+
+            //dynamicArray.PrintArray();
+
+
+
+            //Console.WriteLine();
+
+            //dynamicArray.PrintArray();
+
+            //Console.WriteLine(dynamicArray.Length);
+            //Console.WriteLine(dynamicArray.Capacity);
 
             Console.ReadKey();
         }
