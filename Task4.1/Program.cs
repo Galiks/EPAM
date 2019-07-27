@@ -13,8 +13,12 @@ namespace Task4._1
 
             ArraySort(array, CompareItems);
 
-            CustomSortDemo();
+            foreach (var item in array)
+            {
+                Console.WriteLine(item);
+            }
 
+            CustomSortDemo();
 
             Console.ReadKey();
         }
@@ -24,7 +28,7 @@ namespace Task4._1
         {
             string[] array = new string[] { "a", "c", "acb", "aca", "ac", "ab" };
 
-            ArraySort(array, CompareString);
+           // ArraySort(array, CompareString);
 
             foreach (var item in array)
             {
@@ -33,11 +37,11 @@ namespace Task4._1
         }
 
         //Task 4.1
-        static void ArraySort<T>(T[] array, Func<T, T, int> func)
+        public static void ArraySort<T>(T[] array, Func<T, T, int> func)
         {
             if (func == null)
             {
-                throw new ArgumentException("Пустой делегат");
+                throw new ArgumentException("Empty delegate");
             }
 
             bool swapped;
@@ -46,7 +50,8 @@ namespace Task4._1
                 swapped = false;
                 for (int i = 1; i < array.Length; i++)
                 {
-                    if (func(array[i - 1], array[i]) > 0)
+                    //решил опробовать операцию "?."
+                    if (func?.Invoke(array[i - 1], array[i]) > 0)
                     {
                         Swap(ref array[i - 1], ref array[i]);
                         swapped = true;
