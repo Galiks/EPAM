@@ -65,7 +65,8 @@ namespace Task1._7
                         swapped = true;
                     }
                 }
-            } while (swapped != false);
+            }
+            while (swapped != false);
         }
 
         private static void AnotherAscendingSortingArray(int[] array)
