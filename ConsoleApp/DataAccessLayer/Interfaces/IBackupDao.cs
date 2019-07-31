@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using System.Collections.Generic;
 
 namespace DataAccessLayer.Interfaces
 {
@@ -6,5 +7,6 @@ namespace DataAccessLayer.Interfaces
     {
         void AddBackup(Backup backup);
         void DeleteBackup(Backup backup);
+        IEnumerable<Backup> GetBackups();
     }
 }
