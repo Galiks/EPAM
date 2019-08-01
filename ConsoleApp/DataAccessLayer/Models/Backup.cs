@@ -10,19 +10,16 @@ namespace DataAccessLayer.Models
         public string CurrentPathToFile { get; set; }
         public string PreviousPathToFile { get; set; }
         public byte[] Bytes { get; set; }
-        //useless field
-        public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string Action { get; set; }
 
-        public Backup(string currentName, string previousName, string currentPathToFile, string previousPathToFile, byte[] bytes, DateTime createdAt, DateTime updatedAt)
+        public Backup(string currentName, string previousName, string currentPathToFile, string previousPathToFile, byte[] bytes, DateTime updatedAt)
         {
             CurrentName = currentName;
             PreviousName = previousName;
             CurrentPathToFile = currentPathToFile;
             PreviousPathToFile = previousPathToFile;
             Bytes = bytes;
-            CreatedAt = createdAt;
             UpdatedAt = updatedAt;
         }
 
@@ -34,7 +31,6 @@ namespace DataAccessLayer.Models
             CurrentPathToFile = currentPathToFile;
             PreviousPathToFile = previousPathToFile;
             Bytes = bytes;
-            CreatedAt = nowDateTime;
             UpdatedAt = nowDateTime;
         }
 
@@ -58,7 +54,7 @@ namespace DataAccessLayer.Models
 
         public override string ToString()
         {
-            return $"Current Name: {CurrentName}{Environment.NewLine}Previous Name: {PreviousName}{Environment.NewLine}Current Path To File: {CurrentPathToFile}{Environment.NewLine}Previous Path To File: {PreviousPathToFile}{Environment.NewLine}Action: {Action}{Environment.NewLine}Created At: {CreatedAt}{Environment.NewLine}Update At: {UpdatedAt}{Environment.NewLine}";
+            return $"Current Name: {CurrentName}{Environment.NewLine}Previous Name: {PreviousName}{Environment.NewLine}Current Path To File: {CurrentPathToFile}{Environment.NewLine}Previous Path To File: {PreviousPathToFile}{Environment.NewLine}Action: {Action}{Environment.NewLine}{Environment.NewLine}Update At: {UpdatedAt}{Environment.NewLine}";
         }
     }
 }
