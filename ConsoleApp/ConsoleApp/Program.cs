@@ -50,43 +50,43 @@ namespace ConsoleApp
         {
             Console.WriteLine("Begin");
 
-            
+            var file = Observer.FindFile("New file.txt", "");
 
-            var item = Observer.FindFile("New file.txt", "New folder");
+            Console.WriteLine("Create File" == Actions.CreateFile.ToString());
 
             Console.WriteLine("End");
 
             Console.ReadKey();
         }
 
-        private static void SerializeAndDeserialize()
-        {
-            string text = "КУДА ИДЁМ С ПЯТОЧКОМ!";
-            var bytes = Encoding.UTF8.GetBytes(text);
-            var backup = new Backup(text, text, "Test1", "Test1", bytes, DateTime.Now);
+        //private static void SerializeAndDeserialize()
+        //{
+        //    string text = "КУДА ИДЁМ С ПЯТОЧКОМ!";
+        //    var bytes = Encoding.UTF8.GetBytes(text);
+        //    var backup = new Backup(text, text, "Test1", "Test1", bytes, DateTime.Now);
 
-            File.AppendAllText(PathToBackupFile, JsonConvert.SerializeObject(backup) + Environment.NewLine);
+        //    File.AppendAllText(PathToBackupFile, JsonConvert.SerializeObject(backup) + Environment.NewLine);
 
-            JsonSerializer serializer = new JsonSerializer
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
+        //    JsonSerializer serializer = new JsonSerializer
+        //    {
+        //        NullValueHandling = NullValueHandling.Ignore
+        //    };
 
 
-            using (StreamReader streamReader = new StreamReader("backups.json"))
-            {
-                string line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    var item = JsonConvert.DeserializeObject<Backup>(line);
+        //    using (StreamReader streamReader = new StreamReader("backups.json"))
+        //    {
+        //        string line;
+        //        while ((line = streamReader.ReadLine()) != null)
+        //        {
+        //            var item = JsonConvert.DeserializeObject<Backup>(line);
 
-                    string codingText = Convert.ToBase64String(item.Bytes);
-                    var enTextBytes = Convert.FromBase64String(codingText);
-                    string deText = Encoding.UTF8.GetString(enTextBytes);
+        //            string codingText = Convert.ToBase64String(item.Bytes);
+        //            var enTextBytes = Convert.FromBase64String(codingText);
+        //            string deText = Encoding.UTF8.GetString(enTextBytes);
 
-                    Console.WriteLine($"{item.CurrentName}{Environment.NewLine}{deText}{Environment.NewLine}");
-                }
-            }
-        }
+        //            Console.WriteLine($"{item.CurrentName}{Environment.NewLine}{deText}{Environment.NewLine}");
+        //        }
+        //    }
+        //}
     }
 }

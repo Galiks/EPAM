@@ -19,7 +19,7 @@ namespace ConsoleApp
         static Observer()
         {
             myDirectoryInfo = new DirectoryInfo(Program.RootDirectory);
-            WriteBackupEvent = WriteBackup;
+            WriteBackupEvent += WriteBackup;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="fileNameOrPath"></param>
         /// <param name="text"></param>
-        public static void WriteTextInFile(string fileNameOrPath, string text)
+        public static void UpdateText(string fileNameOrPath, string text)
         {
             var file = FindFile(fileNameOrPath, fileNameOrPath);
 
@@ -55,7 +55,7 @@ namespace ConsoleApp
 
             var bytes = ConvertTextOnBytes(stringBuilder.ToString());
 
-            WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, "Update text"));
+            WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.UpdateFile));
         }
 
         /// <summary>
@@ -64,9 +64,7 @@ namespace ConsoleApp
         /// <param name="fileName"></param>
         public static void DeleteFile(string filePath)
         {
-            string[] splitPath = filePath.Split('\\');
-
-            string fileName = splitPath.Last();
+            string fileName = GetNameFromPath(filePath);
 
             FileInfo file = FindFile(fileName, filePath);
 
@@ -80,7 +78,15 @@ namespace ConsoleApp
 
             file.Delete();
 
-            WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, "Delete file"));
+            WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.DeleteFile));
+        }
+
+        private static string GetNameFromPath(string filePath)
+        {
+            string[] splitPath = filePath.Split('\\');
+
+            string fileName = splitPath.Last();
+            return fileName;
         }
 
         /// <summary>
@@ -97,15 +103,9 @@ namespace ConsoleApp
             }
             var bytes = ConvertTextOnBytes("");
 
-            WriteBackupEvent(new Backup(name, name, Directory.GetCurrentDirectory(), Directory.GetCurrentDirectory(), bytes, "Create file"));
-        }
+            WriteBackupEvent(new Backup(name, name, Directory.GetCurrentDirectory(), Directory.GetCurrentDirectory(), bytes, Actions.CreateFile));
 
-        public static void MoveFile(string name)
-        {
-
-            var bytes = ConvertTextOnBytes("");
-
-            WriteBackupEvent(new Backup(name, name, "", "", bytes, "Move file"));
+            //сделать возвращаемый тип или нет?
         }
 
         /// <summary>
@@ -153,18 +153,18 @@ namespace ConsoleApp
         /// <summary>
         /// Ищет файл
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="directoryInfo"></param>
+        /// <param name="fileName">имя файла</param>
+        /// <param name="path">путь к папке</param>
         /// <returns></returns>
-        public static FileInfo FindFile(string fileName, string filePath)
+        public static FileInfo FindFile(string fileName, string path)
         {
-            string[] splitPath = filePath.Split('\\');
+            string[] splitPath = path.Split('\\');
 
             DirectoryInfo directoryInfo;
 
             if (splitPath.Length == 1)
             {
-                directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + filePath);
+                directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + path);
             }
             else
             {
@@ -176,7 +176,7 @@ namespace ConsoleApp
 
                 directoryInfo = new DirectoryInfo(MyDirectoryInfo.FullName + path.ToString());
             }
-           
+
             try
             {
                 var files = directoryInfo.GetFiles(fileName).ToArray();
@@ -215,7 +215,6 @@ namespace ConsoleApp
             File.AppendAllText(Program.PathToBackupFile, JsonConvert.SerializeObject(backup) + Environment.NewLine);
         }
 
-
         public static byte[] ConvertTextOnBytes(string text)
         {
             return Encoding.UTF8.GetBytes(text);
@@ -223,9 +222,45 @@ namespace ConsoleApp
 
         public static void SetCurrentDirectory(string path)
         {
-
-
             Directory.SetCurrentDirectory(path);
+        }
+
+        /// <summary>
+        /// Перемещает файл
+        /// </summary>
+        /// <param name="fileName">имя файла</param>
+        /// <param name="currentFilePath">путь к файлу</param>
+        /// <param name="futureFilePath">новый путь к файлу</param>
+        public static void MoveFileTo(string fileName, string currentFilePath, string futureFilePath)
+        {
+            Actions action = Actions.MoveFile;
+            //string previousFileName = GetNameFromPath(currentFilePath);
+            string currentFileName = GetNameFromPath(futureFilePath);
+
+            var file = FindFile(fileName, currentFilePath);
+
+            if (currentFileName != fileName)
+            {
+                action = Actions.MoveAndRenameFile;
+            }
+
+            var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
+
+            File.Move(currentFilePath, futureFilePath);
+
+            WriteBackup(new Backup(currentName: currentFileName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
+        }
+
+        /// <summary>
+        /// Переименовывает файл
+        /// </summary>
+        /// <param name="fileName">имя файла</param>
+        /// <param name="path">путь к файлу</param>
+        /// <param name="name">новое имя файла</param>
+        public static void RenameFile(string fileName, string path, string name)
+        {
+            var file = FindFile(fileName, path);
+            //переименовывание через Move и Remove. Еееееееееее, костыли!
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
+using System.Text;
 
-namespace DataAccessLayer.Models
+namespace ConsoleApp
 {
     public sealed class Backup
     {
@@ -11,7 +12,7 @@ namespace DataAccessLayer.Models
         public string PreviousPathToFile { get; set; }
         public byte[] Bytes { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public string Action { get; set; }
+        public Actions Action { get; set; }
 
         /// <summary>
         /// Initial object of class Backup
@@ -22,7 +23,7 @@ namespace DataAccessLayer.Models
         /// <param name="previousPathToFile">current path where file was located</param>
         /// <param name="bytes">text in file as bytes</param>
         /// <param name="action">action on file</param>
-        public Backup(string currentName, string previousName, string currentPathToFile, string previousPathToFile, byte[] bytes, string action)
+        public Backup(string currentName, string previousName, string currentPathToFile, string previousPathToFile, byte[] bytes, Actions action)
         {
             UpdatedAt = DateTime.Now;
             CurrentName = currentName;

@@ -62,29 +62,65 @@ namespace ConsoleApp
 
             var backup = items.Where(b => b.UpdatedAt.ToString(dateFormat) == dateTime.ToString(dateFormat)).FirstOrDefault();
 
-            var file = Observer.FindFile(backup.CurrentName, path);
-
-            if (backup.Action == "Update text")
+            switch (backup.Action)
             {
-                string text = ConvertBytesToString(backup.Bytes);
-                using (StreamWriter writer = file.CreateText())
-                {
-                    writer.Write(text);
-                }
-                RemoveBackup(backup);
+                case Actions.UpdateFile:
+                    RollbackUpdateFile(backup);
+                    break;
+                case Actions.CreateFile:
+                    RollbackCreateFile(backup);
+                    break;
+                case Actions.DeleteFile:
+                    RollbackDeleteFile(backup);
+                    break;
+                case Actions.MoveFile:
+                    RollbackMoveFile(backup);
+                    break;
+                case Actions.RenameFile:
+                    RollbackRenameFile(backup);
+                    break;
+                case Actions.MoveAndRenameFile:
+                    RollbackMoveAndRenameFile(backup);
+                    break;
+                default:
+                    break;
             }
+        }
 
-            if (backup.Action == "Create File")
+        private static void RollbackMoveAndRenameFile(Backup backup)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void RollbackRenameFile(Backup backup)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void RollbackMoveFile(Backup backup)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void RollbackDeleteFile(Backup backup)
+        {
+            Observer.CreateFile(backup.CurrentName);
+        }
+
+        private static void RollbackCreateFile(Backup backup)
+        {
+            Observer.DeleteFile(backup.CurrentName);
+        }
+
+        private static void RollbackUpdateFile(Backup backup)
+        {
+            var file = Observer.FindFile(backup.CurrentName, backup.CurrentPathToFile);
+            string text = ConvertBytesToString(backup.Bytes);
+            using (StreamWriter writer = file.CreateText())
             {
-                Observer.DeleteFile(backup.CurrentName);
+                writer.Write(text);
             }
-
-            if (backup.Action == "Delete file")
-            {
-                Observer.CreateFile(backup.CurrentName);
-            }
-
-            Console.WriteLine(backup);
+            RemoveBackup(backup);
         }
 
         public static IEnumerable<Backup> GetBackups()
