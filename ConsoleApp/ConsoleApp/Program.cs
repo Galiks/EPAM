@@ -1,14 +1,6 @@
-﻿using DataAccessLayer.Implementations;
-using DataAccessLayer.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading;
 
 namespace ConsoleApp
 {
@@ -48,45 +40,220 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Begin");
+            Console.WriteLine($"Hello, Stranger!{Environment.NewLine}I see that you decided to run this program{Environment.NewLine}Good luck!{Environment.NewLine}So... What do you want?{Environment.NewLine}");
+            Console.WriteLine("Press O to start OBSERVER mode");
+            Console.WriteLine("Press R to start ROLLBACK mode");
+            Console.WriteLine("Press Esc to start EXIT mode" + Environment.NewLine);
+            while (true)
+            {
+                var command = Console.ReadKey();
+                // Не люблю когда после ввода символа в консоль он остаётся. Следующая процедура убирает его (Bakcspace)
+                Console.Write("\b");
 
-            var file = Observer.FindFile("New file.txt", "");
-
-            Console.WriteLine("Create File" == Actions.CreateFile.ToString());
-
-            Console.WriteLine("End");
-
-            Console.ReadKey();
+                switch (command.Key)
+                {
+                    case ConsoleKey.O:
+                        StartObserverMode();
+                        break;
+                    case ConsoleKey.R:
+                        StartRollbackMode();
+                        break;
+                    case ConsoleKey.Escape:
+                        Console.WriteLine("Bye-bye!");
+                        return;
+                    default:
+                        Console.WriteLine("Do not try to fool me, dude! There is no such command");
+                        break;
+                }
+            }
         }
 
-        //private static void SerializeAndDeserialize()
-        //{
-        //    string text = "КУДА ИДЁМ С ПЯТОЧКОМ!";
-        //    var bytes = Encoding.UTF8.GetBytes(text);
-        //    var backup = new Backup(text, text, "Test1", "Test1", bytes, DateTime.Now);
+        private static void StartRollbackMode()
+        {
+            throw new NotImplementedException();
+        }
 
-        //    File.AppendAllText(PathToBackupFile, JsonConvert.SerializeObject(backup) + Environment.NewLine);
+        private static void StartObserverMode()
+        {
+            //текст набран в 3-4 ночи, поэтому он на русском языке, а не на коверканном английском.
+            Console.WriteLine("Для ваших нужд создана папка MainFolder. Когда будете писать путь, начинайте с ней. " + Environment.NewLine + 
+                "Также, следует учесть, что если действия происходят в текущей папке, " + Environment.NewLine +
+                "то путь можно не указывать (просто нажать Enter при запросе)");
 
-        //    JsonSerializer serializer = new JsonSerializer
-        //    {
-        //        NullValueHandling = NullValueHandling.Ignore
-        //    };
+            Console.WriteLine("The jokes are over!");
+            Console.WriteLine("Press F to Create File");
+            Console.WriteLine("Press Q to Create Folder");
+            Console.WriteLine("Press D to Delete File");
+            Console.WriteLine("Press W to Find File");
+            Console.WriteLine("Press M to Move File");
+            Console.WriteLine("Press R to Rename File");
+            Console.WriteLine("Press S to Set Current Directory");
+            Console.WriteLine("Press U to Update Text");
+            Console.WriteLine("Press Esc to start EXIT mode" + Environment.NewLine);
 
+            var command = Console.ReadKey();
 
-        //    using (StreamReader streamReader = new StreamReader("backups.json"))
-        //    {
-        //        string line;
-        //        while ((line = streamReader.ReadLine()) != null)
-        //        {
-        //            var item = JsonConvert.DeserializeObject<Backup>(line);
+            switch (command.Key)
+            {
+                case ConsoleKey.F:
+                    CreateFile();
+                    break;
+                case ConsoleKey.Q:
+                    CreateFolder();
+                    break;
+                case ConsoleKey.D:
+                    DeleteFile();
+                    break;
+                case ConsoleKey.W:
+                    FindFile();
+                    break;
+                case ConsoleKey.M:
+                    MoveFile();
+                    break;
+                case ConsoleKey.R:
+                    RenameFile();
+                    break;
+                case ConsoleKey.S:
+                    SetCurrentDirectory();
+                    break;
+                case ConsoleKey.U:
+                    UpdateText();
+                    break;
+                case ConsoleKey.Escape:
+                    Console.WriteLine("Bye-bye!");
+                    return;
+                default:
+                    Console.WriteLine("Do not try to fool me, dude! There is no such command");
+                    break;
+            }
+        }
 
-        //            string codingText = Convert.ToBase64String(item.Bytes);
-        //            var enTextBytes = Convert.FromBase64String(codingText);
-        //            string deText = Encoding.UTF8.GetString(enTextBytes);
+        private static void UpdateText()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
 
-        //            Console.WriteLine($"{item.CurrentName}{Environment.NewLine}{deText}{Environment.NewLine}");
-        //        }
-        //    }
-        //}
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                Console.WriteLine("Имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Console.Write("Путь к файлу: ");
+            string path = Console.ReadLine();
+            Console.Write("Текст файла: ");
+            string text = Console.ReadLine();
+            Observer.UpdateText(fileName, path, text);
+        }
+
+        private static void SetCurrentDirectory()
+        {
+            Console.Write("Путь: ");
+            string path = Console.ReadLine();
+            Observer.SetCurrentDirectory(path);
+        }
+
+        private static void RenameFile()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                Console.WriteLine("Имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Console.Write("Путь к файлу: ");
+            string path = Console.ReadLine();
+            Console.Write("Новое имя файла: ");
+            string newName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                Console.WriteLine("Новое имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Observer.RenameFile(fileName, path, newName);
+        }
+
+        private static void MoveFile()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
+            Console.Write("Путь к файлу: ");
+            string currentPath = Console.ReadLine();
+            Console.Write("Новый путь к файлу: ");
+            string futurePath = Console.ReadLine();
+            Observer.MoveFileTo(fileName, currentPath, futurePath);
+        }
+
+        private static void FindFile()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                Console.WriteLine("Имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Console.Write("Путь к файлу: ");
+            string path = Console.ReadLine();
+            Observer.FindFile(fileName, path);
+        }
+
+        private static void DeleteFile()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                Console.WriteLine("Имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Console.Write("Путь к файлу: ");
+            string path = Console.ReadLine();
+            Observer.DeleteFile(fileName, path);
+        }
+
+        private static void CreateFolder()
+        {
+            Console.Write("Название папки: ");
+            string folderName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(folderName))
+            {
+                Console.WriteLine("Имя папки не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Observer.CreateFolder(folderName);
+        }
+
+        private static void CreateFile()
+        {
+            Console.Write("Название файла: ");
+            string fileName = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                Console.WriteLine("Имя файла не должно быть пустое!");
+                return;
+                //throw new Exception();
+            }
+
+            Observer.CreateFile(fileName);
+        }
     }
 }

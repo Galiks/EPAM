@@ -1,7 +1,5 @@
-﻿using DataAccessLayer.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,16 +23,18 @@ namespace ConsoleApp
         /// <summary>
         /// Записывает еткст в файл
         /// </summary>
-        /// <param name="fileNameOrPath"></param>
+        /// <param name="fileName"></param>
+        /// <param name="path"></param>
         /// <param name="text"></param>
-        public static void UpdateText(string fileNameOrPath, string text)
+        public static void UpdateText(string fileName, string path, string text)
         {
-            var file = FindFile(fileNameOrPath, fileNameOrPath);
+            var file = FindFile(fileName, path);
 
             if (file == null)
             {
-                Console.WriteLine("File doesn't found");
+                Console.WriteLine("File not found");
                 return;
+                //throw new Exception("File not found");
             }
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -62,16 +62,16 @@ namespace ConsoleApp
         /// Удаляет файл
         /// </summary>
         /// <param name="fileName"></param>
-        public static void DeleteFile(string filePath)
+        /// <param name="path"></param>
+        public static void DeleteFile(string fileName, string path)
         {
-            string fileName = GetNameFromPath(filePath);
-
-            FileInfo file = FindFile(fileName, filePath);
+            FileInfo file = FindFile(fileName, path);
 
             if (file == null)
             {
-                Console.WriteLine("File doesn't found");
+                Console.WriteLine("File not found");
                 return;
+                //throw new Exception("File not found");
             }
 
             byte[] bytes = ConvertTextOnBytes(file.OpenText().ReadToEnd());
@@ -158,24 +158,7 @@ namespace ConsoleApp
         /// <returns></returns>
         public static FileInfo FindFile(string fileName, string path)
         {
-            string[] splitPath = path.Split('\\');
-
-            DirectoryInfo directoryInfo;
-
-            if (splitPath.Length == 1)
-            {
-                directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + path);
-            }
-            else
-            {
-                StringBuilder path = new StringBuilder();
-                for (int i = 1; i < splitPath.Length; i++)
-                {
-                    path.Append("\\" + splitPath[i]);
-                }
-
-                directoryInfo = new DirectoryInfo(MyDirectoryInfo.FullName + path.ToString());
-            }
+            DirectoryInfo directoryInfo = GetDirectoryByPath(path);
 
             try
             {
@@ -206,6 +189,30 @@ namespace ConsoleApp
             return null;
         }
 
+        private static DirectoryInfo GetDirectoryByPath(string path)
+        {
+            string[] splitPath = path.Split('\\');
+
+            DirectoryInfo directoryInfo;
+
+            if (splitPath.Length == 1)
+            {
+                directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + path);
+            }
+            else
+            {
+                StringBuilder filePath = new StringBuilder();
+                for (int i = 1; i < splitPath.Length; i++)
+                {
+                    filePath.Append("\\" + splitPath[i]);
+                }
+
+                directoryInfo = new DirectoryInfo(MyDirectoryInfo.FullName + filePath.ToString());
+            }
+
+            return directoryInfo;
+        }
+
         /// <summary>
         /// Записывает изменения в файл
         /// </summary>
@@ -222,7 +229,8 @@ namespace ConsoleApp
 
         public static void SetCurrentDirectory(string path)
         {
-            Directory.SetCurrentDirectory(path);
+            var directory = GetDirectoryByPath(path);
+            Directory.SetCurrentDirectory(directory.FullName);
         }
 
         /// <summary>
@@ -233,20 +241,27 @@ namespace ConsoleApp
         /// <param name="futureFilePath">новый путь к файлу</param>
         public static void MoveFileTo(string fileName, string currentFilePath, string futureFilePath)
         {
-            Actions action = Actions.MoveFile;
-            //string previousFileName = GetNameFromPath(currentFilePath);
+            
             string currentFileName = GetNameFromPath(futureFilePath);
 
             var file = FindFile(fileName, currentFilePath);
 
+            if (file == null)
+            {
+                Console.WriteLine("File not found");
+                return;
+                //throw new Exception("File not found");
+            }
+
+            File.Move(currentFilePath, futureFilePath);
+
+            Actions action = Actions.MoveFile;
             if (currentFileName != fileName)
             {
                 action = Actions.MoveAndRenameFile;
             }
 
             var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
-
-            File.Move(currentFilePath, futureFilePath);
 
             WriteBackup(new Backup(currentName: currentFileName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
         }
@@ -256,11 +271,36 @@ namespace ConsoleApp
         /// </summary>
         /// <param name="fileName">имя файла</param>
         /// <param name="path">путь к файлу</param>
-        /// <param name="name">новое имя файла</param>
-        public static void RenameFile(string fileName, string path, string name)
+        /// <param name="newName">новое имя файла</param>
+        public static void RenameFile(string fileName, string path, string newName)
         {
             var file = FindFile(fileName, path);
+
+            if (file == null)
+            {
+                Console.WriteLine("File not found");
+                return;
+                //throw new Exception("File not found");
+            }
+
+            //field for class Backup
+            string futurePath = MyDirectoryInfo.FullName + path;
+
+            //field for MoveTo()
+            string futurePathAndFileName = futurePath + "\\" + newName;
+
+            file.MoveTo(futurePathAndFileName);
             //переименовывание через Move и Remove. Еееееееееее, костыли!
+
+            //if path is current directory - path is empty. So we do next...
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = MyDirectoryInfo.FullName;
+            }
+
+            var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
+            Actions action = Actions.RenameFile;
+            WriteBackup(new Backup(currentName: newName, previousName: fileName, currentPathToFile: futurePath, previousPathToFile: path, bytes: bytes, action: action));
         }
     }
 }

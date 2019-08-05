@@ -43,7 +43,7 @@ namespace ConsoleApp
 
         public override string ToString()
         {
-            return $"Current Name: {CurrentName}{Environment.NewLine}Previous Name: {PreviousName}{Environment.NewLine}Current Path To File: {CurrentPathToFile}{Environment.NewLine}Previous Path To File: {PreviousPathToFile}{Environment.NewLine}Action: {Action}{Environment.NewLine}{Environment.NewLine}Update At: {UpdatedAt}{Environment.NewLine}";
+            return $"Current Name: {CurrentName}{Environment.NewLine}Previous Name: {PreviousName}{Environment.NewLine}Current Path To File: {CurrentPathToFile}{Environment.NewLine}Previous Path To File: {PreviousPathToFile}{Environment.NewLine}Action: {Action}{Environment.NewLine}Update At: {UpdatedAt}{Environment.NewLine}";
         }
     }
 }

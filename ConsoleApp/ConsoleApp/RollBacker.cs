@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -94,12 +93,12 @@ namespace ConsoleApp
 
         private static void RollbackRenameFile(Backup backup)
         {
-            throw new NotImplementedException();
+            Observer.RenameFile(backup.CurrentName, backup.CurrentPathToFile, backup.PreviousName);
         }
 
         private static void RollbackMoveFile(Backup backup)
         {
-            throw new NotImplementedException();
+            Observer.MoveFileTo(backup.CurrentName, backup.CurrentPathToFile, backup.PreviousPathToFile);
         }
 
         private static void RollbackDeleteFile(Backup backup)
@@ -109,7 +108,7 @@ namespace ConsoleApp
 
         private static void RollbackCreateFile(Backup backup)
         {
-            Observer.DeleteFile(backup.CurrentName);
+            Observer.DeleteFile(backup.CurrentName, backup.CurrentPathToFile);
         }
 
         private static void RollbackUpdateFile(Backup backup)
