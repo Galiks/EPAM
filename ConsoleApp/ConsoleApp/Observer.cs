@@ -38,16 +38,22 @@ namespace ConsoleApp
                 //throw new Exception("File not found");
             }
 
-            if (backup)
+            string oldText = "";
+
+            using (StreamReader reader = new StreamReader(file.OpenRead()))
             {
-                var bytes = ConvertTextOnBytes(file.OpenText().ReadToEnd());
-                WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.UpdateFile)); 
+                oldText = reader.ReadToEnd();
             }
 
+            //using (FileStream fileStream = file.Open(FileMode.Open, FileAccess.Write, FileShare.Write))
+            //{
+            File.WriteAllText(file.FullName, text);
+            //}
 
-            using (StreamWriter writer = file.AppendText())
+            if (backup)
             {
-                writer.WriteLine(text);
+                var bytes = ConvertTextOnBytes("");
+                WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.UpdateFile));
             }
         }
 
@@ -71,7 +77,7 @@ namespace ConsoleApp
             if (backup)
             {
                 byte[] bytes = ConvertTextOnBytes(file.OpenText().ReadToEnd());
-                WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.DeleteFile)); 
+                WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.DeleteFile));
             }
 
             file.Delete();
@@ -95,13 +101,15 @@ namespace ConsoleApp
             if (!IsExistsFile(ref name))
             {
                 name = name + ".txt";
-                var file = File.Create(name);
-                file.Close();
+                using (FileStream fileStream = File.Create(name))
+                {
+                    fileStream.Close();
+                }
             }
 
             if (backup)
             {
-                WriteBackupEvent(new Backup(name, name, Directory.GetCurrentDirectory(), Directory.GetCurrentDirectory(), new byte[0], Actions.CreateFile)); 
+                WriteBackupEvent(new Backup(name, name, Directory.GetCurrentDirectory(), Directory.GetCurrentDirectory(), new byte[0], Actions.CreateFile));
             }
 
             //сделать возвращаемый тип или нет?
@@ -241,9 +249,6 @@ namespace ConsoleApp
         /// <param name="backup">необязательный параметр, отвечающий за запись в бэкап</param>
         public static void MoveFileTo(string fileName, string currentFilePath, string futureFilePath, bool backup = true)
         {
-            
-            string currentFileName = GetNameFromPath(futureFilePath);
-
             var file = FindFile(fileName, currentFilePath);
 
             if (file == null)
@@ -253,17 +258,36 @@ namespace ConsoleApp
                 //throw new Exception("File not found");
             }
 
-            File.Move(currentFilePath, futureFilePath);
+            string oldText = "";
+
+            using (StreamReader reader = new StreamReader(file.OpenRead()))
+            {
+                oldText = reader.ReadToEnd();
+                reader.Close();
+            }
+
+            string currentDirectory = GetDirectoryByPath(currentFilePath).FullName + fileName;
+
+            string futureName = GetNameFromPath(futureFilePath);
+
+            string futureDirectory = GetDirectoryByPath(futureFilePath).FullName;
+
+            //using (FileStream fileTemp = file.Open(FileMode.Open))
+            //{
+            File.Move(currentDirectory, futureDirectory);
+            //}
 
             if (backup)
             {
                 Actions action = Actions.MoveFile;
-                if (currentFileName != fileName)
+
+                if (futureName != fileName)
                 {
                     action = Actions.MoveAndRenameFile;
                 }
-                var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
-                WriteBackup(new Backup(currentName: currentFileName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
+
+                var bytes = ConvertTextOnBytes(oldText);
+                WriteBackup(new Backup(currentName: futureName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
             }
         }
 
@@ -290,9 +314,10 @@ namespace ConsoleApp
 
             //field for MoveTo()
             string futurePathAndFileName = futurePath + "\\" + newName;
+            //переименовывание через Move и Remove. Еееееееееее, костыли!
 
             file.MoveTo(futurePathAndFileName);
-            //переименовывание через Move и Remove. Еееееееееее, костыли!
+
 
             //if path is current directory - path is empty. So we do next...
             if (string.IsNullOrWhiteSpace(path))
@@ -304,8 +329,27 @@ namespace ConsoleApp
             {
                 var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
                 Actions action = Actions.RenameFile;
-                WriteBackup(new Backup(currentName: newName, previousName: fileName, currentPathToFile: futurePath, previousPathToFile: path, bytes: bytes, action: action)); 
+                WriteBackup(new Backup(currentName: newName, previousName: fileName, currentPathToFile: futurePath, previousPathToFile: path, bytes: bytes, action: action));
             }
+        }
+
+        private static bool IsLocked(string fileName)
+        {
+            try
+            {
+                using (FileStream fs = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    fs.Close();
+                    // Здесь вызываем свой метод, работаем с файлом
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.HResult == -2147024894)
+                    return false;
+            }
+            return true;
         }
     }
 }

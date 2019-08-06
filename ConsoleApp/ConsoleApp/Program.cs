@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace ConsoleApp
 {
@@ -40,6 +41,15 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
+            Observer.CreateFile("File2");
+            Observer.UpdateText("File2.txt", "", "Some text");
+            Observer.RenameFile("File2.txt", "", "New File2.txt");
+            Observer.CreateFolder("New Folder");
+            Observer.MoveFileTo("New File2.txt", "", "MainFolder\\New Folder\\New File2.txt");
+        }
+
+        private static void UserInterface()
+        {
             Console.WriteLine($"Hello, Stranger!{Environment.NewLine}I see that you decided to run this program{Environment.NewLine}Good luck!{Environment.NewLine}So... What do you want?{Environment.NewLine}");
             Console.WriteLine("Press O to start OBSERVER mode");
             Console.WriteLine("Press R to start ROLLBACK mode");
@@ -70,13 +80,14 @@ namespace ConsoleApp
 
         private static void StartRollbackMode()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Для отката введите дату, в том же формате, какой указан в бэкапе.");
         }
 
+        #region Observer
         private static void StartObserverMode()
         {
             //текст набран в 3-4 ночи, поэтому он на русском языке, а не на коверканном английском.
-            Console.WriteLine("Для ваших нужд создана папка MainFolder. Когда будете писать путь, начинайте с ней. " + Environment.NewLine + 
+            Console.WriteLine("Для ваших нужд создана папка MainFolder. Когда будете писать путь, начинайте с ней. " + Environment.NewLine +
                 "Также, следует учесть, что если действия происходят в текущей папке, " + Environment.NewLine +
                 "то путь можно не указывать (просто нажать Enter при запросе)");
 
@@ -130,7 +141,7 @@ namespace ConsoleApp
 
         private static void UpdateText()
         {
-            Console.Write("Название файла: ");
+            Console.Write("Название файла с расширением: ");
             string fileName = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(fileName))
@@ -156,7 +167,7 @@ namespace ConsoleApp
 
         private static void RenameFile()
         {
-            Console.Write("Название файла: ");
+            Console.Write("Название файла с расширением: ");
             string fileName = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(fileName))
@@ -168,7 +179,7 @@ namespace ConsoleApp
 
             Console.Write("Путь к файлу: ");
             string path = Console.ReadLine();
-            Console.Write("Новое имя файла: ");
+            Console.Write("Новое имя файла с расширением: ");
             string newName = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(newName))
@@ -183,11 +194,11 @@ namespace ConsoleApp
 
         private static void MoveFile()
         {
-            Console.Write("Название файла: ");
+            Console.Write("Название файла с расширением: ");
             string fileName = Console.ReadLine();
             Console.Write("Путь к файлу: ");
             string currentPath = Console.ReadLine();
-            Console.Write("Новый путь к файлу: ");
+            Console.Write("Новый путь к файлу вместе с именем файла и расширением: ");
             string futurePath = Console.ReadLine();
             Observer.MoveFileTo(fileName, currentPath, futurePath);
         }
@@ -211,7 +222,7 @@ namespace ConsoleApp
 
         private static void DeleteFile()
         {
-            Console.Write("Название файла: ");
+            Console.Write("Название файла с расширением: ");
             string fileName = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(fileName))
@@ -254,6 +265,7 @@ namespace ConsoleApp
             }
 
             Observer.CreateFile(fileName);
-        }
+        } 
+        #endregion
     }
 }

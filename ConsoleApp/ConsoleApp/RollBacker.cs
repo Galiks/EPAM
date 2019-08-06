@@ -12,7 +12,7 @@ namespace ConsoleApp
         private const string dateFormat = "dd.MM.yyyy hh:mm:ss";
         public static string PathToBackupFile;
 
-        private static event Action<Backup> RemoveBackupEvent;
+        private static event Action<string, DateTime> RemoveBackupEvent;
 
         private static readonly DirectoryInfo myDirectoryInfo;
 
@@ -23,26 +23,6 @@ namespace ConsoleApp
             myDirectoryInfo = new DirectoryInfo(Program.RootDirectory);
             PathToBackupFile = Program.PathToBackupFile;
             RemoveBackupEvent += RemoveBackup;
-        }
-
-        /// <summary>
-        /// Удаляет Backup из файла
-        /// </summary>
-        /// <param name="removedBackup"></param>
-        private static void RemoveBackup(Backup removedBackup)
-        {
-            var allLines = File.ReadAllLines(PathToBackupFile);
-            for (int i = 0; i < allLines.Length; i++)
-            {
-                var line = allLines[i];
-
-                Backup backupInLine = JsonConvert.DeserializeObject<Backup>(line);
-                if (backupInLine.CurrentPathToFile == removedBackup.CurrentPathToFile && backupInLine.UpdatedAt == removedBackup.UpdatedAt)
-                {
-                    allLines[i] = string.Empty;
-                }
-            }
-            File.WriteAllLines(PathToBackupFile, allLines);
         }
 
         /// <summary>
@@ -94,38 +74,38 @@ namespace ConsoleApp
             //сначала Rename, а потом Move или наоборот?
             string previousPathAndFileName = backup.PreviousPathToFile + "\\" + backup.PreviousName;
             Observer.MoveFileTo(backup.CurrentName, backup.CurrentPathToFile, previousPathAndFileName, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         private static void RollbackRenameFile(Backup backup)
         {
             Observer.RenameFile(backup.CurrentName, backup.CurrentPathToFile, backup.PreviousName, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         private static void RollbackMoveFile(Backup backup)
         {
             Observer.MoveFileTo(backup.CurrentName, backup.CurrentPathToFile, backup.PreviousPathToFile, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         private static void RollbackDeleteFile(Backup backup)
         {
             Observer.CreateFile(backup.CurrentName, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         private static void RollbackCreateFile(Backup backup)
         {
             Observer.DeleteFile(backup.CurrentName, backup.CurrentPathToFile, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         private static void RollbackUpdateFile(Backup backup)
         {
             string text = ConvertBytesToText(backup.Bytes);
             Observer.UpdateText(backup.CurrentName, backup.CurrentName, text, false);
-            RemoveBackupEvent?.Invoke(backup);
+            RemoveBackupEvent?.Invoke(backup.CurrentPathToFile, backup.UpdatedAt);
         }
 
         public static IEnumerable<Backup> GetBackups()
@@ -159,6 +139,26 @@ namespace ConsoleApp
             string deText = Encoding.UTF8.GetString(enTextBytes);
 
             return deText;
+        }
+
+        /// <summary>
+        /// Удаляет Backup из файла
+        /// </summary>
+        /// <param name="removedBackup"></param>
+        private static void RemoveBackup(string backupCurrentPathToFile, DateTime backupUpdatedAt)
+        {
+            var allLines = File.ReadAllLines(PathToBackupFile);
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                var line = allLines[i];
+
+                Backup backupInLine = JsonConvert.DeserializeObject<Backup>(line);
+                if (backupInLine.CurrentPathToFile == backupCurrentPathToFile && backupInLine.UpdatedAt == backupUpdatedAt)
+                {
+                    allLines[i] = string.Empty;
+                }
+            }
+            File.WriteAllLines(PathToBackupFile, allLines);
         }
     }
 }
