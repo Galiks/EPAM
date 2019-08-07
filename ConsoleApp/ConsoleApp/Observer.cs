@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace ConsoleApp
 {
@@ -29,7 +30,8 @@ namespace ConsoleApp
         /// <param name="backup">необязательный параметр, отвечающий за запись в бэкап</param>
         public static void UpdateText(string fileName, string path, string text, bool backup = true)
         {
-            var file = FindFile(fileName, path);
+            FileInfo file;
+            file = FindFile(fileName, path);
 
             if (file == null)
             {
@@ -45,14 +47,15 @@ namespace ConsoleApp
                 oldText = reader.ReadToEnd();
             }
 
-            //using (FileStream fileStream = file.Open(FileMode.Open, FileAccess.Write, FileShare.Write))
-            //{
-            File.WriteAllText(file.FullName, text);
-            //}
+            using (FileStream fileStream = file.Open(FileMode.Open, FileAccess.Write, FileShare.Write))
+            {
+                byte[] info = ConvertTextOnBytes(text);
+                fileStream.Write(info, 0, info.Length);
+            }
 
             if (backup)
             {
-                var bytes = ConvertTextOnBytes("");
+                var bytes = ConvertTextOnBytes(oldText);
                 WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.UpdateFile));
             }
         }
@@ -74,13 +77,20 @@ namespace ConsoleApp
                 //throw new Exception("File not found");
             }
 
-            if (backup)
+            Backup fileBackup;
+            using (StreamReader stream = file.OpenText())
             {
-                byte[] bytes = ConvertTextOnBytes(file.OpenText().ReadToEnd());
-                WriteBackupEvent(new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.DeleteFile));
+                byte[] bytes = ConvertTextOnBytes(stream.ReadToEnd());
+                fileBackup = new Backup(file.Name, file.Name, file.FullName, file.FullName, bytes, Actions.DeleteFile);
             }
 
             file.Delete();
+
+            if (backup)
+            {
+                WriteBackupEvent(fileBackup);
+            }
+
         }
 
         private static string GetNameFromPath(string filePath)
@@ -103,6 +113,7 @@ namespace ConsoleApp
                 name = name + ".txt";
                 using (FileStream fileStream = File.Create(name))
                 {
+                    //на всякий случай
                     fileStream.Close();
                 }
             }
@@ -249,46 +260,53 @@ namespace ConsoleApp
         /// <param name="backup">необязательный параметр, отвечающий за запись в бэкап</param>
         public static void MoveFileTo(string fileName, string currentFilePath, string futureFilePath, bool backup = true)
         {
-            var file = FindFile(fileName, currentFilePath);
-
-            if (file == null)
+            Thread thread = new Thread(() =>
             {
-                Console.WriteLine("File not found");
-                return;
-                //throw new Exception("File not found");
-            }
+                var file = FindFile(fileName, currentFilePath);
 
-            string oldText = "";
-
-            using (StreamReader reader = new StreamReader(file.OpenRead()))
-            {
-                oldText = reader.ReadToEnd();
-                reader.Close();
-            }
-
-            string currentDirectory = GetDirectoryByPath(currentFilePath).FullName + fileName;
-
-            string futureName = GetNameFromPath(futureFilePath);
-
-            string futureDirectory = GetDirectoryByPath(futureFilePath).FullName;
-
-            //using (FileStream fileTemp = file.Open(FileMode.Open))
-            //{
-            File.Move(currentDirectory, futureDirectory);
-            //}
-
-            if (backup)
-            {
-                Actions action = Actions.MoveFile;
-
-                if (futureName != fileName)
+                if (file == null)
                 {
-                    action = Actions.MoveAndRenameFile;
+                    Console.WriteLine("File not found");
+                    return;
+                    //throw new Exception("File not found");
                 }
 
-                var bytes = ConvertTextOnBytes(oldText);
-                WriteBackup(new Backup(currentName: futureName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
-            }
+                string oldText = "";
+
+                using (StreamReader reader = new StreamReader(file.OpenRead()))
+                {
+                    oldText = reader.ReadToEnd();
+                    reader.Close();
+                }
+
+                string currentDirectory = GetDirectoryByPath(currentFilePath).FullName + fileName;
+
+                string futureName = GetNameFromPath(futureFilePath);
+
+                string futureDirectory = GetDirectoryByPath(futureFilePath).FullName;
+
+                //using (FileStream fileTemp = file.Open(FileMode.Open))
+                //{
+                //File.Move(currentDirectory, futureDirectory);
+                //}
+
+                file.MoveTo(futureDirectory);
+
+                if (backup)
+                {
+                    Actions action = Actions.MoveFile;
+
+                    if (futureName != fileName)
+                    {
+                        action = Actions.MoveAndRenameFile;
+                    }
+
+                    var bytes = ConvertTextOnBytes(oldText);
+                    WriteBackup(new Backup(currentName: futureName, previousName: fileName, currentPathToFile: futureFilePath, previousPathToFile: currentFilePath, bytes: bytes, action: action));
+                }
+            });
+            thread.Start();
+            thread.Join();
         }
 
         /// <summary>
@@ -300,37 +318,81 @@ namespace ConsoleApp
         /// <param name="backup">необязательный параметр, отвечающий за запись в бэкап</param>
         public static void RenameFile(string fileName, string path, string newName, bool backup = true)
         {
-            var file = FindFile(fileName, path);
-
-            if (file == null)
+            Thread thread = new Thread(() =>
             {
-                Console.WriteLine("File not found");
-                return;
-                //throw new Exception("File not found");
-            }
+                var file = FindFile(fileName, path);
 
-            //field for class Backup
-            string futurePath = MyDirectoryInfo.FullName + path;
+                if (file == null)
+                {
+                    Console.WriteLine("File not found");
+                    return;
+                    //throw new Exception("File not found");
+                }
 
-            //field for MoveTo()
-            string futurePathAndFileName = futurePath + "\\" + newName;
-            //переименовывание через Move и Remove. Еееееееееее, костыли!
+                //field for class Backup
+                string futurePath = MyDirectoryInfo.FullName + path;
 
-            file.MoveTo(futurePathAndFileName);
+                //field for MoveTo()
+                string futurePathAndFileName = futurePath + "\\" + newName;
+                //переименовывание через Move и Remove. Еееееееееее, костыли!
+
+                string currentDirectory = GetDirectoryByPath(path).FullName + fileName;
+
+                #region другие варинаты переименовывания
+                //int bufferSize = 1024 * 1024;
+
+                //using (FileStream fileStream = new FileStream(currentDirectory, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite))
+                ////using (FileStream fs = File.Open(<file-path>, FileMode.Open, FileAccess.Read, FileShare.Read))
+                //{
+                //    CreateFile(newName);
+                //    FileStream fs = new FileStream(futurePathAndFileName, FileMode.Open, FileAccess.ReadWrite);
+                //    fileStream.SetLength(fs.Length);
+                //    int bytesRead = -1;
+                //    byte[] bytes = new byte[bufferSize];
+
+                //    while ((bytesRead = fs.Read(bytes, 0, bufferSize)) > 0)
+                //    {
+                //        fileStream.Write(bytes, 0, bytesRead);
+                //    }
+                //}
+
+                //string oldFileName = file.FullName;
+                //string oldFileText = "";
+
+                //using (var stream = File.OpenText(oldFileName))
+                //{
+                //    oldFileText = stream.ReadToEnd();
+                //}
+
+                //file.Delete(); ; // Delete the existing file if exists
+                //File.Move(oldFileName, futurePathAndFileName); // Rename the oldFileName into newFileName
+
+                //using (var stream = File.OpenWrite(futurePathAndFileName))
+                //{
+                //    byte[] info = ConvertTextOnBytes(oldFileText);
+                //    stream.Write(info, 0, info.Length);
+                //} 
+                #endregion
+
+                file.MoveTo(futurePathAndFileName);
 
 
-            //if path is current directory - path is empty. So we do next...
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                path = MyDirectoryInfo.FullName;
-            }
+                //if path is current directory - path is empty. So we do next...
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    path = MyDirectoryInfo.FullName;
+                }
 
-            if (backup)
-            {
-                var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
-                Actions action = Actions.RenameFile;
-                WriteBackup(new Backup(currentName: newName, previousName: fileName, currentPathToFile: futurePath, previousPathToFile: path, bytes: bytes, action: action));
-            }
+                if (backup)
+                {
+                    var bytes = ConvertTextOnBytes(file?.OpenText().ReadToEnd());
+                    Actions action = Actions.RenameFile;
+                    WriteBackup(new Backup(currentName: newName, previousName: fileName, currentPathToFile: futurePath, previousPathToFile: path, bytes: bytes, action: action));
+                }
+            });
+
+            thread.Start();
+            thread.Abort();
         }
 
         private static bool IsLocked(string fileName)

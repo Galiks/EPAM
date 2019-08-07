@@ -42,6 +42,7 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             Observer.CreateFile("File2");
+            //Observer.DeleteFile("File2.txt", "");
             Observer.UpdateText("File2.txt", "", "Some text");
             Observer.RenameFile("File2.txt", "", "New File2.txt");
             Observer.CreateFolder("New Folder");
