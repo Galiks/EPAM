@@ -87,8 +87,7 @@ namespace UserAward.BLL.Logic
 
         public IEnumerable<User> GetUserByLetter(string letter)
         {
-            char userLetter;
-            if (Char.TryParse(letter, out userLetter))
+            if (Char.TryParse(letter, out char userLetter))
             {
                 if (Char.IsLetter(userLetter))
                 {
@@ -111,10 +110,8 @@ namespace UserAward.BLL.Logic
 
         public bool UpdateUser(string id, string name, string birthday)
         {
-            DateTime dateTime;
-            int userId;
 
-            if (DateTime.TryParse(birthday, out dateTime) && (Int32.TryParse(id, out userId)))
+            if (DateTime.TryParse(birthday, out DateTime dateTime) && (Int32.TryParse(id, out int userId)))
             {
                 if (GetUserById(userId) != null)
                 {
@@ -138,10 +135,8 @@ namespace UserAward.BLL.Logic
 
         public bool Rewarding(string idUser, string idAward)
         {
-            int userId;
-            int awardId;
 
-            if (Int32.TryParse(idUser, out userId) && Int32.TryParse(idAward, out awardId))
+            if (Int32.TryParse(idUser, out int userId) && Int32.TryParse(idAward, out int awardId))
             {
                 var user = GetUserById(userId);
 
@@ -174,8 +169,7 @@ namespace UserAward.BLL.Logic
 
         public void GetAwardFromUserAward(string id)
         {
-            int userId;
-            if (Int32.TryParse(id, out userId))
+            if (Int32.TryParse(id, out int userId))
             {
                 var user = GetUserById(userId);
                 if (user != null)
@@ -189,7 +183,10 @@ namespace UserAward.BLL.Logic
                         Console.WriteLine($"User {user.Name} have awards: ");
                         foreach (var item in _userDao.GetAwardFromUserAward(userId).ToList())
                         {
-                            Console.WriteLine($"{item.Key} : {item.Value}{Environment.NewLine}");
+                            if (item.Value.Length > 0)
+                            {
+                                Console.WriteLine($"{item.Key} : {item.Value}{Environment.NewLine}");
+                            }
                         }
                     }
                 }
@@ -206,8 +203,7 @@ namespace UserAward.BLL.Logic
 
         public User GetUserById<T>(T id)
         {
-            int userId;
-            if (Int32.TryParse(id.ToString(), out userId))
+            if (Int32.TryParse(id.ToString(), out int userId))
             {
                 var result = _userDao.GetUserById((userId));
                 if (result != null)

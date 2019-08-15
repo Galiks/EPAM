@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using Entity;
 using UserAward.DAL_Interface.Interface;
 
@@ -49,7 +50,32 @@ namespace UserAward.DAL_File.DAO
 
         public int DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var allLines = File.ReadAllLines(pathToUserFile);
+                for (int i = 0; i < allLines.Length; i++)
+                {
+                    var line = allLines[i];
+
+                    if (line.Length > 0)
+                    {
+                        User user = DeserializeUser(line);
+                        if (user.IdUser == id)
+                        {
+                            allLines[i] = string.Empty;
+
+                            break;
+                        }
+                    }
+                }
+                File.WriteAllLines(pathToUserFile, allLines);
+
+                return 1;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public IDictionary<int, string> GetAwardFromUserAward(int idUser)
@@ -92,7 +118,8 @@ namespace UserAward.DAL_File.DAO
 
         public User GetUserById(int id)
         {
-            throw new NotImplementedException();
+            var user = GetUsers().Where(u => u.IdUser == id).FirstOrDefault();
+            return user;
         }
 
         public IEnumerable<User> GetUserByLetter(char letter)

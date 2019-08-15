@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Entity;
 using Newtonsoft.Json;
@@ -41,12 +42,38 @@ namespace UserAward.DAL_File.DAO
 
         public int DeleteAward(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var allLines = File.ReadAllLines(pathToAwardsFile);
+                for (int i = 0; i < allLines.Length; i++)
+                {
+                    var line = allLines[i];
+
+                    if (line.Length > 0)
+                    {
+                        Award award = DeserializeAward(line);
+                        if (award.IdAward == id)
+                        {
+                            allLines[i] = string.Empty;
+
+                            return 1;
+                        }
+                    }
+                }
+                File.WriteAllLines(pathToAwardsFile, allLines);
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Award GetAwardById(int id)
         {
-            throw new NotImplementedException();
+            Award award = GetAwards().Where(a => a.IdAward == id).FirstOrDefault();
+            return award;
         }
 
         public IEnumerable<Award> GetAwardByLetter(char letter)

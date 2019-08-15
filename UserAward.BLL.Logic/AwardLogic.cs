@@ -45,8 +45,7 @@ namespace UserAward.BLL.Logic
 
         public bool DeleteAward(string id)
         {
-            int awardId;
-            if (Int32.TryParse(id, out awardId))
+            if (Int32.TryParse(id, out int awardId))
             {
                 if (GetAwardById(id) != null)
                 {
@@ -69,8 +68,7 @@ namespace UserAward.BLL.Logic
 
         public Award GetAwardById(string id)
         {
-            int awardId;
-            if (Int32.TryParse(id, out awardId))
+            if (Int32.TryParse(id, out int awardId))
             {
                 return _awardDao.GetAwardById(awardId);
             }
@@ -82,8 +80,7 @@ namespace UserAward.BLL.Logic
 
         public IEnumerable<Award> GetAwardByLetter(string letter)
         {
-            char awardLetter;
-            if (Char.TryParse(letter, out awardLetter))
+            if (Char.TryParse(letter, out char awardLetter))
             {
                 return _awardDao.GetAwardByLetter(awardLetter).ToList();
             }
@@ -112,9 +109,8 @@ namespace UserAward.BLL.Logic
         //Добавить проверку на существование награды!
         public bool UpdateAward(string id, string title, string description)
         {
-            int awardId;
 
-            if (Int32.TryParse(id, out awardId))
+            if (Int32.TryParse(id, out int awardId))
             {
                 if (!String.IsNullOrEmpty(title) && GetAwardById(id) != null)
                 {

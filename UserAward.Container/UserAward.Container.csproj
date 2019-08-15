@@ -75,6 +75,10 @@
       <Project>{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF}</Project>
       <Name>UserAward.DAL_Database.DAO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UserAward.DAL_File.DAO\UserAward.DAL_File.DAO.csproj">
+      <Project>{77B0A63B-9DFD-4358-99EA-6BA68561FF4B}</Project>
+      <Name>UserAward.DAL_File.DAO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -20,22 +20,25 @@ namespace userAward
 
         static void Main(string[] args)
         {
-            NinjectCommon.Registration();
+            //Регистрация зависимостей. Параметр отвечает за DAL
+            NinjectCommon.Registration(2);
 
             userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
             awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
 
-            //StartMethod();
-            IAwardDao awardDaoFile = new AwardDaoFile();
-            UserDaoFile userDaoFile = new UserDaoFile(awardDaoFile);
-            var user = new User { IdUser = 2, Name = "Pasha", Birthday = DateTime.Now, Age = 20 };
+            StartMethod();
 
-            var awardsByUser = userDaoFile.GetAwardFromUserAward(user.IdUser);
 
-            foreach (var item in awardsByUser)
-            {
-                Console.WriteLine(item.Key + " : " + item.Value);
-            }
+            //IAwardDao awardDaoFile = new AwardDaoFile();
+            //UserDaoFile userDaoFile = new UserDaoFile(awardDaoFile);
+            //var user = new User { IdUser = 2, Name = "Pasha", Birthday = DateTime.Now, Age = 20 };
+
+            //var awardsByUser = userDaoFile.GetAwardFromUserAward(user.IdUser);
+
+            //foreach (var item in awardsByUser)
+            //{
+            //    Console.WriteLine(item.Key + " : " + item.Value);
+            //}
 
             //userDaoFile.Reawrding(user, 2);
             //userDaoFile.Reawrding(user, 3);
