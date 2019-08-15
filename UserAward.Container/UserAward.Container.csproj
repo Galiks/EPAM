@@ -79,6 +79,10 @@
       <Project>{77B0A63B-9DFD-4358-99EA-6BA68561FF4B}</Project>
       <Name>UserAward.DAL_File.DAO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UserAward.DAL_Memory.DAO\UserAward.DAL_Memory.DAO.csproj">
+      <Project>{82F18925-1B4B-4691-934A-95C42494CA25}</Project>
+      <Name>UserAward.DAL_Memory.DAO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

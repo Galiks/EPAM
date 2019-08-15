@@ -55,14 +55,13 @@ namespace UserAward.DAL_File.DAO
                         if (award.IdAward == id)
                         {
                             allLines[i] = string.Empty;
-
-                            return 1;
+                            break;
                         }
                     }
                 }
                 File.WriteAllLines(pathToAwardsFile, allLines);
 
-                return 0;
+                return 1;
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ using UserAward.BLL.Logic;
 using UserAward.DAL_Database.DAO;
 using UserAward.DAL_File.DAO;
 using UserAward.DAL_Interface.Interface;
+using UserAward.DAL_Memory.DAO;
 
 namespace UserAward.Container
 {
@@ -34,7 +35,8 @@ namespace UserAward.Container
 
             if (numberOfDAL == 3)
             {
-
+                _kernel.Bind<IUserDao>().To<UserDaoMemory>();
+                _kernel.Bind<IAwardDao>().To<AwardDaoMemory>();
             }
             #endregion
 

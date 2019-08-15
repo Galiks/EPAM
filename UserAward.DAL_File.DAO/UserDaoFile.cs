@@ -80,7 +80,6 @@ namespace UserAward.DAL_File.DAO
 
         public IDictionary<int, string> GetAwardFromUserAward(int idUser)
         {
-            string pathToAwardsFile = ConfigurationManager.ConnectionStrings["awardFile"].ConnectionString;
             Dictionary<int, string> result = new Dictionary<int, string>();
 
             using (StreamReader reader = new StreamReader(pathToUserAwardsFile))

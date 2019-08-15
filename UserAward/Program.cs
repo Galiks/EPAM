@@ -20,33 +20,28 @@ namespace userAward
 
         static void Main(string[] args)
         {
-            //Регистрация зависимостей. Параметр отвечает за DAL
-            NinjectCommon.Registration(2);
+            Console.WriteLine("Куда сохранять информацию? Push button: 1 - Database, 2 - File, 3 or another button - Memory (default)");
+            var command = Console.ReadKey();
+            switch (command.Key)
+            {
+                case ConsoleKey.D1:
+                    //Регистрация зависимостей. Параметр отвечает за DAL
+                    NinjectCommon.Registration(1);
+                    break;
+                case ConsoleKey.D2:
+                    //Регистрация зависимостей. Параметр отвечает за DAL
+                    NinjectCommon.Registration(2);
+                    break;
+                default:
+                    //Регистрация зависимостей. Параметр отвечает за DAL
+                    NinjectCommon.Registration();
+                    break;
+            }
 
             userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
             awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
 
             StartMethod();
-
-
-            //IAwardDao awardDaoFile = new AwardDaoFile();
-            //UserDaoFile userDaoFile = new UserDaoFile(awardDaoFile);
-            //var user = new User { IdUser = 2, Name = "Pasha", Birthday = DateTime.Now, Age = 20 };
-
-            //var awardsByUser = userDaoFile.GetAwardFromUserAward(user.IdUser);
-
-            //foreach (var item in awardsByUser)
-            //{
-            //    Console.WriteLine(item.Key + " : " + item.Value);
-            //}
-
-            //userDaoFile.Reawrding(user, 2);
-            //userDaoFile.Reawrding(user, 3);
-            //userDaoFile.AddUser(new User { IdUser = 2, Name = "Pasha", Birthday = DateTime.Now, Age = 20 });
-            //foreach (var item in userDaoFile.GetUsers())
-            //{
-            //    Console.WriteLine(item);
-            //}
 
             Console.Read();
 

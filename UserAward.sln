@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL_Database", "DAL_Databas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAward.DAL_Database.DAO", "UserAward.DAL_Database.DAO\UserAward.DAL_Database.DAO.csproj", "{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL_Memory", "DAL_Memory", "{A3FB58A7-CFBF-4942-B2FD-D7510FACF0DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAward.DAL_Memory.DAO", "UserAward.DAL_Memory.DAO\UserAward.DAL_Memory.DAO.csproj", "{82F18925-1B4B-4691-934A-95C42494CA25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F18925-1B4B-4691-934A-95C42494CA25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F18925-1B4B-4691-934A-95C42494CA25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F18925-1B4B-4691-934A-95C42494CA25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F18925-1B4B-4691-934A-95C42494CA25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +99,7 @@ Global
 		{71036F84-83BB-4A45-9F27-BBE89448462D} = {7E99E71C-0F02-4742-AE9B-ED01BEE3F9ED}
 		{77B0A63B-9DFD-4358-99EA-6BA68561FF4B} = {37E6FF2A-AD61-4177-816C-0E0555678EDF}
 		{13CC4FD4-CB90-47AA-BAF1-E0FB2B3153FF} = {A31265E2-84B6-4AF0-A0D8-D998D70F66E4}
+		{82F18925-1B4B-4691-934A-95C42494CA25} = {A3FB58A7-CFBF-4942-B2FD-D7510FACF0DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6F24CE0-FB33-41ED-8B21-8E65C0BEB177}
