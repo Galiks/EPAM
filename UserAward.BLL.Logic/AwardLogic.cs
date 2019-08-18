@@ -39,7 +39,8 @@ namespace UserAward.BLL.Logic
             }
             else
             {
-                return false;
+                throw new ArgumentNullException($"Title is null");
+                //return false;
             }
         }
 
@@ -55,14 +56,16 @@ namespace UserAward.BLL.Logic
                 }
                 else
                 {
-                    Console.WriteLine($"DB has no information");
-                    return false;
+                    //Console.WriteLine($"DB has no information");
+                    throw new NullReferenceException($"DB has no information");
+                    //return false;
                 }
             }
             else
             {
-                Console.WriteLine($"Incorrect ID");
-                return false;
+                //Console.WriteLine($"Incorrect ID");
+                throw new ArgumentException($"Incorrect ID");
+                //return false;
             }
         }
 
@@ -74,7 +77,8 @@ namespace UserAward.BLL.Logic
             }
             else
             {
-                return null;
+                throw new ArgumentException("Award's ID is not number");
+                //return null;
             }
         }
 
@@ -86,8 +90,9 @@ namespace UserAward.BLL.Logic
             }
             else
             {
-                Console.WriteLine($"Incorrect Letter");
-                return null;
+                throw new ArgumentException($"Incorrect Letter");
+                //Console.WriteLine($"Incorrect Letter");
+                //return null;
             }
         }
 
@@ -110,32 +115,41 @@ namespace UserAward.BLL.Logic
         public bool UpdateAward(string id, string title, string description)
         {
 
-            if (Int32.TryParse(id, out int awardId))
+            if (!String.IsNullOrEmpty(title))
             {
-                if (!String.IsNullOrEmpty(title) && GetAwardById(id) != null)
+                if (Int32.TryParse(id, out int awardId))
                 {
-                    if (description != null)
+                    if (GetAwardById(id) != null)
                     {
-                        _awardDao.UpdateAward(awardId, title, description);
+                        if (description != null)
+                        {
+                            _awardDao.UpdateAward(awardId, title, description);
 
-                        return true;
+                            return true;
+                        }
+                        else
+                        {
+                            _awardDao.UpdateAward(awardId, title, null);
+
+                            return true;
+                        }
                     }
                     else
                     {
-                        _awardDao.UpdateAward(awardId, title, null);
-
-                        return true;
+                        throw new NullReferenceException($"Award does not exists");
+                        //return false;
                     }
                 }
                 else
                 {
-                    return false;
-                }
+                    throw new ArgumentException($"Incorrect ID");
+                    //Console.WriteLine($"Incorrect ID");
+                    //return false;
+                } 
             }
             else
             {
-                Console.WriteLine($"Incorrect ID");
-                return false;
+                throw new ArgumentNullException("Title is empty");
             }
         }
 

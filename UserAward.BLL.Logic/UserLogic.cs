@@ -27,8 +27,10 @@ namespace UserAward.BLL.Logic
 
                 return true;
             }
-
-            return false;
+            else
+            {
+                throw new ArgumentNullException(nameof(name), "This parameter must be not null");
+            }
         }
 
         public IEnumerable<User> GetUsers()
@@ -71,7 +73,7 @@ namespace UserAward.BLL.Logic
             }
             else
             {
-                return false;
+                throw new NullReferenceException("This user does not exists");
             }
         }
 
@@ -82,7 +84,7 @@ namespace UserAward.BLL.Logic
                 return _userDao.GetUserByName(name).ToList();
             }
 
-            return null;
+            throw new ArgumentNullException($"Name is null");
         }
 
         public IEnumerable<User> GetUserByLetter(string letter)
@@ -95,7 +97,7 @@ namespace UserAward.BLL.Logic
                 }
             }
 
-            return null;
+            throw new ArgumentException($"Your letter is not letter");
         }
 
         public IEnumerable<User> GetUserByWord(string word)
@@ -105,7 +107,7 @@ namespace UserAward.BLL.Logic
                 return _userDao.GetUserByWord(word).ToList();
             }
 
-            return null;
+            throw new ArgumentNullException($"Word is null");
         }
 
         public bool UpdateUser(string id, string name, string birthday)
@@ -121,15 +123,16 @@ namespace UserAward.BLL.Logic
                 }
                 else
                 {
-                    Console.WriteLine($"DB has no information");
-
-                    return false;
+                    //Console.WriteLine($"DB has no information");
+                    throw new NullReferenceException($"DB has no information");
+                    //return false;
                 }
             }
             else
             {
-                Console.WriteLine($"Incorrect id or birthday");
-                return false;
+                throw new ArgumentException($"Incorrect id or birthday");
+                //Console.WriteLine($"Incorrect id or birthday");
+                //return false;
             }
         }
 
@@ -144,8 +147,9 @@ namespace UserAward.BLL.Logic
                 {
                     if (_userDao.GetAwardFromUserAward(userId).ContainsKey(awardId))
                     {
-                        Console.WriteLine($"This user already has award like this");
-                        return false;
+                        throw new Exception($"This user already has award like this");
+                        //Console.WriteLine($"This user already has award like this");
+                        //return false;
                     }
                     else
                     {
@@ -156,14 +160,16 @@ namespace UserAward.BLL.Logic
                 }
                 else
                 {
-                    Console.WriteLine($"DB doesn't know this user");
-                    return false;
+                    throw new NullReferenceException($"DB doesn't know this user");
+                    //Console.WriteLine($"DB doesn't know this user");
+                    //return false;
                 }
             }
             else
             {
-                Console.WriteLine($"Incorrect User's ID or Award's ID");
-                return false;
+                throw new ArgumentException($"Incorrect User's ID or Award's ID");
+                //Console.WriteLine($"Incorrect User's ID or Award's ID");
+                //return false;
             }
         }
 
@@ -176,7 +182,8 @@ namespace UserAward.BLL.Logic
                 {
                     if (_userDao.GetAwardFromUserAward(userId).ToList().Count == 0)
                     {
-                        Console.WriteLine($"DB has no information");
+                        throw new NullReferenceException($"DB has no information");
+                        //Console.WriteLine($"DB has no information");
                     }
                     else
                     {
@@ -192,12 +199,14 @@ namespace UserAward.BLL.Logic
                 }
                 else
                 {
-                    Console.WriteLine($"DB has no information about this user");
+                    throw new NullReferenceException($"DB has no information about this user");
+                    //Console.WriteLine($"DB has no information about this user");
                 }
             }
             else
             {
-                Console.WriteLine($"Incorrect ID");
+                throw new ArgumentException($"Incorrect ID");
+                //Console.WriteLine($"Incorrect ID");
             }
         }
 
@@ -212,13 +221,14 @@ namespace UserAward.BLL.Logic
                 }
                 else
                 {
-                    Console.WriteLine($"Incorrect ID");
-                    return null;
+                    throw new NullReferenceException($"DB has no information about this user");
+                    //Console.WriteLine($"Incorrect ID");
+                    //return null;
                 }
             }
             else
             {
-                return null;
+                throw new ArgumentException($"Incorrect ID");
             }
         }
     }

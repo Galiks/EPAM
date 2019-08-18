@@ -230,8 +230,15 @@ namespace userAward
                     case "1":
                         Console.Write($"User's ID: ");
                         var id_1 = Console.ReadLine();
-                        var userById = userLogic.GetUserById(id_1);
-                        Console.WriteLine($"{userById.IdUser} : {userById.Name} : {userById.Birthday.Year}-{userById.Birthday.Month}-{userById.Birthday.Day} : {userById.Age}{Environment.NewLine}");
+                        try
+                        {
+                            var userById = userLogic.GetUserById(id_1);
+                            Console.WriteLine($"{userById.IdUser} : {userById.Name} : {userById.Birthday.Year}-{userById.Birthday.Month}-{userById.Birthday.Day} : {userById.Age}{Environment.NewLine}");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "2":
                         Console.Write($"User's name: ");
@@ -262,7 +269,14 @@ namespace userAward
                         var userId = Console.ReadLine();
                         Console.Write($"Award ID: ");
                         var awardId = Console.ReadLine();
-                        userLogic.Rewarding(userId, awardId);
+                        try
+                        {
+                            userLogic.Rewarding(userId, awardId);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "6":
                         Console.Write($"User's ID: ");
@@ -270,7 +284,14 @@ namespace userAward
                         try
                         {
                             var user = userLogic.GetUserById(Int32.Parse(id_5));
-                            userLogic.DeleteUser(user.IdUser);
+                            try
+                            {
+                                userLogic.DeleteUser(user.IdUser);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -285,7 +306,14 @@ namespace userAward
                         var name_6 = Console.ReadLine();
                         Console.Write($"User's Birthday: ");
                         var birthday = Console.ReadLine();
-                        userLogic.UpdateUser(id_6, name_6, birthday);
+                        try
+                        {
+                            userLogic.UpdateUser(id_6, name_6, birthday);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "8":
                         return;
