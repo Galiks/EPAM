@@ -1,0 +1,100 @@
+legend{
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    border: 10px;
+    border-block-color: white;
+}
+
+.form-inline p{
+    color: white;
+    font-size: 20px;
+    margin-bottom: 5px;
+    padding:0;
+    margin-left: 20px;
+    display: inline-block;
+    /* line-height: 80px; */
+}
+
+.form-inline{
+    width: 500px;
+    background-color: mediumslateblue
+}
+
+.form-inline input{
+    display: block;
+    margin-bottom: 30px;
+}
+
+.form-inline input#email{
+    width: 408px;
+}
+
+.form-inline input#password{
+    width: 190px;
+}
+
+.form-inline input#repeat-password{
+    margin-left: 0px;
+    width: 190px;
+}
+
+.form-inline input[type="submit"]{
+    width: 45%;
+    height: 50%;
+    display: inline;
+    text-align: center;
+    background-color: chartreuse
+}
+
+.form-inline input[type="reset"]{
+    width: 45%;
+    height: 50%;
+    display: inline;
+    text-align: center;
+    background-color: brown
+}
+
+/* .form-inline { 
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  
+  /* Add some margins for each label */
+  /* .form-inline label {
+    margin: 5px 10px 5px 0;
+  }
+  
+  /* Style the input fields */
+  /* .form-inline input {
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  } */
+  
+  /* Style the submit button */
+  /* .form-inline button {
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    border: 1px solid #ddd;
+    color: white;
+  }
+  
+  .form-inline button:hover {
+    background-color: royalblue;
+  } */
+
+  /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+  /* @media (max-width: 800px) {
+    .form-inline input {
+      margin: 10px 0;
+    }
+  
+    .form-inline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  } */
