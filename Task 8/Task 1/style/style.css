@@ -1,0 +1,19 @@
+ul.none-type-list > li{
+    list-style-type: none;
+    padding-inline-start: 5px;
+    padding-inline-end: 5px;
+    padding: 5px;
+}
+
+div.div-background{
+    background-color: yellowgreen;
+    width: 200px;
+    margin: 2px;
+    padding: 0px;
+    border: 5px;
+    border-style: outset
+}
+
+header.my-header {
+    margin-left: 10px;
+}
