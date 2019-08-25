@@ -1,0 +1,67 @@
+.step-by-step {
+    list-style: none;
+    overflow: hidden;
+    font: 18px;
+  }
+  
+  .step-by-step li {
+    float: left;
+  }
+  
+  .step-by-step li a {
+    color: black;
+    text-decoration: none;
+    padding: 10px 0 10px 55px;
+    background: #dedede;
+    position: relative;
+    display: block;
+    float: left;
+  }
+  
+  .step-by-step li a::after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid #dedede;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    left: 100%;
+    z-index: 2;
+  }
+  
+  .step-by-step li a::before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left: 35px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: 1px;
+    left: 100%;
+    z-index: 1;
+  }
+  
+  .step-by-step li a:hover {
+    background: #42ff53;
+    color: white;
+  }
+  .step-by-step li a:hover:after {
+    border-left-color: #42ff53 !important;
+  }
+  
+  #last {
+    padding-right: 20px;
+  }
+  
+  #last::after {
+    display: none;
+  }
+  
