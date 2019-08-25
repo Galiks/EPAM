@@ -1,0 +1,47 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  .container {
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 9px 15px 1px black;
+    justify-content: space-between;
+  }
+  
+  .image-container {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .item-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 150px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  
+  .item-container:after {
+    content: "";
+    position: absolute;
+    right: -2px;
+    top: 15%;
+    width: 2px;
+    height: 75%;
+    background-color: gray;
+  }
+  
+  .item-header {
+    color: orange;
+  }
+  
+  .item-button {
+    background-color: orange;
+    color: white;
+    height: 25px;
+  }
+  
