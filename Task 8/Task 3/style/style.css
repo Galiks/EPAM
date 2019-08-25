@@ -1,88 +1,42 @@
-/* div{
-    display: inline-block;
-    padding-inline-start: 5px;
-    padding-inline-end: 5px;
-    padding: 5px;
-}
-
-div ul{
-    color: dodgerblue;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    list-style-type: none;
-}
-
-div ul li{
-    display: none;
-
-}
-
-div ul li a{
-    color: dodgerblue;
-    display: block;
-}
-
-div ul li a:hover{
-    background-color: darkblue;
-    color: white;
-} */
-
-.dropdown 
-{
+.dropdown {
 	position: relative;
 	display: inline-block;
-	padding-right: 30px;
-}
-
-div[class="dropdown"] ul
-{
-	color: blue;
-	font-size: 16px;
-	border: none;
-	text-decoration: underline;
-	padding-inline-start: 0;
-	margin-block-start: 0;
-	margin-block-end: 0;
-	z-index: 1;
-	padding: 4px;
-	border-radius: 5px 5px 0 0;
-}
-
-.dropdown-li 
-{
+  }
+  
+  .dropbtn {
+	cursor: default;
+  }
+  
+  .dropdown-content {
 	display: none;
 	position: absolute;
-	min-width: 160px;
-	z-index: 1;
-	padding: 4px;
-	z-index: -1;
-}
-
-.dropdown-li a 
-{
-	color: blue;
-	padding: 4px;
-	padding-left: 0;
-	text-decoration: none;
+	width: 100px;
+	box-shadow: 0 0 5px black;
+  }
+  
+  .dropdown-content a {
 	display: block;
-}
-
-.dropdown-li a:hover 
-{
-	background-color: #37abff;
+	padding: 5px;
+  }
+  
+  .dropdown-content a:hover {
+	background-color: blue;
 	color: white;
-}
-
-.dropdown:hover .dropdown-ul 
-{
 	text-decoration: none;
-	cursor: pointer;
-	color: black;
-	box-shadow: 0 -4px 4px 2px rgba(0,0,0,0.2), inset 0 -4px 4px 0 white;
-}
-
-.dropdown:hover .dropdown-li 
-{
+  }
+  
+  .dropdown:hover .dropdown-content {
 	display: block;
-	box-shadow: 0 0 4px 2px rgba(0,0,0,0.2);
-}
+  }
+  
+  .dropdown:hover .white-space {
+	display: block;
+  }
+  
+  .dropdown:hover .dropbtn {
+	color: black;
+	box-shadow: 0 0 5px black;
+	text-decoration: none;
+	z-index: 2;
+  }
+  
