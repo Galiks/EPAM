@@ -1,0 +1,21 @@
+body {
+    font-family: sans-serif;
+  }
+  
+  .header {
+    background-color: green;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+  }
+  
+  .sub-header {
+    position: absolute;
+    background-color: lightgreen;
+    width: 90%;
+    right: 0;
+    padding: 10px;
+    top: 30px;
+  }
