@@ -11,7 +11,7 @@ namespace RegexTask
     public static class Task3
     {
         //пытался сделать всё через метасимволы контекста "^" и "$", но не вышло
-        private const string patternEmail = @"[A-Za-z0-9]{1}\S+[A-Za-z0-9]{1}@mail(\.[A-Za-z0-9-]+)+";
+        private const string patternEmail = @"\b[A-Za-zА-ЯёЁ0-9]{1}\S+[A-Za-zА-ЯёЁ0-9]{1}\b@[A-Za-zА-ЯёЁ]+(\.[A-Za-zА-ЯёЁ0-9-]+)+";
 
         public static IEnumerable GetEmail(string input)
         {

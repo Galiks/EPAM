@@ -24,7 +24,7 @@ namespace RegexTask
 
             #region Task 3
 
-            string textWithEmails = "Иван: ivan@mail.ru, Петр: p_ivanov@mail.rol.ru";
+            string textWithEmails = "Иван: ivan@mail.ru, Петр: p_ivanov@mail.rol.ru, 123@1.1";
             var emails = Task3.GetEmail(textWithEmails);
             foreach (var item in emails)
             {
