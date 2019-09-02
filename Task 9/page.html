@@ -2,21 +2,54 @@
 <html>
     <head>
         <title>Task 9</title>
-        <script src="../Task 9/task9.js"></script>
+        <link rel="stylesheet" href="../Task 9/style.css">
     </head>
     <body>
         <div>
             <form>
                 <legend>Task 1</legend>
+                <script src="../Task 9/javascripts/task9_1.js"></script>
                 <p><input type="text" id="task1-input"></p>
                 <p><input type="text" id="task1-output" value="ANSWER" readonly></p>
                 <p><input type="button" value="Send" onclick="charRemover()"></p>
             </form>
+            
             <form>
                 <legend>Task 2</legend>
+                <script src="../Task 9/javascripts/task9_2.js"></script>
                 <p><input type="text" id="task2-input"></p>
                 <p><input type="text" id="task2-output" value="ANSWER" readonly></p>
                 <p><input type="button" value="Send" onclick="mathCalculator()"></p>
+            </form>
+
+            <form>
+                <legend>Task 3</legend>
+                <script src="../Task 9/javascripts/task9-3.js"></script>
+                <div>
+                    <ul id="first-list"></ul>
+                  </div>
+                  <div>
+                    <ul class="buttons-container">
+                      <button id="all-right">>></button>
+                      <button id="one-right">></button>
+                      <button id="one-left"><</button>
+                      <button id="all-left"><<</button>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul id="second-list"></ul>
+                  </div>
+            </form>
+            
+            <form>
+                <legend>Task 4</legend>
+                <script src="../Task 9/javascripts/task9-4.js"></script>
+                <h1>Begin page</h1>
+	            <a class="link" href="../Task 9/page1.html" id="first">Первая страница</a>
+	            <a class="link" href="../Task 9/page2.html" id="second">Вторая страница</a>
+	            <a class="link" href="../Task 9/page3.html" id="third">Третья страница</a>
+
+	            <p><input type="button" value="Move to pages" onclick="moveToPagesByTime()"></p>
             </form>
         </div>
     </body>
