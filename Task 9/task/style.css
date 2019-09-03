@@ -9,11 +9,17 @@ body {
   }
   
   a.link {
-    display: block;
+    display:block;
   }
   
   a.link :hover {
     background-color: blue;
     color: white;
     text-decoration: none;
+  }
+  
+  .buttons-container {
+    width: 30px;
+    display: flex;
+    flex-direction: column;
   }
