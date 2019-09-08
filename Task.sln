@@ -52,22 +52,64 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1", "Task1", "{D8B03539
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task2", "Task2", "{051F3ECA-2D1F-402D-B1D1-9D0EFC19E27C}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\style\reset.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\style\reset.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\page\task 2.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 2\page\task 2.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task3", "Task3", "{5C331196-B0EA-4082-9E1C-E6C9DA4D6F25}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\style\reset.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\style\reset.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\page\task3.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 3\page\task3.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task4", "Task4", "{EB161F3D-5F33-4180-8EC4-D37DECE7608D}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 4\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 4\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 4\page\task4.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 4\page\task4.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task5", "Task5", "{063FF8CF-D604-48D2-9B9B-47F77C9F60F0}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\CloudHosting.png = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\CloudHosting.png
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\DatabaseHosting.jpg = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\DatabaseHosting.jpg
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\page\task5.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\page\task5.html
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\virtualHosting.jpeg = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 5\image\virtualHosting.jpeg
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task6", "Task6", "{57E05B8F-8857-4D50-859D-76934266DA41}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\style\reset.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\style\reset.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\page\task6.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 6\page\task6.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task7", "Task7", "{CE32B709-E669-458A-AC93-3ECD563F7B06}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 7\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 7\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 7\page\task7.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 7\page\task7.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task8", "Task8", "{96A4C01D-FD4E-4EAF-9FB1-155A52D9E449}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 8\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 8\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 8\page\task8.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 8\page\task8.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task9", "Task9", "{D5DEE1AF-9505-4913-AB04-E71ADE6717C8}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 9\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 9\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 9\page\task9.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 9\page\task9.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task10", "Task10", "{D8653D5A-AD26-47D3-A702-23C0C5CFE43A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 10\style\style.css = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 10\style\style.css
+		..\..\..\..\Download\EPAM-WEB\Task 8\Task 10\page\task10.html = ..\..\..\..\Download\EPAM-WEB\Task 8\Task 10\page\task10.html
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Task1", "Task1", "{188ED385-52E2-4ABA-BE10-82E7FE7F5442}"
 	ProjectSection(SolutionItems) = preProject
