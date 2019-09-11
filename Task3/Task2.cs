@@ -12,7 +12,7 @@ namespace Task3
 
         public static Dictionary<string, int> CountOfWord { get => countOfWord; private set => countOfWord = value; }
 
-        static void Main(string[] args)
+        public static void MainFunc()
         {
             CountOfWord = new Dictionary<string, int>();
 

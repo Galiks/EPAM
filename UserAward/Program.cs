@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using Entity;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,28 +17,31 @@ namespace UserAward
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Куда сохранять информацию? Push button: 1 - Database, 2 - File, 3 or another button - Memory (default)");
-            var command = Console.ReadKey();
-            switch (command.Key)
-            {
-                case ConsoleKey.D1:
-                    //Регистрация зависимостей. Параметр отвечает за DAL
-                    NinjectCommon.Registration(1);
-                    break;
-                case ConsoleKey.D2:
-                    //Регистрация зависимостей. Параметр отвечает за DAL
-                    NinjectCommon.Registration(2);
-                    break;
-                default:
-                    //Регистрация зависимостей. Параметр отвечает за DAL
-                    NinjectCommon.Registration();
-                    break;
-            }
+            User user = new User();
+            user.Password = "1234";
 
-            userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
-            awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+            //Console.WriteLine("Куда сохранять информацию? Push button: 1 - Database, 2 - File, 3 or another button - Memory (default)");
+            //var command = Console.ReadKey();
+            //switch (command.Key)
+            //{
+            //    case ConsoleKey.D1:
+            //        //Регистрация зависимостей. Параметр отвечает за DAL
+            //        NinjectCommon.Registration(1);
+            //        break;
+            //    case ConsoleKey.D2:
+            //        //Регистрация зависимостей. Параметр отвечает за DAL
+            //        NinjectCommon.Registration(2);
+            //        break;
+            //    default:
+            //        //Регистрация зависимостей. Параметр отвечает за DAL
+            //        NinjectCommon.Registration();
+            //        break;
+            //}
 
-            StartMethod();
+            //userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+            //awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+
+            //StartMethod();
 
             Console.Read();
 

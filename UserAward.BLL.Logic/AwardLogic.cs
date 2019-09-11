@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAward.BLL.Interface;
 using UserAward.DAL.Interface;
 
@@ -22,22 +20,12 @@ namespace UserAward.BLL.Logic
         {
             if (!string.IsNullOrEmpty(title))
             {
-                if (description != null)
-                {
-                    var newAward = new Award { IdAward = SetIdAward(), Title = title, Description = description };
+                var newAward = new Award { IdAward = SetIdAward(), Title = title, Description = description };
 
-                    _awardDao.AddAward(newAward);
+                _awardDao.AddAward(newAward);
 
-                    return true;
-                }
-                else
-                {
-                    var newAward = new Award { IdAward = SetIdAward(), Title = title, Description = null };
+                return true;
 
-                    _awardDao.AddAward(newAward);
-
-                    return true;
-                }
             }
             else
             {
