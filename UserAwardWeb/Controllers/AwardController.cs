@@ -1,40 +1,31 @@
-﻿using Ninject;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using UserAward.BLL.Interface;
-using UserAward.Container;
 
 namespace UserAwardWeb.Controllers
 {
     public class AwardController : Controller
     {
-        private readonly IAwardLogic awardLogic;
-
-        public AwardController()
-        {
-            this.awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
-        }
-
-
+        // GET: Award
         public ActionResult Index()
         {
-            var awards = awardLogic.GetAwards();
-            return View(awards);
+            return View();
         }
 
-
-        public ActionResult Create(string title, string description, HttpPostedFileBase awardImage)
+        public ActionResult Delete()
         {
-            //byte[] image = null;
-            //if (awardImage != null)
-            //{
-            //    image = new byte[awardImage.ContentLength];
-            //    awardImage.InputStream.Read(image, 0, awardImage.ContentLength);
-            //}
+            return View();
+        }
 
-            //awardLogic.AddAward(title, description, image);
-            //return RedirectToAction("Index");
+        public ActionResult Create()
+        {
+            return View();
+        }
 
+        public ActionResult Update()
+        {
             return View();
         }
     }

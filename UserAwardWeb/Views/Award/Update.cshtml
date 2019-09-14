@@ -1,0 +1,61 @@
+﻿@using Entity
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
+@{
+    Layout = null;
+}
+
+@{
+    IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            string id = Request["awardId"];
+            string title = Request["title"];
+            string description = Request["description"];
+            string image = null;
+
+            Award award = awardLogic.GetAwardById(id);
+
+            if (award == null)
+            {
+                <h1>Нет такой награды</h1>
+            }
+            else
+            {
+
+                awardLogic.UpdateAward(id, title, description, new byte[] { 0, 0, 0, 25 });
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <div>
+        <form method="post" class="form-group">
+            <input type="number" id="awardId" name="awardId" />
+            <input type="text" id="title" name="title" />
+            <input type="text" id="description" name="description" />
+            <input type="file" id="image" name="image" />
+            <button class="alert-danger">Update</button>
+        </form>
+        <form action="~/Award/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

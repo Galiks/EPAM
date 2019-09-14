@@ -168,8 +168,11 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Award\Index.cshtml" />
     <Content Include="Views\Award\Create.cshtml" />
-    <Content Include="Main.cshtml" />
     <Content Include="Views\Award\Delete.cshtml" />
+    <Content Include="Views\Award\Update.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

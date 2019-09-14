@@ -66,17 +66,24 @@ namespace UserAward.BLL.Logic
             }
         }
 
-        public bool DeleteUser(int id)
+        public bool DeleteUser(string id)
         {
-            if (GetUserById(id) != null)
+            if (int.TryParse(id, out int userId))
             {
-                _userDao.DeleteUser(id);
+                if (GetUserById(id) != null)
+                {
+                    _userDao.DeleteUser(userId);
 
-                return true;
+                    return true;
+                }
+                else
+                {
+                    throw new NullReferenceException("This user does not exists");
+                }
             }
             else
             {
-                throw new NullReferenceException("This user does not exists");
+                throw new ArgumentException($"Incorrect ID");
             }
         }
 

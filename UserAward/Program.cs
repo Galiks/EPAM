@@ -287,10 +287,9 @@ namespace UserAward
                         var id_5 = Console.ReadLine();
                         try
                         {
-                            var user = userLogic.GetUserById(Int32.Parse(id_5));
                             try
                             {
-                                userLogic.DeleteUser(user.IdUser);
+                                userLogic.DeleteUser(id_5);
                             }
                             catch (Exception e)
                             {

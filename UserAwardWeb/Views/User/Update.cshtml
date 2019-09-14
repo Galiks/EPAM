@@ -1,0 +1,55 @@
+﻿@using Entity
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
+
+@{
+    Layout = null;
+}
+
+@{
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            string name = Request["name"];
+            string email = Request["email"];
+            string date = Request["date"];
+            string password = Request["password"];
+            string image = null;
+            byte[] temp = new byte[] { 0, 0, 0, 25 };
+            bool isRightOperation = userLogic.AddUser(name, date, email, password, temp);
+        }
+        catch (Exception e)
+        {
+            <h1>ERROR! @e.Message</h1>
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Update</title>
+</head>
+<body>
+    <div>
+        <form method="post" class="form-group">
+            <input type="text" id="name" name="name" />
+            <input type="text" id="email" name="email" />
+            <input type="date" id="date" name="date" />
+            <input type="password" id="password" name="password" />
+
+            <input type="file" id="image" name="image" />
+            <button class="alert-danger">Create</button>
+        </form>
+        <form action="~/User/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

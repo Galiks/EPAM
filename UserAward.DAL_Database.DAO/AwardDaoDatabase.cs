@@ -44,6 +44,8 @@ namespace UserAward.DAL_Database.DAO
                     Value = award.AwardImage
                 };
 
+                command.Parameters.Add(awardImage);
+
                 connection.Open();
 
                 return (int)(decimal)command.ExecuteScalar();
@@ -267,14 +269,14 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.Add(title);
 
-                var description = new SqlParameter("@DESCRIPTION", SqlDbType.DateTime)
+                var description = new SqlParameter("@DESCRIPTION", SqlDbType.NVarChar)
                 {
                     Value = award.Description
                 };
 
                 command.Parameters.Add(description);
 
-                var awardImage = new SqlParameter("", SqlDbType.VarBinary)
+                var awardImage = new SqlParameter("@AwardImage", SqlDbType.VarBinary)
                 {
                     Value = award.AwardImage
                 };

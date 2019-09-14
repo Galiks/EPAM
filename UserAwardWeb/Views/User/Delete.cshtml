@@ -1,0 +1,44 @@
+﻿@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
+
+@{
+    Layout = null;
+}
+
+@{
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            string id = Request["idForDelete"];
+            bool isRightOperation = userLogic.DeleteUser(id);
+        }
+        catch (Exception e)
+        {
+            <h1>ERROR! @e.Message</h1>
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <div>
+        <form method="post">
+            <input type="number" id="idForDelete" name="idForDelete" />
+            <button class="alert-danger">Delete</button>
+        </form>
+        <form action="~/User/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

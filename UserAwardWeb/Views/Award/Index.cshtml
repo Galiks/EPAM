@@ -21,6 +21,17 @@
 </head>
 <body>
     <div>
+        <form action="~/Award/Delete">
+            <button class="btn-danger">Delete Award</button>
+        </form>
+        <form action="~/Award/Update">
+            <button class="btn-danger">Update Award</button>
+        </form>
+        <form action="~/Award/Create">
+            <button class="btn-danger">Create Award</button>
+        </form>
+    </div>
+    <div>
         <h1>Список наград</h1>
         @foreach (var item in awards)
         {

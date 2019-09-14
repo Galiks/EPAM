@@ -1,7 +1,36 @@
-﻿
+﻿@using Entity
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
 @{
     Layout = null;
 }
+
+@{
+    IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            var isRightOperation = awardLogic.DeleteAward(Request["idForDelete"]);
+
+            if (isRightOperation)
+            {
+        <h1>OK</h1>
+            }
+            else
+            {
+        <h1>BAD!</h1>
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+    }
+
 
 <!DOCTYPE html>
 
@@ -11,7 +40,14 @@
     <title>Delete</title>
 </head>
 <body>
-    <div> 
+    <div>
+        <form method="post">
+            <input type="number" id="idForDelete" name="idForDelete"/>
+            <button class="alert-danger">Delete</button>
+        </form>
+        <form action="~/Award/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
     </div>
 </body>
 </html>
