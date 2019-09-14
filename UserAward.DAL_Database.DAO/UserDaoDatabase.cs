@@ -173,7 +173,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.CommandText = "GetUserByName";
 
-                var name = new SqlParameter("@NAME", SqlDbType.VarChar)
+                var name = new SqlParameter("@NAME", SqlDbType.NVarChar)
                 {
                     Value = wantedName
                 };
@@ -211,7 +211,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.CommandText = "GetUserByWord";
 
-                var word = new SqlParameter("@WORD", SqlDbType.VarChar)
+                var word = new SqlParameter("@WORD", SqlDbType.NVarChar)
                 {
                     Value = wantedWord
                 };
@@ -322,7 +322,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.Add(id);
 
-                var name = new SqlParameter("@NAME", SqlDbType.VarChar)
+                var name = new SqlParameter("@NAME", SqlDbType.NVarChar)
                 {
                     Value = user.Name
                 };

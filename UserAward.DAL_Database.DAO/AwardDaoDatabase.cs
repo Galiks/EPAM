@@ -25,14 +25,14 @@ namespace UserAward.DAL_Database.DAO
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "AddAward";
 
-                var title = new SqlParameter("@TITLE", SqlDbType.VarChar)
+                var title = new SqlParameter("@TITLE", SqlDbType.NVarChar)
                 {
                     Value = award.Title
                 };
 
                 command.Parameters.Add(title);
 
-                var description = new SqlParameter("@DESCRIPTION", SqlDbType.VarChar)
+                var description = new SqlParameter("@DESCRIPTION", SqlDbType.NVarChar)
                 {
                     Value = award.Description
                 };
@@ -154,7 +154,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.CommandText = "GetAwardByTitle";
 
-                var name = new SqlParameter("@TITLE", SqlDbType.VarChar)
+                var name = new SqlParameter("@TITLE", SqlDbType.NVarChar)
                 {
                     Value = title
                 };
@@ -191,7 +191,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.CommandText = "GetAwardByWord";
 
-                var word = new SqlParameter("@WORD", SqlDbType.VarChar)
+                var word = new SqlParameter("@WORD", SqlDbType.NVarChar)
                 {
                     Value = wantedWord
                 };
@@ -260,7 +260,7 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.Add(id);
 
-                var title = new SqlParameter("@TITLE", SqlDbType.VarChar)
+                var title = new SqlParameter("@TITLE", SqlDbType.NVarChar)
                 {
                     Value = award.Title
                 };
@@ -278,6 +278,8 @@ namespace UserAward.DAL_Database.DAO
                 {
                     Value = award.AwardImage
                 };
+
+                command.Parameters.Add(awardImage);
 
                 connection.Open();
 
