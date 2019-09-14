@@ -45,7 +45,7 @@ namespace Entity
             return $"{IdUser}; {Name}; {Birthday}; {Age}";
         }
 
-        public Guid EncryptionPassword(string password)
+        private Guid EncryptionPassword(string password)
         {
             //переводим строку в байт-массим  
             byte[] bytes = Encoding.Unicode.GetBytes(password);

@@ -9,8 +9,8 @@ namespace UserAward.BLL.Interface
 {
     public interface IAwardLogic
     {
-        bool AddAward(string title, string description);
-        bool UpdateAward(string id, string title, string description);
+        bool AddAward(string title, string description, byte[] awardImage);
+        bool UpdateAward(string id, string title, string description, byte[] awardImage);
         bool DeleteAward(string id);
         Award GetAwardById(string id);
         IEnumerable<Award> GetAwardByLetter(string letter);

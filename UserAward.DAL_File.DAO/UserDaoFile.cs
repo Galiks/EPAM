@@ -185,7 +185,7 @@ namespace UserAward.DAL_File.DAO
             }
         }
 
-        public int UpdateUser(int id, string name, DateTime birthday, int age)
+        public int UpdateUser(int id, User user)
         {
             throw new NotImplementedException();
         }

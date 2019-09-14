@@ -18,13 +18,13 @@ namespace UserAward.BLL.Logic
             _userDao = userDao;
         }
 
-        public bool AddUser(string name, string birthday)
+        public bool AddUser(string name, string birthday, string email, string password, byte[] userPhoto)
         {
             if (!string.IsNullOrEmpty(name))
             {
                 var rightBirthday = DateTime.Parse(birthday);
 
-                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday) };
+                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = password, UserPhoto = userPhoto };
 
                 _userDao.AddUser(newUser);
 
@@ -113,14 +113,16 @@ namespace UserAward.BLL.Logic
             throw new ArgumentNullException($"Word is null");
         }
 
-        public bool UpdateUser(string id, string name, string birthday)
+        public bool UpdateUser(string id, string name, string birthday, string email, string password, byte[] userPhoto)
         {
 
-            if (DateTime.TryParse(birthday, out DateTime dateTime) && (Int32.TryParse(id, out int userId)))
+            if (DateTime.TryParse(birthday, out DateTime dateTime) && (int.TryParse(id, out int userId)))
             {
                 if (GetUserById(userId) != null)
                 {
-                    _userDao.UpdateUser(userId, name, dateTime, SetAge(dateTime));
+                    User user = new User { Name = name, Birthday = dateTime, Age = SetAge(dateTime), Email = email, Password = password, UserPhoto = userPhoto };
+
+                    _userDao.UpdateUser(userId, user);
 
                     return true;
                 }

@@ -17,8 +17,8 @@ namespace UserAward
 
         static void Main(string[] args)
         {
-            User user = new User();
-            user.Password = "1234";
+            User user = new User() { Name = "Pasha", Age = 21, Birthday = DateTime.Now, Email = "test", Password = "1234"};
+            Console.WriteLine(user.Name);
 
             //Console.WriteLine("Куда сохранять информацию? Push button: 1 - Database, 2 - File, 3 or another button - Memory (default)");
             //var command = Console.ReadKey();
@@ -104,7 +104,11 @@ namespace UserAward
                         var name = Console.ReadLine();
                         Console.Write($"User's Birthday: ");
                         var birthday = Console.ReadLine();
-                        if (userLogic.AddUser(name, birthday))
+                        Console.Write($"User's Email: ");
+                        var email = Console.ReadLine();
+                        Console.Write($"User's Password: ");
+                        var password = Console.ReadLine();
+                        if (userLogic.AddUser(name, birthday, email, password, null))
                         {
                             Console.WriteLine($"User is created!{Environment.NewLine}");
                         }
@@ -118,7 +122,7 @@ namespace UserAward
                         var title = Console.ReadLine();
                         Console.Write($"Award's Description: ");
                         var description = Console.ReadLine();
-                        awardLogic.AddAward(title, description);
+                        awardLogic.AddAward(title, description, null);
                         Console.WriteLine($"Award is created!{Environment.NewLine}");
                         break;
                     case "3":
@@ -306,9 +310,13 @@ namespace UserAward
                         var name_6 = Console.ReadLine();
                         Console.Write($"User's Birthday: ");
                         var birthday = Console.ReadLine();
+                        Console.Write($"User's Email: ");
+                        var email = Console.ReadLine();
+                        Console.Write($"User's Password: ");
+                        var password = Console.ReadLine();
                         try
                         {
-                            userLogic.UpdateUser(id_6, name_6, birthday);
+                            userLogic.UpdateUser(id_6, name_6, birthday, email, password, null);
                         }
                         catch (Exception e)
                         {
@@ -386,7 +394,7 @@ namespace UserAward
                         var title = Console.ReadLine();
                         Console.Write($"award's Description: ");
                         var description = Console.ReadLine();
-                        awardLogic.UpdateAward(id_6, title, description);
+                        awardLogic.UpdateAward(id_6, title, description, null);
                         break;
                     case "7":
                         return;

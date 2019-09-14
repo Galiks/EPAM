@@ -57,7 +57,7 @@ namespace UserAward.DAL_Memory.DAO
             return Awards;
         }
 
-        public int UpdateAward(int id, string title, string description)
+        public int UpdateAward(int id, Award award)
         {
             throw new NotImplementedException();
         }

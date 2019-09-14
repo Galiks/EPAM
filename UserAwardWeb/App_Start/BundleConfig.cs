@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using UserAward.Container;
 
 namespace UserAwardWeb
 {
@@ -25,6 +26,8 @@ namespace UserAwardWeb
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            NinjectCommon.Registration(numberOfDAL: 1);
         }
     }
 }

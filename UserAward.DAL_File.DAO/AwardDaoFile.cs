@@ -119,14 +119,14 @@ namespace UserAward.DAL_File.DAO
             }
         }
 
-        public int UpdateAward(int id, string title, string description)
-        {
-            throw new NotImplementedException();
-        }
-
         private byte[] ConvertTextOnBytes(string text)
         {
             return Encoding.UTF8.GetBytes(text);
+        }
+
+        public int UpdateAward(int id, Award award)
+        {
+            throw new NotImplementedException();
         }
     }
 }

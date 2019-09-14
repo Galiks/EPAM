@@ -11,8 +11,18 @@
     <title>Home Pge</title>
 </head>
 <body>
-    <div> 
+    <div class="page-header"> 
         <h1>Hello, Stranger! This is start page for you!</h1>
+    </div>
+
+    <div>
+        <form action="~/Award/Index" method="post" class="form-inline">
+            <button class="btn-primary" id="awards">Awards</button>
+        </form>
+
+        <form action="~/User/Index" method="post" class="form-inline">
+            <button class="btn-primary" id="users">Users</button>
+        </form>
     </div>
 </body>
 </html>

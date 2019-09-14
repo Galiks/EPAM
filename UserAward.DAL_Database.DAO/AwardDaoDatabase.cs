@@ -1,12 +1,8 @@
 ﻿using Entity;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAward.DAL.Interface;
 
 namespace UserAward.DAL_Database.DAO
@@ -17,7 +13,7 @@ namespace UserAward.DAL_Database.DAO
 
         public AwardDaoDatabase()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["userAward"].ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings["Olympics"].ConnectionString;
         }
 
         public int AddAward(Award award)
@@ -26,22 +22,27 @@ namespace UserAward.DAL_Database.DAO
             {
                 var command = connection.CreateCommand();
 
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "AddAward";
 
-                var title = new SqlParameter("@TITLE", System.Data.SqlDbType.VarChar)
+                var title = new SqlParameter("@TITLE", SqlDbType.VarChar)
                 {
                     Value = award.Title
                 };
 
                 command.Parameters.Add(title);
 
-                var description = new SqlParameter("@DESCRIPTION", System.Data.SqlDbType.VarChar)
+                var description = new SqlParameter("@DESCRIPTION", SqlDbType.VarChar)
                 {
                     Value = award.Description
                 };
 
                 command.Parameters.Add(description);
+
+                var awardImage = new SqlParameter("@AwardImage", SqlDbType.VarBinary)
+                {
+                    Value = award.AwardImage
+                };
 
                 connection.Open();
 
@@ -243,7 +244,7 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
-        public int UpdateAward(int wantedId, string wantedTitle, string wantedDescription)
+        public int UpdateAward(int wantedId, Award award)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -261,17 +262,22 @@ namespace UserAward.DAL_Database.DAO
 
                 var title = new SqlParameter("@TITLE", SqlDbType.VarChar)
                 {
-                    Value = wantedTitle
+                    Value = award.Title
                 };
 
                 command.Parameters.Add(title);
 
                 var description = new SqlParameter("@DESCRIPTION", SqlDbType.DateTime)
                 {
-                    Value = wantedDescription
+                    Value = award.Description
                 };
 
                 command.Parameters.Add(description);
+
+                var awardImage = new SqlParameter("", SqlDbType.VarBinary)
+                {
+                    Value = award.AwardImage
+                };
 
                 connection.Open();
 

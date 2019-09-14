@@ -17,7 +17,7 @@ namespace UserAward.DAL_Database.DAO
 
         public UserDaoDatabase()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["userAward"].ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings["Olympics"].ConnectionString;
         }
 
         public int AddUser(User user)
@@ -49,6 +49,8 @@ namespace UserAward.DAL_Database.DAO
                 };
 
                 command.Parameters.Add(age);
+
+                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age });
 
                 connection.Open();
 
@@ -235,7 +237,9 @@ namespace UserAward.DAL_Database.DAO
                                         ,[Name]
                                         ,[Birthday]
                                         ,[Age]
-                                        FROM [Olympics2].[dbo].[User]";
+                                        ,[Email]
+                                        ,[UserPhoto]
+                                        FROM [Olympics].[dbo].[User]";
 
                 connection.Open();
 
@@ -249,6 +253,8 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
                 }
@@ -286,7 +292,7 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
-        public int UpdateUser(int wantedId, string wantedName, DateTime wantedBirthday, int wantedAge)
+        public int UpdateUser(int wantedId, User user)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -304,22 +310,24 @@ namespace UserAward.DAL_Database.DAO
 
                 var name = new SqlParameter("@NAME", SqlDbType.VarChar)
                 {
-                    Value = wantedName
+                    Value = user.Name
                 };
 
                 command.Parameters.Add(name);
 
                 var birthday = new SqlParameter("@BIRTHDAY", SqlDbType.DateTime)
                 {
-                    Value = wantedBirthday
+                    Value = user.Birthday
                 };
 
                 command.Parameters.Add(birthday);
 
                 var age = new SqlParameter("@AGE", SqlDbType.Int)
                 {
-                    Value = wantedAge
+                    Value = user.Age
                 };
+
+                command.Parameters.AddRange(new[] { name, age, birthday});
 
                 command.Parameters.Add(age);
 

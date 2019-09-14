@@ -46,6 +46,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -164,6 +167,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Award\Index.cshtml" />
+    <Content Include="Views\Award\Create.cshtml" />
+    <Content Include="Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -187,6 +192,14 @@
     <ProjectReference Include="..\Entity\Entity.csproj">
       <Project>{0381fd17-9cdc-44d3-baa9-ad09420d86ca}</Project>
       <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserAward.BLL.Interface\UserAward.BLL.Interface.csproj">
+      <Project>{842F0E59-2230-46EB-BCF7-A8DC73E6515A}</Project>
+      <Name>UserAward.BLL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserAward.Container\UserAward.Container.csproj">
+      <Project>{9E1D1392-7315-4717-82E6-D0BF454A0075}</Project>
+      <Name>UserAward.Container</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

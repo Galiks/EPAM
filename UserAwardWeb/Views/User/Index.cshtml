@@ -1,6 +1,15 @@
-﻿
+﻿@using Entity
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{ 
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    var users = userLogic.GetUsers();
 }
 
 <!DOCTYPE html>
@@ -11,8 +20,27 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
-        <h1>USERS!</h1>
+    <div>
+        <h1>Список пользователей</h1>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Photo</th>
+            </tr>
+            @foreach (var item in users)
+            {
+                <tr>
+                    <th>@item.IdUser</th>
+                    <th>@item.Name</th>
+                    <th>@item.Age</th>
+                    <th>@item.Email</th>
+                    <th>@item.UserPhoto</th>
+                </tr>
+            }
+        </table>
     </div>
 </body>
 </html>

@@ -1,0 +1,56 @@
+﻿@using Entity
+
+@model Award
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm("Create", "Award", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            <h1>Создание награды</h1>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title)
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Title)
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description)
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AwardImage)
+                <div class="col-md-10">
+                    <input type="file" id="awardImage" name="awardImage" />
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>

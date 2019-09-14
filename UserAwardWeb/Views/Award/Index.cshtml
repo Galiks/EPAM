@@ -1,9 +1,15 @@
 ﻿@using Entity
-
-@model IEnumerable<Award>
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
 
 @{
     Layout = null;
+}
+
+@{
+    IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+    var awards = awardLogic.GetAwards();
 }
 
 <!DOCTYPE html>
@@ -14,7 +20,12 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
+    <div>
+        <h1>Список наград</h1>
+        @foreach (var item in awards)
+        {
+            <p>@item.Title</p>
+        }
     </div>
 </body>
 </html>

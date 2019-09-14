@@ -106,7 +106,7 @@ namespace UserAward.DAL_Memory.DAO
             return 1;
         }
 
-        public int UpdateUser(int id, string name, DateTime birthday, int age)
+        public int UpdateUser(int id, User user)
         {
             throw new NotImplementedException();
         }

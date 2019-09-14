@@ -16,11 +16,11 @@ namespace UserAward.BLL.Logic
             _awardDao = awardDao;
         }
 
-        public bool AddAward(string title, string description)
+        public bool AddAward(string title, string description, byte[] awardImage)
         {
             if (!string.IsNullOrEmpty(title))
             {
-                var newAward = new Award { IdAward = SetIdAward(), Title = title, Description = description };
+                var newAward = new Award { IdAward = SetIdAward(), Title = title, Description = description, AwardImage = awardImage };
 
                 _awardDao.AddAward(newAward);
 
@@ -102,7 +102,7 @@ namespace UserAward.BLL.Logic
         }
 
         //Добавить проверку на существование награды!
-        public bool UpdateAward(string id, string title, string description)
+        public bool UpdateAward(string id, string title, string description, byte[] awardImage)
         {
 
             if (!string.IsNullOrEmpty(title))
@@ -111,18 +111,12 @@ namespace UserAward.BLL.Logic
                 {
                     if (GetAwardById(id) != null)
                     {
-                        if (description != null)
-                        {
-                            _awardDao.UpdateAward(awardId, title, description);
+                        Award award = new Award { IdAward = SetIdAward(), Title = title, Description = description, AwardImage = awardImage };
 
-                            return true;
-                        }
-                        else
-                        {
-                            _awardDao.UpdateAward(awardId, title, null);
+                        _awardDao.UpdateAward(awardId, award);
 
-                            return true;
-                        }
+                        return true;
+
                     }
                     else
                     {
