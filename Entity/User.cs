@@ -16,6 +16,7 @@ namespace Entity
         public DateTime Birthday { get; set; }
         public int Age { get; set; }
         public string Email { get; set; }
+        public byte[] UserPhoto { get; set; }
         public string Password
         {
             set

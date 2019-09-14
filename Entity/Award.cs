@@ -11,6 +11,7 @@ namespace Entity
         public int IdAward { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public byte[] AwardImage { get; set; }
 
         public override string ToString()
         {
