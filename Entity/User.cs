@@ -19,6 +19,10 @@ namespace Entity
         public byte[] UserPhoto { get; set; }
         public string Password
         {
+            get
+            {
+                return password.ToString();
+            }
             set
             {
                 password = EncryptionPassword(value);

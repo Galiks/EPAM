@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAward.DAL.Interface;
 
 namespace UserAward.DAL_Database.DAO
@@ -29,28 +26,37 @@ namespace UserAward.DAL_Database.DAO
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "AddUser";
 
-                var name = new SqlParameter("@Name", SqlDbType.VarChar)
+                var name = new SqlParameter("@Name", SqlDbType.NVarChar)
                 {
                     Value = user.Name
                 };
-
-                command.Parameters.Add(name);
 
                 var birthday = new SqlParameter("@Birthday", SqlDbType.DateTime)
                 {
                     Value = user.Birthday
                 };
 
-                command.Parameters.Add(birthday);
-
                 var age = new SqlParameter("@Age", SqlDbType.Int)
                 {
                     Value = user.Age
                 };
 
-                command.Parameters.Add(age);
+                var email = new SqlParameter("@Email", SqlDbType.NVarChar)
+                {
+                    Value = user.Email
+                };
 
-                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age });
+                var password = new SqlParameter("@Password", SqlDbType.NVarChar)
+                {
+                    Value = user.Password
+                };
+
+                var userPhoto = new SqlParameter("@UserPhoto", SqlDbType.VarBinary)
+                {
+                    Value = user.UserPhoto
+                };
+
+                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age, email, password, userPhoto });
 
                 connection.Open();
 
@@ -108,6 +114,8 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
                 }
@@ -146,6 +154,8 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
                 }
@@ -182,6 +192,8 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
                 }
@@ -218,6 +230,8 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
                 }
@@ -327,7 +341,7 @@ namespace UserAward.DAL_Database.DAO
                     Value = user.Age
                 };
 
-                command.Parameters.AddRange(new[] { name, age, birthday});
+                command.Parameters.AddRange(new[] { name, age, birthday });
 
                 command.Parameters.Add(age);
 

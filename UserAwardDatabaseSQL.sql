@@ -15,18 +15,18 @@ GO
 
 CREATE TABLE [User] (
 	id_user int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_User] primary key,
-	[Name] varchar(50) NOT NULL,
+	[Name] nvarchar(50) NOT NULL,
 	Birthday date NOT NULL,
 	Age int NOT NULL,
-	[Email] varchar(250) unique NOT NULL,
-	[Password] varchar(500) NOT NULL,
+	[Email] nvarchar(250) unique NOT NULL,
+	[Password] nvarchar(500) NOT NULL,
 	UserPhoto varbinary(MAX)
 )
 GO
 CREATE TABLE Award (
 	id_award int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Award] primary key,
-	Title varchar(50) NOT NULL,
-	[Description] varchar(250),
+	Title nvarchar(50) NOT NULL,
+	[Description] nvarchar(250),
 	AwardImage varbinary(MAX)
 )
 GO
@@ -56,11 +56,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 Create PROCEDURE AddUser --1
-	@Name varchar(50),
+	@Name nvarchar(50),
 	@Birthday date,
 	@Age int,
-	@Email varchar(250),
-	@Password varchar(500),
+	@Email nvarchar(250),
+	@Password nvarchar(500),
 	@UserPhoto varbinary(MAX)
 AS
 BEGIN
@@ -125,7 +125,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE GetUserByName --4
-	@NAME varchar(200)
+	@NAME nvarchar(200)
 AS
 BEGIN
 	SELECT [id_user]
@@ -168,7 +168,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE GetUserByWord--6
-	@WORD varchar(200)
+	@WORD nvarchar(200)
 AS
 BEGIN
 	SELECT [id_user]
@@ -190,11 +190,11 @@ GO
 
 CREATE PROCEDURE UpdateUser--7
 	@ID int,
-	@NAME varchar(100),
+	@NAME nvarchar(100),
 	@BIRTHDAY date,
 	@AGE int,
-	@Email varchar(250),
-	@Password varchar(500),
+	@Email nvarchar(250),
+	@Password nvarchar(500),
 	@UserPhoto varbinary(MAX)
 AS
 BEGIN
@@ -215,8 +215,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE AddAward --8
-	@TITLE varchar(50),
-	@DESCRIPTION varchar(300),
+	@TITLE nvarchar(50),
+	@DESCRIPTION nvarchar(300),
 	@AwardImage varbinary(MAX)
 AS
 BEGIN
@@ -256,8 +256,8 @@ GO
 
 CREATE PROCEDURE UpdateAward --10
 	@ID int,
-	@TITLE varchar(50),
-	@DESCRIPTION varchar(300) = 'Empty Description',
+	@TITLE nvarchar(50),
+	@DESCRIPTION nvarchar(300) = 'Empty Description',
 	@AwardImage varbinary(MAX)
 AS
 BEGIN
@@ -331,7 +331,7 @@ GO
 -- Description:	<>
 -- =============================================
 CREATE PROCEDURE GetAwardByWord --14
-	@WORD varchar(200)
+	@WORD nvarchar(200)
 AS
 BEGIN
 	SELECT [id_award]
@@ -353,7 +353,7 @@ GO
 -- Description:	<Description,,>
 -- =============================================
 CREATE PROCEDURE GetAwardByTitle --15
-	@TITLE varchar(50)
+	@TITLE nvarchar(50)
 AS
 BEGIN
 	SELECT [id_award]

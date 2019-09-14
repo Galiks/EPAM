@@ -169,6 +169,7 @@
     <Content Include="Views\Award\Index.cshtml" />
     <Content Include="Views\Award\Create.cshtml" />
     <Content Include="Main.cshtml" />
+    <Content Include="Views\Award\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
