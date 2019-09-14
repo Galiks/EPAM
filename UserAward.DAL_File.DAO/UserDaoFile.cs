@@ -78,7 +78,7 @@ namespace UserAward.DAL_File.DAO
             }
         }
 
-        public IDictionary<int, string> GetAwardFromUserAward(int idUser)
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
         {
             Dictionary<int, string> result = new Dictionary<int, string>();
 
@@ -95,24 +95,12 @@ namespace UserAward.DAL_File.DAO
                         {
                             if (realIdUser == idUser)
                             {
-                                result.Add(realIdAward, "");
+                                yield return awardDao.GetAwardById(realIdUser);
                             }
                         }
                     }
                 }
             }
-
-            var awards = awardDao.GetAwards();
-
-            foreach (var item in awards)
-            {
-                if (result.ContainsKey(item.IdAward))
-                {
-                    result[item.IdAward] = item.Title;
-                }
-            }
-
-            return result;
         }
 
         public User GetUserById(int id)

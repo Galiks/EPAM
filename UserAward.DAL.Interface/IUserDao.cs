@@ -18,6 +18,6 @@ namespace UserAward.DAL.Interface
         IEnumerable<User> GetUserByName(string name);
         int UpdateUser(int id, User user);
         int Reawrding(User user, int idAward);
-        IDictionary<int, string> GetAwardFromUserAward(int idUser);
+        IEnumerable<Award> GetAwardFromUserAward(int idUser);
     }
 }

@@ -3,13 +3,19 @@
 @using UserAward.Container
 @using Ninject
 
+
 @{
     Layout = null;
 }
 
 @{
-    IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
-    var awards = awardLogic.GetAwards();
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    IEnumerable<Award> awardsByUser = new List<Award>();
+    if (IsPost)
+    {
+        string userId = Request["userId"];
+        awardsByUser = userLogic.GetAwardFromUserAward(userId);
+    }
 }
 
 <!DOCTYPE html>
@@ -17,20 +23,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>AwardsByUser</title>
 </head>
 <body>
     <div>
-        <form action="~/Award/Delete">
-            <button class="btn-danger">Delete Award</button>
-        </form>
-        <form action="~/Award/Update">
-            <button class="btn-danger">Update Award</button>
-        </form>
-        <form action="~/Award/Create">
-            <button class="btn-danger">Create Award</button>
+        <p>User's id</p>
+        <form method="post">
+            <input type="number" id="userId" name="userId" />
+            <button class="active">Get Awards</button>
         </form>
     </div>
+
     <div>
         <h1>Список наград</h1>
         <table class="table">
@@ -40,7 +43,7 @@
                 <th>Description</th>
                 <th>Award's Image</th>
             </tr>
-            @foreach (var item in awards)
+            @foreach (var item in @awardsByUser)
             {
                 <tr>
                     <th>@item.IdAward</th>
@@ -51,5 +54,6 @@
             }
         </table>
     </div>
+
 </body>
 </html>

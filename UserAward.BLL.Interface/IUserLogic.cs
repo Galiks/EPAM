@@ -19,6 +19,6 @@ namespace UserAward.BLL.Interface
         bool UpdateUser(string id, string name, string birthday, string email, string password, byte[] userPhoto);
         int SetAge(DateTime birthday);
         bool Rewarding(string idUser, string idAward);
-        void GetAwardFromUserAward(string id);
+        IEnumerable<Award> GetAwardFromUserAward(string id);
     }
 }

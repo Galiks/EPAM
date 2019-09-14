@@ -101,6 +101,7 @@ namespace UserAward.DAL_Database.DAO
                             IdAward = (int)reader["id_award"],
                             Title = (string)reader["Title"],
                             Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
                         };
                     }
                 }
@@ -138,7 +139,8 @@ namespace UserAward.DAL_Database.DAO
                         {
                             IdAward = (int)reader["id_award"],
                             Title = (string)reader["Title"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
                         };
                     }
                 }
@@ -175,7 +177,8 @@ namespace UserAward.DAL_Database.DAO
                         {
                             IdAward = (int)reader["id_award"],
                             Title = (string)reader["Title"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
                         };
                     }
                 }
@@ -212,7 +215,8 @@ namespace UserAward.DAL_Database.DAO
                         {
                             IdAward = (int)reader["id_award"],
                             Title = (string)reader["Title"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
                         };
                     }
                 }
@@ -239,7 +243,8 @@ namespace UserAward.DAL_Database.DAO
                         {
                             IdAward = (int)reader["id_award"],
                             Title = (string)reader["Title"],
-                            Description = (string)reader["Description"]
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
                         };
                     }
                 }

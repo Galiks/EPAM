@@ -2,10 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAward.BLL.Interface;
 using UserAward.DAL.Interface;
+using Validation;
 
 namespace UserAward.BLL.Logic
 {
@@ -22,13 +21,26 @@ namespace UserAward.BLL.Logic
         {
             if (!string.IsNullOrEmpty(name))
             {
-                var rightBirthday = DateTime.Parse(birthday);
+                if (DateTime.TryParse(birthday, out DateTime rightBirthday))
+                {
 
-                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = password, UserPhoto = userPhoto };
+                    int age = SetAge(rightBirthday);
 
-                _userDao.AddUser(newUser);
+                    if (!UserValidation.IsRightAge(age))
+                    {
+                        throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
+                    }
 
-                return true;
+                    var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = password, UserPhoto = userPhoto };
+
+                    _userDao.AddUser(newUser);
+
+                    return true;
+                }
+                else
+                {
+                    throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
+                }
             }
             else
             {
@@ -157,7 +169,8 @@ namespace UserAward.BLL.Logic
 
                 if ((user != null))
                 {
-                    if (_userDao.GetAwardFromUserAward(userId).ContainsKey(awardId))
+                    var awardsByUser = _userDao.GetAwardFromUserAward(userId);
+                    if (awardsByUser.Any(award => award.IdAward == awardId))
                     {
                         throw new Exception($"This user already has award like this");
                         //Console.WriteLine($"This user already has award like this");
@@ -185,28 +198,22 @@ namespace UserAward.BLL.Logic
             }
         }
 
-        public void GetAwardFromUserAward(string id)
+        public IEnumerable<Award> GetAwardFromUserAward(string id)
         {
             if (int.TryParse(id, out int userId))
             {
                 var user = GetUserById(userId);
                 if (user != null)
                 {
-                    if (_userDao.GetAwardFromUserAward(userId).ToList().Count == 0)
+                    List<Award> awardsByUser = _userDao.GetAwardFromUserAward(userId).ToList();
+                    if (awardsByUser.Count == 0)
                     {
                         throw new NullReferenceException($"DB has no information");
                         //Console.WriteLine($"DB has no information");
                     }
                     else
                     {
-                        Console.WriteLine($"User {user.Name} have awards: ");
-                        foreach (var item in _userDao.GetAwardFromUserAward(userId).ToList())
-                        {
-                            if (item.Value.Length > 0)
-                            {
-                                Console.WriteLine($"{item.Key} : {item.Value}{Environment.NewLine}");
-                            }
-                        }
+                        return awardsByUser;
                     }
                 }
                 else

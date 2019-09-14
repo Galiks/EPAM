@@ -167,6 +167,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PL_Web", "PL_Web", "{537906
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAwardWeb", "UserAwardWeb\UserAwardWeb.csproj", "{5D72E518-AEE2-45FB-A093-41CA4A0036AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Validation\Validation.csproj", "{6C8F2167-A0B2-4E3C-9640-8C43001E9E22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -241,6 +243,10 @@ Global
 		{5D72E518-AEE2-45FB-A093-41CA4A0036AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D72E518-AEE2-45FB-A093-41CA4A0036AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D72E518-AEE2-45FB-A093-41CA4A0036AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8F2167-A0B2-4E3C-9640-8C43001E9E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8F2167-A0B2-4E3C-9640-8C43001E9E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8F2167-A0B2-4E3C-9640-8C43001E9E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8F2167-A0B2-4E3C-9640-8C43001E9E22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +291,7 @@ Global
 		{F38780E2-D575-46E8-9B82-A73AC01AEDDE} = {90DFE397-14CE-49C0-B235-0556F91346D6}
 		{53790609-A9F5-4B23-AE0F-9309472ECE07} = {53F39F2E-5BB6-4D28-AFC3-A935CC36B48A}
 		{5D72E518-AEE2-45FB-A093-41CA4A0036AA} = {53790609-A9F5-4B23-AE0F-9309472ECE07}
+		{6C8F2167-A0B2-4E3C-9640-8C43001E9E22} = {88D2D2A6-C799-4294-91B9-8CC8FFCE288A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42F947B7-58E6-4594-9D37-66C3D5FE740A}

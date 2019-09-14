@@ -351,14 +351,10 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
-        public IDictionary<int, string> GetAwardFromUserAward(int idUser)
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                Dictionary<int, string> result = new Dictionary<int, string>();
-
-                result.Clear();
-
                 var command = connection.CreateCommand();
 
                 command.CommandType = CommandType.StoredProcedure;
@@ -377,11 +373,16 @@ namespace UserAward.DAL_Database.DAO
                 {
                     while (reader.Read())
                     {
-                        result.Add((int)reader["id_award"], (string)reader["Title"]);
+                        yield return new Award()
+                        {
+                            IdAward = (int)reader["id_award"],
+                            Title = (string)reader["Title"],
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
+                        };
                     }
                 }
 
-                return result;
             }
         }
     }

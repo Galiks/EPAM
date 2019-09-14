@@ -169,7 +169,11 @@ namespace UserAward
                     case "3":
                         Console.Write($"User's id: ");
                         var id_3 = Console.ReadLine();
-                        userLogic.GetAwardFromUserAward(id_3);
+                        var awardsByUser = userLogic.GetAwardFromUserAward(id_3);
+                        foreach (var item in awardsByUser)
+                        {
+                            Console.WriteLine(item);
+                        }
                         break;
                     case "4":
                         return;

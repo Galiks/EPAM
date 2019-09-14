@@ -51,28 +51,15 @@ namespace UserAward.DAL_Memory.DAO
             return 1;
         }
 
-        public IDictionary<int, string> GetAwardFromUserAward(int idUser)
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
         {
-            Dictionary<int, string> result = new Dictionary<int, string>();
             foreach (var item in UsersAwards)
             {
                 if (item.Key == idUser)
                 {
-                    result.Add(item.Value, "");
+                    yield return awardDao.GetAwardById(idUser);
                 }
             }
-
-            var awards = awardDao.GetAwards();
-
-            foreach (var item in awards)
-            {
-                if (result.ContainsKey(item.IdAward))
-                {
-                    result[item.IdAward] = item.Title;
-                }
-            }
-
-            return result;
         }
 
         public User GetUserById(int id)

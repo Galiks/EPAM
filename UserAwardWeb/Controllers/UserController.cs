@@ -28,5 +28,15 @@ namespace UserAwardWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult Rewarding()
+        {
+            return View();
+        }
+
+        public ActionResult GetAwardsByUser()
+        {
+            return View();
+        }
     }
 }

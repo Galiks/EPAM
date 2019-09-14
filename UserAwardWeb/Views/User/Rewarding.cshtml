@@ -1,0 +1,47 @@
+﻿@using Entity
+@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
+
+@{
+    Layout = null;
+}
+
+@{
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            string userId = Request["userId"];
+            string awardId = Request["awardId"];
+            bool isRightOperation = userLogic.Rewarding(userId, awardId);
+        }
+        catch (Exception e)
+        {
+            <h1>ERROR! @e.Message</h1>
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Rewarding</title>
+</head>
+<body>
+    <div>
+        <form method="post" class="form-group">
+            <input type="number" id="userId" name="userId" />
+            <input type="number" id="awardId" name="awardId" />
+            <button class="alert-danger">Rewarding</button>
+        </form>
+        <form action="~/User/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>
