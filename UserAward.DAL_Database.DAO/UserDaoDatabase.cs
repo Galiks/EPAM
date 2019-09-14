@@ -385,5 +385,45 @@ namespace UserAward.DAL_Database.DAO
 
             }
         }
+
+        public User GetUserByEmail(string email)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.CommandText = "GetUserByEmail";
+
+                var parameterEmail = new SqlParameter("@Email", SqlDbType.NVarChar)
+                {
+                    Value = email
+                };
+
+                command.Parameters.Add(parameterEmail);
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return new User
+                        {
+                            IdUser = (int)reader["id_user"],
+                            Name = (string)reader["Name"],
+                            Birthday = (DateTime)reader["Birthday"],
+                            Age = (int)reader["Age"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
+                        };
+                    }
+                }
+
+                return null;
+            }
+        }
     }
 }

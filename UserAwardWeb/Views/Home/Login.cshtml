@@ -1,0 +1,49 @@
+﻿@using UserAwardWeb.Models
+
+
+@{
+    Layout = null;
+}
+
+@{ 
+    string errorMessage = null;
+    if (IsPost)
+    {
+        string email = Request["email"];
+        string password = Request["password"];
+
+        if (Auth.CanLogin(email, password))
+        {
+            FormsAuthentication.SetAuthCookie(email, true);
+            Response.Redirect("~/Home/Index");
+        }
+        else
+        {
+            errorMessage = "Invalid email or password";
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">
+            <p>@errorMessage</p>
+        </div>
+    }
+    <div> 
+        <form method="post">
+            <input type="text" name="email" value="" />
+            <input type="password" name="password" value="" />
+            <button>Sign In</button>
+        </form>
+    </div>
+</body>
+</html>

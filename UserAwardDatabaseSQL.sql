@@ -38,6 +38,19 @@ CREATE TABLE User_Award (
 )
 GO
 
+CREATE TABLE [Role] (
+	id_role int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Role] primary key,
+	[Name] nvarchar(50) NOT NULL,
+	id_user int NOT NULL,
+)
+GO
+
+ALTER TABLE [Role] ADD CONSTRAINT [FK_Role_TO_User]
+FOREIGN KEY ([id_user]) references [User]([id_user])
+on delete cascade
+on update cascade
+GO
+
 ALTER TABLE [User_Award] ADD CONSTRAINT [FK_User_Award_TO_User]
 FOREIGN KEY ([id_user]) references [User]([id_user])
 on delete cascade
@@ -409,3 +422,39 @@ BEGIN
 	JOIN Award AS A ON UA.id_award = A.id_award
 	WHERE id_user = @ID_USER
 END
+
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE GetUserByEmail
+	-- Add the parameters for the stored procedure here
+	@Email nvarchar(250)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+	SELECT *
+	FROM [User]
+	Where Email = @Email
+END
+GO

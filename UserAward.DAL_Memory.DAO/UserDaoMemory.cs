@@ -97,5 +97,10 @@ namespace UserAward.DAL_Memory.DAO
         {
             throw new NotImplementedException();
         }
+
+        public User GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

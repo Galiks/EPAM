@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using UserAward.BLL.Interface;
 using UserAward.DAL.Interface;
 using Validation;
@@ -19,8 +21,14 @@ namespace UserAward.BLL.Logic
 
         public bool AddUser(string name, string birthday, string email, string password, byte[] userPhoto)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (!UserValidation.IsEmptyString(name, birthday, email, password))
             {
+
+                if (!UserValidation.IsRightEmail(email))
+                {
+                    throw new ArgumentException(nameof(email), "Incorrect email");
+                }
+
                 if (DateTime.TryParse(birthday, out DateTime rightBirthday))
                 {
 
@@ -31,7 +39,7 @@ namespace UserAward.BLL.Logic
                         throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
                     }
 
-                    var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = password, UserPhoto = userPhoto };
+                    var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = EncryptionPassword(password).ToString(), UserPhoto = userPhoto };
 
                     _userDao.AddUser(newUser);
 
@@ -44,7 +52,7 @@ namespace UserAward.BLL.Logic
             }
             else
             {
-                throw new ArgumentNullException(nameof(name), "This parameter must be not null");
+                throw new ArgumentNullException(nameof(name), "Parameters must be not null");
             }
         }
 
@@ -249,6 +257,33 @@ namespace UserAward.BLL.Logic
             {
                 throw new ArgumentException($"Incorrect ID");
             }
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userDao.GetUserByEmail(email);
+        }
+
+        public Guid EncryptionPassword(string password)
+        {
+            //переводим строку в байт-массим  
+            byte[] bytes = Encoding.Unicode.GetBytes(password);
+
+            //создаем объект для получения средст шифрования  
+            MD5CryptoServiceProvider CSP =
+                new MD5CryptoServiceProvider();
+
+            //вычисляем хеш-представление в байтах  
+            byte[] byteHash = CSP.ComputeHash(bytes);
+
+            string hash = string.Empty;
+
+            //формируем одну цельную строку из массива  
+            foreach (byte b in byteHash)
+                hash += string.Format("{0:x2}", b);
+
+            //заносить в БД пароль в стринговом представлении не стоит, лучше использовать тип ячейки Uniqueidentifier.
+            return new Guid(hash);
         }
     }
 }

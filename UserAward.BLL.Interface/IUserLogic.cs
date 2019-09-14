@@ -20,5 +20,7 @@ namespace UserAward.BLL.Interface
         int SetAge(DateTime birthday);
         bool Rewarding(string idUser, string idAward);
         IEnumerable<Award> GetAwardFromUserAward(string id);
+        User GetUserByEmail(string email);
+        Guid EncryptionPassword(string password);
     }
 }
