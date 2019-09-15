@@ -17,12 +17,14 @@ namespace UserAward
 
         static void Main(string[] args)
         {
-            User user = new User() { Name = "Pasha", Age = 21, Birthday = DateTime.Now, Email = "test", Password = "1234"};
-            Console.WriteLine(user.Name);
-            User user2 = new User() { Name = "Pasha", Age = 21, Birthday = DateTime.Now, Email = "test", Password = "1234" };
-            Console.WriteLine(user2.Name);
-            User user3 = new User() { Name = "Pasha", Age = 21, Birthday = DateTime.Now, Email = "test", Password = "1234" };
-            Console.WriteLine(user3.Name);
+            string temp = "45 rewr";
+
+            if (!int.TryParse(temp, out int result))
+            {
+                Console.WriteLine(result);
+            }
+
+            Console.WriteLine("ALL");
 
             //Console.WriteLine("Куда сохранять информацию? Push button: 1 - Database, 2 - File, 3 or another button - Memory (default)");
             //var command = Console.ReadKey();

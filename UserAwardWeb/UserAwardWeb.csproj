@@ -177,6 +177,8 @@
     <Content Include="Views\User\Rewarding.cshtml" />
     <Content Include="Views\User\GetAwardsByUser.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Award\DeleteAwardFromUser.cshtml" />
+    <Content Include="Views\Award\DeleteAwardFromAllUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

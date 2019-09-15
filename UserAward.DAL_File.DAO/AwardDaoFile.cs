@@ -128,5 +128,15 @@ namespace UserAward.DAL_File.DAO
         {
             throw new NotImplementedException();
         }
+
+        public int DeleteAwardFromUser(int userId, int awardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int DeleteAwardFromAllUsers(int awardId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

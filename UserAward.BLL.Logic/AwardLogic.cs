@@ -59,6 +59,40 @@ namespace UserAward.BLL.Logic
             }
         }
 
+        public bool DeleteAwardFromAllUsers(string awardId)
+        {
+            if (!Validation.Validation.IsEmptyStrings(awardId))
+            {
+                throw new ArgumentException("Parametres must be not empty");
+            }
+
+            if (!Validation.Validation.IsNumbers(awardId))
+            {
+                throw new ArgumentException("Parametres must be numbers");
+            }
+
+            _awardDao.DeleteAwardFromAllUsers(int.Parse(awardId));
+
+            return true;
+        }
+
+        public bool DeleteAwardFromUser(string userId, string awardId)
+        {
+            if (!Validation.Validation.IsEmptyStrings(userId, awardId))
+            {
+                throw new ArgumentException("Parametres must be not empty");
+            }
+
+            if (!Validation.Validation.IsNumbers(userId, awardId))
+            {
+                throw new ArgumentException("Parametres must be numbers");
+            }
+
+            _awardDao.DeleteAwardFromUser(int.Parse(userId), int.Parse(awardId));
+
+            return true;
+        }
+
         public Award GetAwardById(string id)
         {
             if (int.TryParse(id, out int awardId))

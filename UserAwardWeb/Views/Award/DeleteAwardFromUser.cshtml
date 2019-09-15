@@ -1,0 +1,57 @@
+﻿@using UserAward.BLL.Interface
+@using UserAward.Container
+@using Ninject
+
+@{
+    Layout = null;
+}
+
+@{
+    IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
+    if (IsPost)
+    {
+        try
+        {
+            string userId = Request["userId"];
+            string awardId = Request["awardId"];
+            var isRightOperation = awardLogic.DeleteAwardFromUser(userId, awardId);
+
+            if (isRightOperation)
+            {
+                <h1>OK</h1>
+            }
+            else
+            {
+                <h1>BAD!</h1>
+            }
+        }
+        catch (Exception e)
+        {
+            <h1>@e.Message</h1>
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DeleteAwardFromUser</title>
+</head>
+<body>
+    <div>
+        <form method="post">
+            <p>User's Id</p><input type="number" id="userId" name="userId" />
+            <p>Award's Id</p><input type="number" id="awardId" name="awardId" />
+            <button class="active">Delete Award</button>
+        </form>
+    </div>
+    <div>
+        <p>If you want to delete award from all users, click to this button</p>
+        <form action="~/Award/DeleteAwardFromAllUsers">
+            <button class="active">Delete Award from all Users</button>
+        </form>
+    </div>
+</body>
+</html>

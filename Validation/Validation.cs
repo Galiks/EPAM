@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Validation
 {
-    public static class UserValidation
+    public static class Validation
     {
         private const string patternEmail = @"\b[A-Za-zА-ЯёЁ0-9]{1}\S+[A-Za-zА-ЯёЁ0-9]{1}\b@[A-Za-zА-ЯёЁ]{2,6}(\.[A-Za-zА-ЯёЁ0-9-]+)+";
         public static bool IsRightAge(int age)
@@ -34,7 +34,7 @@ namespace Validation
             }
         }
 
-        public static bool IsEmptyString(params string[] strings)
+        public static bool IsEmptyStrings(params string[] strings)
         {
             foreach (var item in strings)
             {
@@ -45,6 +45,19 @@ namespace Validation
             }
 
             return false;
+        }
+
+        public static bool IsNumbers(params string[] strings)
+        {
+            foreach (var item in strings)
+            {
+                if (!int.TryParse(item, out int result))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -17,5 +17,7 @@ namespace UserAward.BLL.Interface
         IEnumerable<Award> GetAwardByWord(string word);
         IEnumerable<Award> GetAwardByTitle(string title);
         IEnumerable<Award> GetAwards();
+        bool DeleteAwardFromUser(string userId, string awardId);
+        bool DeleteAwardFromAllUsers(string awardId);
     }
 }

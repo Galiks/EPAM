@@ -28,5 +28,15 @@ namespace UserAwardWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult DeleteAwardFromUser()
+        {
+            return View();
+        }
+
+        public ActionResult DeleteAwardFromAllUsers()
+        {
+            return View();
+        }
     }
 }

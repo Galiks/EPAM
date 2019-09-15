@@ -21,10 +21,10 @@ namespace UserAward.BLL.Logic
 
         public bool AddUser(string name, string birthday, string email, string password, byte[] userPhoto)
         {
-            if (!UserValidation.IsEmptyString(name, birthday, email, password))
+            if (!Validation.Validation.IsEmptyStrings(name, birthday, email, password))
             {
 
-                if (!UserValidation.IsRightEmail(email))
+                if (!Validation.Validation.IsRightEmail(email))
                 {
                     throw new ArgumentException(nameof(email), "Incorrect email");
                 }
@@ -34,7 +34,7 @@ namespace UserAward.BLL.Logic
 
                     int age = SetAge(rightBirthday);
 
-                    if (!UserValidation.IsRightAge(age))
+                    if (!Validation.Validation.IsRightAge(age))
                     {
                         throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
                     }

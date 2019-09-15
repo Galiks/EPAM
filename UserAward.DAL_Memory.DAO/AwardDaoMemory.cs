@@ -61,5 +61,15 @@ namespace UserAward.DAL_Memory.DAO
         {
             throw new NotImplementedException();
         }
+
+        public int DeleteAwardFromUser(int userId, int awardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int DeleteAwardFromAllUsers(int awardId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

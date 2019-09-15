@@ -74,6 +74,55 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
+        public int DeleteAwardFromAllUsers(int awardId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "DeleteAwardFromAllUsers";
+
+                var idAward = new SqlParameter("@AwardId", SqlDbType.Int)
+                {
+                    Value = awardId
+                };
+
+                command.Parameters.Add(idAward);
+
+                connection.Open();
+
+                return (int)command.ExecuteNonQuery();
+            }
+        }
+
+        public int DeleteAwardFromUser(int userId, int awardId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "DeleteAwardFromUser";
+
+                var idAward = new SqlParameter("@AwardId", SqlDbType.Int)
+                {
+                    Value = awardId
+                };
+
+                var idUser = new SqlParameter("@UserId", SqlDbType.Int)
+                {
+                    Value = userId
+                };
+
+                command.Parameters.AddRange(new[] { idAward, idUser });
+
+                connection.Open();
+
+                return (int)command.ExecuteNonQuery();
+            }
+        }
+
         public Award GetAwardById(int wantedId)
         {
             using (var connection = new SqlConnection(_connectionString))
