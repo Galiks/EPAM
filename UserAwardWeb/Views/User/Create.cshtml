@@ -18,9 +18,9 @@
             string email = Request["email"];
             string date = Request["date"];
             string password = Request["password"];
-            string image = null;
-            byte[] temp = new byte[] { 0, 0, 0, 25 };
-            bool isRightOperation = userLogic.AddUser(name, date, email, password, temp);
+            WebImage photo = WebImage.GetImageFromRequest("image");
+            byte[] userPhoto = photo.GetBytes();
+            bool isRightOperation = userLogic.AddUser(name, date, email, password, userPhoto);
         }
         catch (Exception e)
         {
@@ -37,14 +37,14 @@
     <title>Create</title>
 </head>
 <body>
-    <form method="post" class="form-group">
+    <form method="post" class="form-group" enctype="multipart/form-data">
         <p>Name</p><input type="text" id="name" name="name" />
         <p>Email</p><input type="text" id="email" name="email" />
         <p>Birthday</p><input type="date" id="date" name="date" />
         <p>Password</p><input type="password" id="password" name="password" />
 
         <p>Photo</p><input type="file" id="image" name="image" />
-        <button class="alert-danger">Create</button>
+        <input type="submit" value="Create" />
     </form>
     <form action="~/User/Index">
         <button class="bg-primary">Cancel</button>
