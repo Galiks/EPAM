@@ -20,6 +20,7 @@ CREATE TABLE [User] (
 	Age int NOT NULL,
 	[Email] nvarchar(250) unique NOT NULL,
 	[Password] nvarchar(500) NOT NULL,
+	[Role] nvarchar(150) NOT NULL,
 	UserPhoto varbinary(MAX)
 )
 GO
@@ -38,18 +39,18 @@ CREATE TABLE User_Award (
 )
 GO
 
-CREATE TABLE [Role] (
-	id_role int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Role] primary key,
-	[Name] nvarchar(50) NOT NULL,
-	id_user int NOT NULL,
-)
-GO
+--CREATE TABLE [Role] (
+--	id_role int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Role] primary key,
+--	[Name] nvarchar(50) NOT NULL,
+--	id_user int NOT NULL,
+--)
+--GO
 
-ALTER TABLE [Role] ADD CONSTRAINT [FK_Role_TO_User]
-FOREIGN KEY ([id_user]) references [User]([id_user])
-on delete cascade
-on update cascade
-GO
+--ALTER TABLE [Role] ADD CONSTRAINT [FK_Role_TO_User]
+--FOREIGN KEY ([id_user]) references [User]([id_user])
+--on delete cascade
+--on update cascade
+--GO
 
 ALTER TABLE [User_Award] ADD CONSTRAINT [FK_User_Award_TO_User]
 FOREIGN KEY ([id_user]) references [User]([id_user])

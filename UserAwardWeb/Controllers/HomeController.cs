@@ -18,5 +18,10 @@ namespace UserAwardWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult SignOut()
+        {
+            return View();
+        }
     }
 }
