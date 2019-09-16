@@ -53,10 +53,15 @@ namespace UserAward.DAL_Database.DAO
 
                 var userPhoto = new SqlParameter("@UserPhoto", SqlDbType.VarBinary)
                 {
-                    Value = user.UserPhoto
+                    Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null
                 };
 
-                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age, email, password, userPhoto });
+                var role = new SqlParameter("@Role", SqlDbType.NVarChar)
+                {
+                    Value = user.Role
+                };
+
+                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age, email, password, userPhoto, role });
 
                 connection.Open();
 
@@ -320,30 +325,42 @@ namespace UserAward.DAL_Database.DAO
                     Value = wantedId
                 };
 
-                command.Parameters.Add(id);
-
                 var name = new SqlParameter("@NAME", SqlDbType.NVarChar)
                 {
                     Value = user.Name
                 };
-
-                command.Parameters.Add(name);
 
                 var birthday = new SqlParameter("@BIRTHDAY", SqlDbType.DateTime)
                 {
                     Value = user.Birthday
                 };
 
-                command.Parameters.Add(birthday);
-
                 var age = new SqlParameter("@AGE", SqlDbType.Int)
                 {
                     Value = user.Age
                 };
 
-                command.Parameters.AddRange(new[] { name, age, birthday });
+                var email = new SqlParameter("@Email", SqlDbType.NVarChar)
+                {
+                    Value = user.Email
+                };
 
-                command.Parameters.Add(age);
+                var password = new SqlParameter("@Password", SqlDbType.NVarChar)
+                {
+                    Value = user.Password
+                };
+
+                var userPhoto = new SqlParameter("@UserPhoto", SqlDbType.VarBinary)
+                {
+                    Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null
+                };
+
+                var role = new SqlParameter("@Role", SqlDbType.NVarChar)
+                {
+                    Value = user.Role
+                };
+
+                command.Parameters.AddRange(new[] { id, name, age, birthday, email, password, userPhoto, role });
 
                 connection.Open();
 

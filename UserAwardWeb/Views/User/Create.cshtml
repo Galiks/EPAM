@@ -10,6 +10,8 @@
 
 @{
     IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    List<string> roles = new List<string>() { "Admin", "User" };
+    SelectList selectsRole = new SelectList(roles);
     if (IsPost)
     {
         try
@@ -19,7 +21,11 @@
             string date = Request["date"];
             string password = Request["password"];
             WebImage photo = WebImage.GetImageFromRequest("image");
-            byte[] userPhoto = photo.GetBytes();
+            byte[] userPhoto = null;
+            if (photo != null)
+            {
+                userPhoto = photo.GetBytes();
+            }
             bool isRightOperation = userLogic.AddUser(name, date, email, password, userPhoto);
         }
         catch (Exception e)
@@ -42,7 +48,9 @@
         <p>Email</p><input type="text" id="email" name="email" />
         <p>Birthday</p><input type="date" id="date" name="date" />
         <p>Password</p><input type="password" id="password" name="password" />
-
+        <div class="col-md-6">
+            @Html.DropDownList("awardId", selectsRole as SelectList)
+        </div>
         <p>Photo</p><input type="file" id="image" name="image" />
         <input type="submit" value="Create" />
     </form>

@@ -75,6 +75,7 @@ Create PROCEDURE AddUser --1
 	@Age int,
 	@Email nvarchar(250),
 	@Password nvarchar(500),
+	@Role nvarchar(150),
 	@UserPhoto varbinary(MAX)
 AS
 BEGIN
@@ -84,6 +85,7 @@ BEGIN
            ,[Age]
 		   ,[Email]
 		   ,[Password]
+		   ,[Role]
 		   ,[UserPhoto])
      VALUES
            (@Name,
@@ -91,6 +93,7 @@ BEGIN
 			@Age, 
 			@Email,
 			@Password,
+			@Role,
 			@UserPhoto)
 
 	SELECT SCOPE_IDENTITY()
@@ -127,6 +130,7 @@ BEGIN
       ,[Age]
 	  ,[Email]
 	  ,[Password]
+	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [id_user] = @ID
@@ -147,7 +151,8 @@ BEGIN
       ,[Birthday]
       ,[Age]
 	  ,[Email]
-	  ,[Password]
+	  ,[Password]  
+	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE @NAME
@@ -170,6 +175,7 @@ BEGIN
       ,[Age]
 	  ,[Email]
 	  ,[Password]
+	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE @LETTER + '%'
@@ -191,6 +197,7 @@ BEGIN
       ,[Age]
 	  ,[Email]
 	  ,[Password]
+	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE (@WORD+'%'+@WORD)
@@ -209,6 +216,7 @@ CREATE PROCEDURE UpdateUser--7
 	@AGE int,
 	@Email nvarchar(250),
 	@Password nvarchar(500),
+	@Role nvarchar(150),
 	@UserPhoto varbinary(MAX)
 AS
 BEGIN
@@ -219,6 +227,7 @@ BEGIN
 	Age = @AGE,
 	Email = @Email,
 	[Password] = @Password,
+	[Role] = @Role,
 	UserPhoto = @UserPhoto
 	WHERE id_user = @ID
 END
