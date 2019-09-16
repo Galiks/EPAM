@@ -20,13 +20,14 @@
             string email = Request["email"];
             string date = Request["date"];
             string password = Request["password"];
+            string role = Request["role"];
             WebImage photo = WebImage.GetImageFromRequest("image");
             byte[] userPhoto = null;
             if (photo != null)
             {
                 userPhoto = photo.GetBytes();
             }
-            bool isRightOperation = userLogic.AddUser(name, date, email, password, userPhoto);
+            bool isRightOperation = userLogic.AddUser(name, date, email, password, role, userPhoto);
         }
         catch (Exception e)
         {
@@ -44,12 +45,12 @@
 </head>
 <body>
     <form method="post" class="form-group" enctype="multipart/form-data">
-        <p>Name</p><input type="text" id="name" name="name" />
-        <p>Email</p><input type="text" id="email" name="email" />
-        <p>Birthday</p><input type="date" id="date" name="date" />
-        <p>Password</p><input type="password" id="password" name="password" />
+        <p>Name</p><input type="text" id="name" name="name" value="Pasha"/>
+        <p>Email</p><input type="text" id="email" name="email" value="test.test@test.ru"/>
+        <p>Birthday</p><input type="date" id="date" name="date" value="1996-12-04"/>
+        <p>Password</p><input type="password" id="password" name="password" value="123"/>
         <div class="col-md-6">
-            @Html.DropDownList("awardId", selectsRole as SelectList)
+            @Html.DropDownList("role", selectsRole as SelectList)
         </div>
         <p>Photo</p><input type="file" id="image" name="image" />
         <input type="submit" value="Create" />

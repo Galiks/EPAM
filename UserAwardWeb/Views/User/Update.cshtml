@@ -10,6 +10,8 @@
 
 @{
     IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    List<string> roles = new List<string>() { "Admin", "User" };
+    SelectList selectsRole = new SelectList(roles);
     if (IsPost)
     {
         try
@@ -19,9 +21,14 @@
             string email = Request["email"];
             string date = Request["date"];
             string password = Request["password"];
-            string image = null;
-            byte[] temp = new byte[] { 0, 0, 0, 25 };
-            bool isRightOperation = userLogic.UpdateUser(userId, name, date, email, password, temp);
+            string role = Request["role"];
+            WebImage photo = WebImage.GetImageFromRequest("image");
+            byte[] userPhoto = null;
+            if (photo != null)
+            {
+                userPhoto = photo.GetBytes();
+            }
+            bool isRightOperation = userLogic.UpdateUser(userId, name, date, email, password, role, userPhoto);
         }
         catch (Exception e)
         {
@@ -45,7 +52,9 @@
             <p>Email</p><input type="text" id="email" name="email" />
             <p>Birthday</p><input type="date" id="date" name="date" />
             <p>Password</p><input type="password" id="password" name="password" />
-
+            <div class="col-md-6">
+                @Html.DropDownList("role", selectsRole as SelectList)
+            </div>
             <p>Photo</p><input type="file" id="image" name="image" />
             <button class="alert-danger">Update</button>
         </form>
