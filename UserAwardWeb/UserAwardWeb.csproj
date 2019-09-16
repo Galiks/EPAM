@@ -183,6 +183,7 @@
     <Content Include="Views\Award\DeleteAwardFromUser.cshtml" />
     <Content Include="Views\Award\DeleteAwardFromAllUsers.cshtml" />
     <Content Include="Views\Home\SignOut.cshtml" />
+    <Content Include="Views\Shared\_MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

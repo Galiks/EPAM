@@ -46,20 +46,20 @@
 <body>
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
-    <form method="post" class="form-group" enctype="multipart/form-data">
-        <p>Name</p><input type="text" id="name" name="name" value="Pasha"/>
-        <p>Email</p><input type="text" id="email" name="email" value="test.test@test.ru"/>
-        <p>Birthday</p><input type="date" id="date" name="date" value="1996-12-04"/>
-        <p>Password</p><input type="password" id="password" name="password" value="123"/>
-        <div class="col-md-6">
-            @Html.DropDownList("role", selectsRole as SelectList)
-        </div>
-        <p>Photo</p><input type="file" id="image" name="image" />
-        <input type="submit" value="Create" />
-    </form>
-    <form action="~/User/Index">
-        <button class="bg-primary">Cancel</button>
-    </form>
+        <form method="post" class="form-group" enctype="multipart/form-data">
+            <p>Name</p><input type="text" id="name" name="name" value="Pasha" />
+            <p>Email</p><input type="text" id="email" name="email" value="test.test@test.ru" />
+            <p>Birthday</p><input type="date" id="date" name="date" value="1996-12-04" />
+            <p>Password</p><input type="password" id="password" name="password" value="123" />
+            <div class="col-md-6">
+                Role: @Html.DropDownList("role", selectsRole as SelectList)
+            </div>
+            <p>Photo</p><input type="file" id="image" name="image" />
+            <input type="submit" value="Create" />
+        </form>
+        <form action="~/User/Index">
+            <button class="bg-primary">Cancel</button>
+        </form>
     }
     else
     {
