@@ -17,19 +17,19 @@
 
             if (isRightOperation)
             {
-        <h1>OK</h1>
+                <h1>OK</h1>
             }
             else
             {
-        <h1>BAD!</h1>
-                }
-            }
-            catch (Exception e)
-            {
-
+                <h1>BAD!</h1>
             }
         }
+        catch (Exception e)
+        {
+
+        }
     }
+}
 
 
 <!DOCTYPE html>
@@ -40,14 +40,23 @@
     <title>Delete</title>
 </head>
 <body>
-    <div>
-        <form method="post">
-            <p>Award's ID</p><input type="number" id="idForDelete" name="idForDelete"/>
-            <button class="alert-danger">Delete</button>
-        </form>
-        <form action="~/Award/Index">
-            <button class="bg-primary">Cancel</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post">
+                <p>Award's ID</p><input type="number" id="idForDelete" name="idForDelete" />
+                <button class="alert-danger">Delete</button>
+            </form>
+            <form action="~/Award/Index">
+                <button class="bg-primary">Cancel</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

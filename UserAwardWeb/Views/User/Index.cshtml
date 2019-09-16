@@ -17,26 +17,42 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Users</title>
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || User.IsInRole("User")))
+    @if (User.Identity.IsAuthenticated)
     {
-        <div class="form-inline">
-            <form action="~/User/Delete">
-                <button class="btn-danger">Delete User</button>
-            </form>
-            <form action="~/User/Update">
-                <button class="btn-danger">Update User</button>
-            </form>
-            <form action="~/User/Create">
-                <button class="btn-danger">Create User</button>
-            </form>
-            <form action="~/User/Rewarding">
-                <button class="btn-danger">Rewarding User</button>
-            </form>
+        if (User.IsInRole("User"))
+        {
             <form action="~/User/GetAwardsByUser">
                 <button class="btn-danger">Get user's awards</button>
+            </form>
+        }
+
+        if (User.IsInRole("Admin"))
+        {
+            <div class="form-inline">
+                <form action="~/User/Delete" class="btn-group-justified">
+                    <button class="btn-danger">Delete User</button>
+                </form>
+
+                <form action="~/User/Update">
+                    <button class="btn-danger">Update User</button>
+                </form>
+
+                <form action="~/User/Create">
+                    <button class="btn-danger">Create User</button>
+                </form>
+
+                <form action="~/User/Rewarding">
+                    <button class="btn-danger">Rewarding User</button>
+                </form>
+            </div>
+        }
+
+        <div>
+            <form action="~/Home/SignOut">
+                <button class="btn-danger">Sign out</button>
             </form>
         </div>
     }

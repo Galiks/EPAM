@@ -114,7 +114,9 @@ namespace UserAward
                         var email = Console.ReadLine();
                         Console.Write($"User's Password: ");
                         var password = Console.ReadLine();
-                        if (userLogic.AddUser(name, birthday, email, password, null))
+                        Console.Write($"User's Role: ");
+                        var role = Console.ReadLine();
+                        if (userLogic.AddUser(name, birthday, email, password, role, null))
                         {
                             Console.WriteLine($"User is created!{Environment.NewLine}");
                         }
@@ -323,9 +325,11 @@ namespace UserAward
                         var email = Console.ReadLine();
                         Console.Write($"User's Password: ");
                         var password = Console.ReadLine();
+                        Console.Write($"User's Role: ");
+                        var role = Console.ReadLine();
                         try
                         {
-                            userLogic.UpdateUser(id_6, name_6, birthday, email, password, null);
+                            userLogic.UpdateUser(id_6, name_6, birthday, email, password, role, null);
                         }
                         catch (Exception e)
                         {

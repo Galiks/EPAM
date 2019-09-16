@@ -18,7 +18,7 @@
             string userId = Request["userId"];
             awardsByUser = userLogic.GetAwardFromUserAward(userId);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             <h1>@e.Message</h1>
         }
@@ -33,34 +33,42 @@
     <title>AwardsByUser</title>
 </head>
 <body>
-    <div>
-        <p>User's id</p>
-        <form method="post">
-            <input type="number" id="userId" name="userId" />
-            <button class="active">Get Awards</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("User") || User.IsInRole("Admin")))
+    {
+        <div>
+            <p>User's id</p>
+            <form method="post">
+                <input type="number" id="userId" name="userId" />
+                <button class="active">Get Awards</button>
+            </form>
+        </div>
 
-    <div>
-        <h1>Список наград</h1>
-        <table class="table">
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Award's Image</th>
-            </tr>
-            @foreach (var item in @awardsByUser)
-            {
+        <div>
+            <h1>Список наград</h1>
+            <table class="table">
                 <tr>
-                    <th>@item.IdAward</th>
-                    <th>@item.Title</th>
-                    <th>@item.Description</th>
-                    <th>@item.AwardImage</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Award's Image</th>
                 </tr>
-            }
-        </table>
-    </div>
-
+                @foreach (var item in @awardsByUser)
+                {
+                    <tr>
+                        <th>@item.IdAward</th>
+                        <th>@item.Title</th>
+                        <th>@item.Description</th>
+                        <th>@item.AwardImage</th>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

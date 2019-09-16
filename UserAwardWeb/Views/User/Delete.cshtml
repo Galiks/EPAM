@@ -31,14 +31,23 @@
     <title>Delete</title>
 </head>
 <body>
-    <div>
-        <form method="post">
-            <p>User's ID</p><input type="number" id="idForDelete" name="idForDelete" />
-            <button class="alert-danger">Delete</button>
-        </form>
-        <form action="~/User/Index">
-            <button class="bg-primary">Cancel</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post">
+                <p>User's ID</p><input type="number" id="idForDelete" name="idForDelete" />
+                <button class="alert-danger">Delete</button>
+            </form>
+            <form action="~/User/Index">
+                <button class="bg-primary">Cancel</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

@@ -9,6 +9,7 @@
 }
 
 @{
+    string errorMessage = null;
     IAwardLogic awardLogic = NinjectCommon.Kernel.Get<IAwardLogic>();
     if (IsPost)
     {
@@ -16,12 +17,17 @@
         {
             string title = Request["title"];
             string description = Request["description"];
-            string image = null;
-            bool isRightOperation = awardLogic.AddAward(title, description, new byte[] { 0, 0, 0, 25 });
+            WebImage photo = WebImage.GetImageFromRequest("image");
+            byte[] awardImage = null;
+            if (photo != null)
+            {
+                awardImage = photo.GetBytes();
+            }
+            bool isRightOperation = awardLogic.AddAward(title, description, awardImage);
         }
         catch (Exception e)
         {
-
+            errorMessage = e.Message;
         }
     }
 }
@@ -34,14 +40,31 @@
     <title>Create</title>
 </head>
 <body>
-    <form method="post" class="form-group">
-        <p>Title</p><input type="text" id="title" name="title" />
-        <p>Description</p><input type="text" id="description" name="description" />
-        <p>Image</p><input type="file" id="image" name="image" />
-        <button class="alert-danger">Create</button>
-    </form>
-    <form action="~/Award/Index">
-        <button class="bg-primary">Cancel</button>
-    </form>
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger">
+            <p>@errorMessage</p>
+        </div>
+    }
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post" class="form-group">
+                <p>Title</p><input type="text" id="title" name="title" />
+                <p>Description</p><input type="text" id="description" name="description" />
+                <p>Image</p><input type="file" id="image" name="image" />
+                <button class="alert-danger">Create</button>
+            </form>
+            <form action="~/Award/Index">
+                <button class="bg-primary">Cancel</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

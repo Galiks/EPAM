@@ -32,13 +32,13 @@ namespace UserAward.Container
                 _kernel.Bind<IAwardDao>().To<AwardDaoDatabase>();
             }
 
-            if (numberOfDAL == 2)
+            else if (numberOfDAL == 2)
             {
                 _kernel.Bind<IUserDao>().To<UserDaoFile>();
                 _kernel.Bind<IAwardDao>().To<AwardDaoFile>();
             }
 
-            if (numberOfDAL == 3)
+            else if (numberOfDAL == 3)
             {
                 _kernel.Bind<IUserDao>().To<UserDaoMemory>();
                 _kernel.Bind<IAwardDao>().To<AwardDaoMemory>();

@@ -35,18 +35,26 @@
     <title>Rewarding</title>
 </head>
 <body>
-    <div>
-        <form method="post" class="form-group">
-            <p>User's ID</p><input type="number" id="userId" name="userId" />
-            <div class="col-md-6">
-                @Html.DropDownList("awardId", awards as SelectList)
-            </div>
-            @*<p>Award's ID</p><input type="number" id="awardId" name="awardId" />*@
-            <button class="alert-danger">Rewarding</button>
-        </form>
-        <form action="~/User/Index">
-            <button class="bg-primary">Cancel</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post" class="form-group">
+                <p>User's ID</p><input type="number" id="userId" name="userId" />
+                <div class="col-md-6">
+                    @Html.DropDownList("awardId", awards as SelectList)
+                </div>
+                <button class="alert-danger">Rewarding</button>
+            </form>
+            <form action="~/User/Index">
+                <button class="bg-primary">Cancel</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

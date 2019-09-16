@@ -56,7 +56,7 @@ namespace UserAwardWeb.Models
                     case "Admin":
                         return new[] { "Admin", "User" };
                     default:
-                        return new string[] { };
+                        return new string[] { "Stranger" };
                 }
             }
 

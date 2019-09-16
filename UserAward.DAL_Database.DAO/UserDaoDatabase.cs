@@ -120,6 +120,7 @@ namespace UserAward.DAL_Database.DAO
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
                             Email = (string)reader["Email"],
+                            Role = (string)reader["Role"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -434,6 +435,7 @@ namespace UserAward.DAL_Database.DAO
                             Age = (int)reader["Age"],
                             Email = (string)reader["Email"],
                             Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }

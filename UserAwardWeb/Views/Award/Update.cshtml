@@ -16,7 +16,12 @@
             string id = Request["awardId"];
             string title = Request["title"];
             string description = Request["description"];
-            string image = null;
+            WebImage photo = WebImage.GetImageFromRequest("image");
+            byte[] awardImage = null;
+            if (photo != null)
+            {
+                awardImage = photo.GetBytes();
+            }
 
             Award award = awardLogic.GetAwardById(id);
 
@@ -27,7 +32,7 @@
             else
             {
 
-                awardLogic.UpdateAward(id, title, description, new byte[] { 0, 0, 0, 25 });
+                awardLogic.UpdateAward(id, title, description, awardImage);
             }
         }
         catch (Exception e)
@@ -45,17 +50,26 @@
     <title>Update</title>
 </head>
 <body>
-    <div>
-        <form method="post" class="form-group">
-            <p>Award's ID</p><input type="number" id="awardId" name="awardId" />
-            <p>Title</p><input type="text" id="title" name="title" />
-            <p>Description</p><input type="text" id="description" name="description" />
-            <p>Image</p><input type="file" id="image" name="image" />
-            <button class="alert-danger">Update</button>
-        </form>
-        <form action="~/Award/Index">
-            <button class="bg-primary">Cancel</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post" class="form-group">
+                <p>Award's ID</p><input type="number" id="awardId" name="awardId" />
+                <p>Title</p><input type="text" id="title" name="title" />
+                <p>Description</p><input type="text" id="description" name="description" />
+                <p>Image</p><input type="file" id="image" name="image" />
+                <button class="alert-danger">Update</button>
+            </form>
+            <form action="~/Award/Index">
+                <button class="bg-primary">Cancel</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

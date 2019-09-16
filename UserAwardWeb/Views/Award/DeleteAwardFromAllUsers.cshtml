@@ -39,11 +39,20 @@
     <title>DeleteAwardFromAllUsers</title>
 </head>
 <body>
-    <div>
-        <form method="post">
-            <p>Award's Id</p><input type="number" id="awardId" name="awardId" />
-            <button class="active">Delete Award</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post">
+                <p>Award's Id</p><input type="number" id="awardId" name="awardId" />
+                <button class="active">Delete Award</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>

@@ -40,18 +40,27 @@
     <title>DeleteAwardFromUser</title>
 </head>
 <body>
-    <div>
-        <form method="post">
-            <p>User's Id</p><input type="number" id="userId" name="userId" />
-            <p>Award's Id</p><input type="number" id="awardId" name="awardId" />
-            <button class="active">Delete Award</button>
-        </form>
-    </div>
-    <div>
-        <p>If you want to delete award from all users, click to this button</p>
-        <form action="~/Award/DeleteAwardFromAllUsers">
-            <button class="active">Delete Award from all Users</button>
-        </form>
-    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div>
+            <form method="post">
+                <p>User's Id</p><input type="number" id="userId" name="userId" />
+                <p>Award's Id</p><input type="number" id="awardId" name="awardId" />
+                <button class="active">Delete Award</button>
+            </form>
+        </div>
+        <div>
+            <p>If you want to delete award from all users, click to this button</p>
+            <form action="~/Award/DeleteAwardFromAllUsers">
+                <button class="active">Delete Award from all Users</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>You can't do it</h1>
+        </div>
+    }
 </body>
 </html>
