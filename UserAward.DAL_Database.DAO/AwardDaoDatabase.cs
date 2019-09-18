@@ -46,9 +46,16 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.Add(awardImage);
 
+                var id = new SqlParameter
+                {
+                    ParameterName = "@Id",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output,
+                };
+
                 connection.Open();
 
-                return (int)(decimal)command.ExecuteScalar();
+                return (int)id.Value;
             }
         }
 
@@ -337,9 +344,16 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.Add(awardImage);
 
+                var idUpdate = new SqlParameter
+                {
+                    ParameterName = "@Id_update",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output,
+                };
+
                 connection.Open();
 
-                return (int)(decimal)command.ExecuteNonQuery();
+                return (int)idUpdate.Value;
             }
         }
     }

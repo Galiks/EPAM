@@ -26,46 +26,75 @@ namespace UserAward.DAL_Database.DAO
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "AddUser";
 
-                var name = new SqlParameter("@Name", SqlDbType.NVarChar)
+                command.Parameters.AddRange(new[]
                 {
-                    Value = user.Name
-                };
+                    new SqlParameter
+                    {
+                        ParameterName = "@Name",
+                        Value = user.Name,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
 
-                var birthday = new SqlParameter("@Birthday", SqlDbType.DateTime)
+                    new SqlParameter
+                    {
+                        ParameterName = "@Birthday",
+                        Value = user.Birthday,
+                        SqlDbType = SqlDbType.DateTime,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Age",
+                        Value = user.Age,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Email",
+                        Value = user.Email,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Password",
+                        Value = user.Password,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserPhoto",
+                        Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null,
+                        SqlDbType = SqlDbType.VarBinary,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Role",
+                        Value = user.Role,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+                });
+
+                var id = new SqlParameter
                 {
-                    Value = user.Birthday
+                    ParameterName = "@Id",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output,
                 };
-
-                var age = new SqlParameter("@Age", SqlDbType.Int)
-                {
-                    Value = user.Age
-                };
-
-                var email = new SqlParameter("@Email", SqlDbType.NVarChar)
-                {
-                    Value = user.Email
-                };
-
-                var password = new SqlParameter("@Password", SqlDbType.NVarChar)
-                {
-                    Value = user.Password
-                };
-
-                var userPhoto = new SqlParameter("@UserPhoto", SqlDbType.VarBinary)
-                {
-                    Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null
-                };
-
-                var role = new SqlParameter("@Role", SqlDbType.NVarChar)
-                {
-                    Value = user.Role
-                };
-
-                command.Parameters.AddRange(new SqlParameter[] { name, birthday, age, email, password, userPhoto, role });
-
+                
                 connection.Open();
 
-                return (int)(decimal)command.ExecuteScalar();
+                return (int)id.Value;
             }
         }
 
@@ -363,9 +392,16 @@ namespace UserAward.DAL_Database.DAO
 
                 command.Parameters.AddRange(new[] { id, name, age, birthday, email, password, userPhoto, role });
 
+                var idUpdate = new SqlParameter
+                {
+                    ParameterName = "@Id_update",
+                    SqlDbType = SqlDbType.Int,
+                    Direction = ParameterDirection.Output,
+                };
+
                 connection.Open();
 
-                return (int)(decimal)command.ExecuteNonQuery();
+                return (int)idUpdate.Value;
             }
         }
 

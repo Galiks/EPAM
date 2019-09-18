@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using UserAward.BLL.Interface;
 using UserAward.DAL.Interface;
-using Validation;
 
 namespace UserAward.BLL.Logic
 {
@@ -23,36 +22,33 @@ namespace UserAward.BLL.Logic
         {
             if (!Validation.Validation.IsEmptyStrings(name, birthday, email, password))
             {
+                throw new ArgumentNullException(nameof(name), "Parameters must be not null");
+            }
 
-                if (!Validation.Validation.IsRightEmail(email))
-                {
-                    throw new ArgumentException(nameof(email), "Incorrect email");
-                }
+            if (!Validation.Validation.IsRightEmail(email))
+            {
+                throw new ArgumentException(nameof(email), "Incorrect email");
+            }
 
-                if (DateTime.TryParse(birthday, out DateTime rightBirthday))
-                {
+            if (DateTime.TryParse(birthday, out DateTime rightBirthday))
+            {
 
-                    int age = SetAge(rightBirthday);
+                int age = SetAge(rightBirthday);
 
-                    if (!Validation.Validation.IsRightAge(age))
-                    {
-                        throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
-                    }
-
-                    var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = EncryptionPassword(password).ToString(), Role = role, UserPhoto = userPhoto };
-
-                    _userDao.AddUser(newUser);
-
-                    return true;
-                }
-                else
+                if (!Validation.Validation.IsRightAge(age))
                 {
                     throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
                 }
+
+                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = EncryptionPassword(password).ToString(), Role = role, UserPhoto = userPhoto };
+
+                _userDao.AddUser(newUser);
+
+                return true;
             }
             else
             {
-                throw new ArgumentNullException(nameof(name), "Parameters must be not null");
+                throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
             }
         }
 

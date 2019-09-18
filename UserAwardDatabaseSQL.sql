@@ -76,7 +76,8 @@ Create PROCEDURE AddUser --1
 	@Email nvarchar(250),
 	@Password nvarchar(500),
 	@Role nvarchar(150),
-	@UserPhoto varbinary(MAX)
+	@UserPhoto varbinary(MAX),
+	@Id int OUTPUT
 AS
 BEGIN
 	INSERT INTO [dbo].[User]
@@ -96,7 +97,7 @@ BEGIN
 			@Role,
 			@UserPhoto)
 
-	SELECT SCOPE_IDENTITY()
+	SET @Id = @@IDENTITY
 END
 GO
 
@@ -217,7 +218,8 @@ CREATE PROCEDURE UpdateUser--7
 	@Email nvarchar(250),
 	@Password nvarchar(500),
 	@Role nvarchar(150),
-	@UserPhoto varbinary(MAX)
+	@UserPhoto varbinary(MAX),
+	@Id_update int OUTPUT
 AS
 BEGIN
 	UPDATE Olympics.dbo.[User]
@@ -228,8 +230,10 @@ BEGIN
 	Email = @Email,
 	[Password] = @Password,
 	[Role] = @Role,
-	UserPhoto = @UserPhoto
+	UserPhoto = @UserPhoto,
+	@Id_update = @ID
 	WHERE id_user = @ID
+
 END
 GO
 
@@ -240,7 +244,8 @@ GO
 CREATE PROCEDURE AddAward --8
 	@TITLE nvarchar(50),
 	@DESCRIPTION nvarchar(300),
-	@AwardImage varbinary(MAX)
+	@AwardImage varbinary(MAX),
+	@Id int OUTPUT
 AS
 BEGIN
 	INSERT INTO [dbo].[Award]
@@ -252,7 +257,7 @@ BEGIN
 		   @DESCRIPTION,
 		   @AwardImage)
 
-	SELECT SCOPE_IDENTITY()
+	SET @Id = @@IDENTITY
 END
 GO
 
@@ -281,13 +286,15 @@ CREATE PROCEDURE UpdateAward --10
 	@ID int,
 	@TITLE nvarchar(50),
 	@DESCRIPTION nvarchar(300) = 'Empty Description',
-	@AwardImage varbinary(MAX)
+	@AwardImage varbinary(MAX) = null,
+	@Id_update int OUTPUT
 AS
 BEGIN
 	UPDATE Olympics.dbo.Award
 	SET Title = @TITLE,
 	[Description] = @DESCRIPTION,
-	AwardImage = @AwardImage
+	AwardImage = @AwardImage,
+	@Id_update = @ID
 	WHERE id_award = @ID
 END
 GO
@@ -399,7 +406,8 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[Rewarding] --16
 	@ID_user int,
-	@ID_award int
+	@ID_award int,
+	@ID_rewarding int OUTPUT
 AS
 BEGIN
 		INSERT INTO [dbo].[User_Award]
@@ -409,7 +417,7 @@ BEGIN
            (@ID_user
            ,@ID_award)
 
-	SELECT SCOPE_IDENTITY()
+	SET @ID_rewarding = @@IDENTITY
 END
 GO
 

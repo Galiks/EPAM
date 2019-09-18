@@ -138,37 +138,37 @@ namespace UserAward.BLL.Logic
         //Добавить проверку на существование награды!
         public bool UpdateAward(string id, string title, string description, byte[] awardImage)
         {
-
-            if (!string.IsNullOrEmpty(title))
+            if (Validation.Validation.IsEmptyStrings(id, title, description))
             {
-                if (int.TryParse(id, out int awardId))
+                throw new ArgumentNullException("Parametres must be not empty");
+            }
+
+
+            if (int.TryParse(id, out int awardId))
+            {
+                if (GetAwardById(id) != null)
                 {
-                    if (GetAwardById(id) != null)
-                    {
-                        Award award = new Award { IdAward = SetIdAward(), Title = title, Description = description, AwardImage = awardImage };
+                    Award award = new Award { IdAward = SetIdAward(), Title = title, Description = description, AwardImage = awardImage };
 
-                        _awardDao.UpdateAward(awardId, award);
+                    _awardDao.UpdateAward(awardId, award);
 
-                        return true;
+                    return true;
 
-                    }
-                    else
-                    {
-                        throw new NullReferenceException($"Award does not exists");
-                        //return false;
-                    }
                 }
                 else
                 {
-                    throw new ArgumentException($"Incorrect ID");
-                    //Console.WriteLine($"Incorrect ID");
+                    throw new NullReferenceException($"Award does not exists");
                     //return false;
                 }
             }
             else
             {
-                throw new ArgumentNullException("Title is empty");
+                throw new ArgumentException($"Incorrect ID");
+                //Console.WriteLine($"Incorrect ID");
+                //return false;
             }
+
+
         }
 
         private int SetIdAward()
