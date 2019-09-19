@@ -171,7 +171,7 @@ namespace UserAward.BLL.Logic
 
         }
 
-        private int SetIdAward()
+        private int? SetIdAward()
         {
             if (GetAwards().ToList().Count == 0)
             {

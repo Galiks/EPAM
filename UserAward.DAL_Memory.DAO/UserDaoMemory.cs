@@ -12,23 +12,23 @@ namespace UserAward.DAL_Memory.DAO
     {
         private static List<User> users;
         //first parameter - User's ID, second - Award's ID
-        private static Dictionary<int, int> usersAwards;
+        private static Dictionary<int?, int?> usersAwards;
         private readonly IAwardDao awardDao;
 
         public static List<User> Users { get => users; private set => users = value; }
-        public static Dictionary<int, int> UsersAwards { get => usersAwards; private set => usersAwards = value; }
+        public static Dictionary<int?, int?> UsersAwards { get => usersAwards; private set => usersAwards = value; }
 
         static UserDaoMemory()
         {
             Users = new List<User>();
-            UsersAwards = new Dictionary<int, int>();
+            UsersAwards = new Dictionary<int?, int?>();
         }
 
         public UserDaoMemory(IAwardDao awardDao)
         {
             this.awardDao = awardDao;
-            Users = new List<User>();
-            UsersAwards = new Dictionary<int, int>();
+            //Users = new List<User>();
+            //UsersAwards = new Dictionary<int?, int?>();
         }
 
         public int AddUser(User user)

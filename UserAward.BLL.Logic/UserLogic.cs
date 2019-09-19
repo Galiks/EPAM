@@ -57,7 +57,7 @@ namespace UserAward.BLL.Logic
             return _userDao.GetUsers().ToList();
         }
 
-        private int SetIdUser()
+        private int? SetIdUser()
         {
             if (GetUsers().ToList().Count == 0)
             {

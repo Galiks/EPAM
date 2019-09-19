@@ -8,8 +8,8 @@ namespace Entity
 {
     public class UsersAwards
     {
-        public int UserId { get; set; }
-        public int AwardId { get; set; }
+        public int? UserId { get; set; }
+        public int? AwardId { get; set; }
 
         public override string ToString()
         {

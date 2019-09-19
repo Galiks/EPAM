@@ -157,7 +157,7 @@ namespace UserAward
                     case "1":
                         foreach (var item in userLogic.GetUsers())
                         {
-                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Year}-{item.Birthday.Month}-{item.Birthday.Day} : {item.Age}{Environment.NewLine}");
+                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Value.Year}-{item.Birthday.Value.Month}-{item.Birthday.Value.Day} : {item.Age}{Environment.NewLine}");
                         }
                         break;
                     case "2":
@@ -241,7 +241,7 @@ namespace UserAward
                         try
                         {
                             var userById = userLogic.GetUserById(id_1);
-                            Console.WriteLine($"{userById.IdUser} : {userById.Name} : {userById.Birthday.Year}-{userById.Birthday.Month}-{userById.Birthday.Day} : {userById.Age}{Environment.NewLine}");
+                            Console.WriteLine($"{userById.IdUser} : {userById.Name} : {userById.Birthday.Value.Year}-{userById.Birthday.Value.Month}-{userById.Birthday.Value.Day} : {userById.Age}{Environment.NewLine}");
                         }
                         catch (Exception e)
                         {
@@ -253,7 +253,7 @@ namespace UserAward
                         var name_2 = Console.ReadLine();
                         foreach (var item in userLogic.GetUserByName(name_2))
                         {
-                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Year}-{item.Birthday.Month}-{item.Birthday.Day} : {item.Age}{Environment.NewLine}");
+                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Value.Year}-{item.Birthday.Value.Month}-{item.Birthday.Value.Day} : {item.Age}{Environment.NewLine}");
                         }
                         break;
                     case "3":
@@ -261,7 +261,7 @@ namespace UserAward
                         var letter = Console.ReadLine();
                         foreach (var item in userLogic.GetUserByLetter(letter))
                         {
-                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Year}-{item.Birthday.Month}-{item.Birthday.Day} : {item.Age}{Environment.NewLine}");
+                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Value.Year}-{item.Birthday.Value.Month}-{item.Birthday.Value.Day} : {item.Age}{Environment.NewLine}");
                         }
                         break;
                     case "4":
@@ -269,7 +269,7 @@ namespace UserAward
                         var word = Console.ReadLine();
                         foreach (var item in userLogic.GetUserByWord(word))
                         {
-                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Year}-{item.Birthday.Month}-{item.Birthday.Day} : {item.Age}{Environment.NewLine}");
+                            Console.WriteLine($"{item.IdUser} : {item.Name} : {item.Birthday.Value.Year}-{item.Birthday.Value.Month}-{item.Birthday.Value.Day} : {item.Age}{Environment.NewLine}");
                         }
                         break;
                     case "5":

@@ -9,10 +9,10 @@ namespace Entity
 {
     public class User
     {
-        public int IdUser { get; set; }
+        public int? IdUser { get; set; }
         public string Name { get; set; }
-        public DateTime Birthday { get; set; }
-        public int Age { get; set; }
+        public DateTime? Birthday { get; set; }
+        public int? Age { get; set; }
         public string Email { get; set; }
         public byte[] UserPhoto { get; set; }
         public string Password { get; set; }
