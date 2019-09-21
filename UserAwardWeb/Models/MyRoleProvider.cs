@@ -11,7 +11,7 @@ namespace UserAwardWeb.Models
 {
     public class MyRoleProvider : RoleProvider
     {
-        private IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+        private readonly IAccountLogic accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -46,10 +46,10 @@ namespace UserAwardWeb.Models
                 return new[] { "Admin", "User" };
             }
 
-            var user = userLogic.GetUserByEmail(username);
-            if (user != null)
+            var account = accountLogic.GetAccountByEmail(username);
+            if (account != null)
             {
-                switch (user.Role)
+                switch (account.Role)
                 {
                     case "User":
                         return new[] { "User" };

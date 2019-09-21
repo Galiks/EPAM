@@ -321,7 +321,7 @@ namespace UserAward
                         var role = Console.ReadLine();
                         try
                         {
-                            userLogic.UpdateUser(id_6, name_6, birthday, email, password, role, null);
+                            userLogic.UpdateUser(id_6, name_6, birthday, null);
                         }
                         catch (Exception e)
                         {

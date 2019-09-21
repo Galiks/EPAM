@@ -11,7 +11,7 @@ namespace UserAwardWeb.Models
 {
     public static class Auth
     {
-        private static readonly IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+        private static readonly IAccountLogic accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
         public static bool CanLogin(string email, string password)
         {
             if (email == "admin" && password == "admin")
@@ -20,15 +20,15 @@ namespace UserAwardWeb.Models
             }
             else
             {
-                var user = userLogic.GetUserByEmail(email);
+                var user = accountLogic.GetAccountByEmail(email);
                 if (user == null)
                 {
                     return false;
                 }
 
-                User tempUser = new User() { Password = userLogic.EncryptionPassword(password).ToString() };
+                Account tempAccount = new Account() { Password = accountLogic.EncryptionPassword(password).ToString() };
 
-                if (user.Password == tempUser.Password)
+                if (user.Password == tempAccount.Password)
                 {
                     return true;
                 }

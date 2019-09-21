@@ -30,6 +30,7 @@ namespace UserAward.Container
             {
                 _kernel.Bind<IUserDao>().To<UserDaoDatabase>();
                 _kernel.Bind<IAwardDao>().To<AwardDaoDatabase>();
+                _kernel.Bind<IAccountDao>().To<AccountDaoDatabase>();
             }
 
             else if (numberOfDAL == 2)
@@ -49,6 +50,7 @@ namespace UserAward.Container
             #region Logic
             _kernel.Bind<IUserLogic>().To<UserLogic>();
             _kernel.Bind<IAwardLogic>().To<AwardLogic>();
+            _kernel.Bind<IAccountLogic>().To<AccountLogic>();
             #endregion
         }
     }
