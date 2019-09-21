@@ -30,6 +30,7 @@ CREATE TABLE [Account] (
 	[CreatedAt] datetime NOT NULL,
 	[LoggedInto] datetime NOT NULL,
 	[PasswordLifetime] datetime NOT NULL,
+	[IsBlocked] bit NOT NULL,
 	id_user int unique NOT NULL,
 )
 GO
@@ -512,6 +513,7 @@ CREATE PROCEDURE [dbo].[AddAccount]
 	@CreatedAt datetime,
 	@LoggedInto datetime,
 	@PasswordLifetime datetime,
+	@IsBlocked bit,
 	@Id_account int OUTPUT
 AS
 BEGIN
@@ -523,6 +525,7 @@ BEGIN
 		[CreatedAt],
 		[LoggedInto],
 		[PasswordLifetime],
+		[IsBlocked],
 		[id_user]
 	)
 	VALUES(
@@ -532,6 +535,7 @@ BEGIN
 		@CreatedAt,
 		@LoggedInto,
 		@PasswordLifetime,
+		@IsBlocked,
 		@Id_user
 	)
 
@@ -563,24 +567,26 @@ CREATE PROCEDURE UpdateAccount
 	@Email nvarchar(250),
 	@Password nvarchar(500),
 	@Role nvarchar(150),
+	@IsBlocked int,
 	@Id_user int
 AS
 BEGIN
 	UPDATE Olympics.dbo.Account
 	SET Email = @Email,
 	[Password] = @Password,
-	[Role] = @Role
+	[Role] = @Role,
+	IsBlocked = @IsBlocked
 	WHERE id_user = @Id_user
 END
 GO
 
-CREATE PROCEDURE UpdateLoggerIntoAccount
+CREATE PROCEDURE UpdateLoggedIntoAccount
 	@Id_user int,
-	@LoggerInto datetime
+	@LoggedInto datetime
 AS
 BEGIN
 	Update dbo.Account
-	SET LoggedInto = @LoggerInto
+	SET LoggedInto = @LoggedInto
 	WHERE id_user = id_account
 END
 GO
@@ -617,7 +623,8 @@ BEGIN
 		[CreatedAt],
 		[LoggedInto],
 		[PasswordLifetime],
-		id_user
+		id_user,
+		[IsBlocked]
 	FROM Account
 	WHERE Email = @Email
 END

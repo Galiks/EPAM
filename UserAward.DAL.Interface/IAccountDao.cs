@@ -10,9 +10,9 @@ namespace UserAward.DAL.Interface
     public interface IAccountDao
     {
         int? AddAccount(Account account);
-        void DeleteAccount(int idAccount);
+        void DeleteAccount(int idUser);
         void UpdateAccount(Account account);
-        void UpdateLoggerIntoAccount(int idUser, DateTime loggerInto);
+        void UpdateLoggerIntoAccount(int idUser, DateTime loggedInto);
         void UpdatePasswordLifetimeAccount(int idUser, DateTime passwordLifetime);
         Account GetAccountByEmail(string email);
     }

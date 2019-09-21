@@ -15,6 +15,7 @@ namespace Entity
         public DateTime? CreatedAt { get; set; }
         public DateTime? LoggedInto { get; set; }
         public DateTime? PasswordLifetime { get; set; }
+        public bool IsBlocked { get; set; }
         public int? IdUser { get; set; }
     }
 }
