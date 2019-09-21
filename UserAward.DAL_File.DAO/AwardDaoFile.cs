@@ -138,5 +138,10 @@ namespace UserAward.DAL_File.DAO
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

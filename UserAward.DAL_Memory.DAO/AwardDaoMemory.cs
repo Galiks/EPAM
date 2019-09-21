@@ -71,5 +71,10 @@ namespace UserAward.DAL_Memory.DAO
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace UserAward.DAL.Interface
         int UpdateAward(int id, Award award);
         int DeleteAwardFromUser(int userId, int awardId);
         int DeleteAwardFromAllUsers(int awardId);
+        IEnumerable<Award> GetAwardFromUserAward(int idUser);
     }
 }

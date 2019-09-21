@@ -18,12 +18,22 @@ CREATE TABLE [User] (
 	[Name] nvarchar(50) NOT NULL,
 	Birthday date NOT NULL,
 	Age int NOT NULL,
-	[Email] nvarchar(250) unique NOT NULL,
-	[Password] nvarchar(500) NOT NULL,
-	[Role] nvarchar(150) NOT NULL,
 	UserPhoto varbinary(MAX)
 )
 GO
+
+CREATE TABLE [Account] (
+	id_account int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Account] primary key,
+	[Email] nvarchar(250) unique NOT NULL,
+	[Password] nvarchar(500) NOT NULL,
+	[Role] nvarchar(150) NOT NULL,
+	[CreatedAt] datetime NOT NULL,
+	[LoggedInto] datetime NOT NULL,
+	[PasswordLifetime] datetime NOT NULL,
+	id_user int unique NOT NULL,
+)
+GO
+
 CREATE TABLE Award (
 	id_award int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Award] primary key,
 	Title nvarchar(50) NOT NULL,
@@ -39,18 +49,11 @@ CREATE TABLE User_Award (
 )
 GO
 
---CREATE TABLE [Role] (
---	id_role int IDENTITY(1,1) NOT NULL CONSTRAINT [PK_Role] primary key,
---	[Name] nvarchar(50) NOT NULL,
---	id_user int NOT NULL,
---)
---GO
-
---ALTER TABLE [Role] ADD CONSTRAINT [FK_Role_TO_User]
---FOREIGN KEY ([id_user]) references [User]([id_user])
---on delete cascade
---on update cascade
---GO
+ALTER TABLE [Account] ADD CONSTRAINT [FK_Account_TO_User]
+FOREIGN KEY ([id_user]) references [User]([id_user])
+on delete cascade
+on update cascade
+GO
 
 ALTER TABLE [User_Award] ADD CONSTRAINT [FK_User_Award_TO_User]
 FOREIGN KEY ([id_user]) references [User]([id_user])
@@ -73,9 +76,6 @@ Create PROCEDURE AddUser --1
 	@Name nvarchar(50),
 	@Birthday date,
 	@Age int,
-	@Email nvarchar(250),
-	@Password nvarchar(500),
-	@Role nvarchar(150),
 	@UserPhoto varbinary(MAX),
 	@Id int OUTPUT
 AS
@@ -84,17 +84,11 @@ BEGIN
            ([Name]
            ,[Birthday]
            ,[Age]
-		   ,[Email]
-		   ,[Password]
-		   ,[Role]
 		   ,[UserPhoto])
      VALUES
            (@Name,
 		    @Birthday, 
-			@Age, 
-			@Email,
-			@Password,
-			@Role,
+			@Age,
 			@UserPhoto)
 
 	SET @Id = @@IDENTITY
@@ -129,9 +123,6 @@ BEGIN
       ,[Name]
       ,[Birthday]
       ,[Age]
-	  ,[Email]
-	  ,[Password]
-	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [id_user] = @ID
@@ -151,9 +142,6 @@ BEGIN
       ,[Name]
       ,[Birthday]
       ,[Age]
-	  ,[Email]
-	  ,[Password]  
-	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE @NAME
@@ -174,9 +162,6 @@ BEGIN
       ,[Name]
       ,[Birthday]
       ,[Age]
-	  ,[Email]
-	  ,[Password]
-	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE @LETTER + '%'
@@ -196,9 +181,6 @@ BEGIN
       ,[Name]
       ,[Birthday]
       ,[Age]
-	  ,[Email]
-	  ,[Password]
-	  ,[Role]
 	  ,[UserPhoto]
   FROM [Olympics].[dbo].[User]
   WHERE [Name] LIKE (@WORD+'%'+@WORD)
@@ -215,9 +197,6 @@ CREATE PROCEDURE UpdateUser--7
 	@NAME nvarchar(100),
 	@BIRTHDAY date,
 	@AGE int,
-	@Email nvarchar(250),
-	@Password nvarchar(500),
-	@Role nvarchar(150),
 	@UserPhoto varbinary(MAX),
 	@Id_update int OUTPUT
 AS
@@ -227,9 +206,6 @@ BEGIN
 	[Name] = @NAME,
 	Birthday = @BIRTHDAY,
 	Age = @AGE,
-	Email = @Email,
-	[Password] = @Password,
-	[Role] = @Role,
 	UserPhoto = @UserPhoto,
 	@Id_update = @ID
 	WHERE id_user = @ID
@@ -243,8 +219,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE AddAward --8
 	@TITLE nvarchar(50),
-	@DESCRIPTION nvarchar(300),
-	@AwardImage varbinary(MAX),
+	@DESCRIPTION nvarchar(300) ='Empty Description',
+	@AwardImage varbinary(MAX) = null,
 	@Id int OUTPUT
 AS
 BEGIN
@@ -440,42 +416,8 @@ BEGIN
 	JOIN Award AS A ON UA.id_award = A.id_award
 	WHERE id_user = @ID_USER
 END
+GO
 
--- ================================================
--- Template generated from Template Explorer using:
--- Create Procedure (New Menu).SQL
---
--- Use the Specify Values for Template Parameters 
--- command (Ctrl-Shift-M) to fill in the parameter 
--- values below.
---
--- This block of comments will not be included in
--- the definition of the procedure.
--- ================================================
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
-CREATE PROCEDURE GetUserByEmail
-	-- Add the parameters for the stored procedure here
-	@Email nvarchar(250)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-	SELECT *
-	FROM [User]
-	Where Email = @Email
-END
-GO
 -- ================================================
 -- Template generated from Template Explorer using:
 -- Create Procedure (New Menu).SQL
@@ -546,3 +488,136 @@ BEGIN
 	Where id_award = @AwardId
 END
 GO
+
+CREATE PROCEDURE GetCurrentDate
+AS
+BEGIN
+ SELECT GETDATE()
+END
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[AddAccount]
+	@Email nvarchar(250),
+	@Password nvarchar(500),
+	@Role nvarchar(150),
+	@Id_user int,
+	@CreatedAt datetime,
+	@LoggedInto datetime,
+	@PasswordLifetime datetime,
+	@Id_account int OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO Account(
+		[Email],
+		[Password],
+		[Role],
+		[CreatedAt],
+		[LoggedInto],
+		[PasswordLifetime],
+		[id_user]
+	)
+	VALUES(
+		@Email,
+		@Password,
+		@Role,
+		@CreatedAt,
+		@LoggedInto,
+		@PasswordLifetime,
+		@Id_user
+	)
+
+	SET @Id_account = @@IDENTITY
+END
+
+GO
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE UpdateAccount
+	@Email nvarchar(250),
+	@Password nvarchar(500),
+	@Role nvarchar(150),
+	@Id_user int
+AS
+BEGIN
+	UPDATE Olympics.dbo.Account
+	SET Email = @Email,
+	[Password] = @Password,
+	[Role] = @Role
+	WHERE id_user = @Id_user
+END
+GO
+
+CREATE PROCEDURE UpdateLoggerIntoAccount
+	@Id_user int,
+	@LoggerInto datetime
+AS
+BEGIN
+	Update dbo.Account
+	SET LoggedInto = @LoggerInto
+	WHERE id_user = id_account
+END
+GO
+
+CREATE PROCEDURE UpdatePasswordLifetimeAccount
+	@Id_user int,
+	@PasswordLifetime datetime
+AS
+BEGIN
+	Update Account
+	SET PasswordLifetime = @PasswordLifetime
+	WHERE id_user = @Id_user
+END
+GO
+
+CREATE PROCEDURE DeleteAccount
+	@Id_user int
+AS
+BEGIN
+	DELETE FROM Account
+	WHERE id_user = @Id_user
+END
+GO
+
+CREATE PROCEDURE GetAccountByEmail
+	@Email nvarchar(250)
+AS
+BEGIN
+	SELECT id_account,
+		id_user,
+		Email,
+		[Password],
+		[Role],
+		[CreatedAt],
+		[LoggedInto],
+		[PasswordLifetime],
+		id_user
+	FROM Account
+	WHERE Email = @Email
+END

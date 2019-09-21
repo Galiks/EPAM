@@ -108,7 +108,7 @@ namespace UserAward
                         var password = Console.ReadLine();
                         Console.Write($"User's Role: ");
                         var role = Console.ReadLine();
-                        if (userLogic.AddUser(name, birthday, email, password, role, null))
+                        if (userLogic.AddUser(name, birthday, null))
                         {
                             Console.WriteLine($"User is created!{Environment.NewLine}");
                         }

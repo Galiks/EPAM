@@ -280,6 +280,40 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
+        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "GetAwardFromUser_Award";
+
+                var id = new SqlParameter("@ID_USER", SqlDbType.Int)
+                {
+                    Value = idUser
+                };
+
+                command.Parameters.Add(id);
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new Award()
+                        {
+                            IdAward = (int)reader["id_award"],
+                            Title = (string)reader["Title"],
+                            Description = (string)reader["Description"],
+                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
+                        };
+                    }
+                }
+            }
+        }
+
         public IEnumerable<Award> GetAwards()
         {
             using (var connection = new SqlConnection(_connectionString))

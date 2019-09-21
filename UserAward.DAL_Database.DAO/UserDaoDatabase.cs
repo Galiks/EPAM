@@ -54,33 +54,9 @@ namespace UserAward.DAL_Database.DAO
 
                     new SqlParameter
                     {
-                        ParameterName = "@Email",
-                        Value = user.Email,
-                        SqlDbType = SqlDbType.NVarChar,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Password",
-                        Value = user.Password,
-                        SqlDbType = SqlDbType.NVarChar,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
                         ParameterName = "@UserPhoto",
                         Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null,
                         SqlDbType = SqlDbType.VarBinary,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Role",
-                        Value = user.Role,
-                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
                 });
@@ -148,8 +124,6 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
-                            Role = (string)reader["Role"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -189,7 +163,6 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -227,7 +200,6 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -265,7 +237,6 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -302,7 +273,6 @@ namespace UserAward.DAL_Database.DAO
                             Name = (string)reader["Name"],
                             Birthday = (DateTime)reader["Birthday"],
                             Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
                             UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
                         };
                     }
@@ -370,27 +340,12 @@ namespace UserAward.DAL_Database.DAO
                     Value = user.Age
                 };
 
-                var email = new SqlParameter("@Email", SqlDbType.NVarChar)
-                {
-                    Value = user.Email
-                };
-
-                var password = new SqlParameter("@Password", SqlDbType.NVarChar)
-                {
-                    Value = user.Password
-                };
-
                 var userPhoto = new SqlParameter("@UserPhoto", SqlDbType.VarBinary)
                 {
                     Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null
                 };
-
-                var role = new SqlParameter("@Role", SqlDbType.NVarChar)
-                {
-                    Value = user.Role
-                };
-
-                command.Parameters.AddRange(new[] { id, name, age, birthday, email, password, userPhoto, role });
+                
+                command.Parameters.AddRange(new[] { id, name, age, birthday, userPhoto });
 
                 var idUpdate = new SqlParameter
                 {
@@ -405,80 +360,46 @@ namespace UserAward.DAL_Database.DAO
             }
         }
 
-        public IEnumerable<Award> GetAwardFromUserAward(int idUser)
-        {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = connection.CreateCommand();
-
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "GetAwardFromUser_Award";
-
-                var id = new SqlParameter("@ID_USER", SqlDbType.Int)
-                {
-                    Value = idUser
-                };
-
-                command.Parameters.Add(id);
-
-                connection.Open();
-
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        yield return new Award()
-                        {
-                            IdAward = (int)reader["id_award"],
-                            Title = (string)reader["Title"],
-                            Description = (string)reader["Description"],
-                            AwardImage = reader["AwardImage"] is System.DBNull ? null : (byte[])reader["AwardImage"],
-                        };
-                    }
-                }
-
-            }
-        }
-
         public User GetUserByEmail(string email)
         {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = connection.CreateCommand();
+            throw new NotImplementedException();
+            //using (var connection = new SqlConnection(_connectionString))
+            //{
+            //    var command = connection.CreateCommand();
 
-                command.CommandType = CommandType.StoredProcedure;
+            //    command.CommandType = CommandType.StoredProcedure;
 
-                command.CommandText = "GetUserByEmail";
+            //    command.CommandText = "GetUserByEmail";
 
-                var parameterEmail = new SqlParameter("@Email", SqlDbType.NVarChar)
-                {
-                    Value = email
-                };
+            //    var parameterEmail = new SqlParameter("@Email", SqlDbType.NVarChar)
+            //    {
+            //        Value = email
+            //    };
 
-                command.Parameters.Add(parameterEmail);
+            //    command.Parameters.Add(parameterEmail);
 
-                connection.Open();
+            //    connection.Open();
 
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        return new User
-                        {
-                            IdUser = (int)reader["id_user"],
-                            Name = (string)reader["Name"],
-                            Birthday = (DateTime)reader["Birthday"],
-                            Age = (int)reader["Age"],
-                            Email = (string)reader["Email"],
-                            Password = (string)reader["Password"],
-                            Role = (string)reader["Role"],
-                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
-                        };
-                    }
-                }
+            //    using (var reader = command.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            return new User
+            //            {
+            //                IdUser = (int)reader["id_user"],
+            //                Name = (string)reader["Name"],
+            //                Birthday = (DateTime)reader["Birthday"],
+            //                Age = (int)reader["Age"],
+            //                Email = (string)reader["Email"],
+            //                Password = (string)reader["Password"],
+            //                Role = (string)reader["Role"],
+            //                UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"],
+            //            };
+            //        }
+            //    }
 
-                return null;
-            }
+            //    return null;
+            //}
         }
     }
 }

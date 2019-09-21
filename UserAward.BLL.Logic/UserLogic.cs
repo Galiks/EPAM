@@ -12,22 +12,19 @@ namespace UserAward.BLL.Logic
     public class UserLogic : IUserLogic
     {
         private readonly IUserDao _userDao;
+        private readonly IAwardDao _awardDao;
 
-        public UserLogic(IUserDao userDao)
+        public UserLogic(IUserDao userDao, IAwardDao awardDao)
         {
             _userDao = userDao;
+            _awardDao = awardDao;
         }
 
-        public bool AddUser(string name, string birthday, string email, string password, string role, byte[] userPhoto)
+        public bool AddUser(string name, string birthday, byte[] userPhoto)
         {
-            if (!Validation.Validation.IsEmptyStrings(name, birthday, email, password))
+            if (!Validation.Validation.IsEmptyStrings(name, birthday))
             {
                 throw new ArgumentNullException(nameof(name), "Parameters must be not null");
-            }
-
-            if (!Validation.Validation.IsRightEmail(email))
-            {
-                throw new ArgumentException(nameof(email), "Incorrect email");
             }
 
             if (DateTime.TryParse(birthday, out DateTime rightBirthday))
@@ -40,7 +37,7 @@ namespace UserAward.BLL.Logic
                     throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
                 }
 
-                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), Email = email, Password = EncryptionPassword(password).ToString(), Role = role, UserPhoto = userPhoto };
+                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), UserPhoto = userPhoto };
 
                 _userDao.AddUser(newUser);
 
@@ -136,14 +133,14 @@ namespace UserAward.BLL.Logic
             throw new ArgumentNullException($"Word is null");
         }
 
-        public bool UpdateUser(string id, string name, string birthday, string email, string password, string role, byte[] userPhoto)
+        public bool UpdateUser(string id, string name, string birthday, byte[] userPhoto)
         {
 
             if (DateTime.TryParse(birthday, out DateTime dateTime) && (int.TryParse(id, out int userId)))
             {
                 if (GetUserById(userId) != null)
                 {
-                    User user = new User { Name = name, Birthday = dateTime, Age = SetAge(dateTime), Email = email, Password = password, UserPhoto = userPhoto };
+                    User user = new User { Name = name, Birthday = dateTime, Age = SetAge(dateTime), UserPhoto = userPhoto };
 
                     _userDao.UpdateUser(userId, user);
 
@@ -173,7 +170,7 @@ namespace UserAward.BLL.Logic
 
                 if ((user != null))
                 {
-                    var awardsByUser = _userDao.GetAwardFromUserAward(userId);
+                    var awardsByUser = _awardDao.GetAwardFromUserAward(userId); //_userDao.GetAwardFromUserAward(userId);
                     if (awardsByUser.Any(award => award.IdAward == awardId))
                     {
                         throw new Exception($"This user already has award like this");
@@ -209,7 +206,7 @@ namespace UserAward.BLL.Logic
                 var user = GetUserById(userId);
                 if (user != null)
                 {
-                    List<Award> awardsByUser = _userDao.GetAwardFromUserAward(userId).ToList();
+                    List<Award> awardsByUser = _awardDao.GetAwardFromUserAward(userId).ToList(); //_userDao.GetAwardFromUserAward(userId).ToList();
                     if (awardsByUser.Count == 0)
                     {
                         throw new NullReferenceException($"DB has no information");
