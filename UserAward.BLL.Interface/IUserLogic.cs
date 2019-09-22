@@ -9,7 +9,7 @@ namespace UserAward.BLL.Interface
 {
     public interface IUserLogic
     {
-        bool AddUser(string name, string birthday, byte[] userPhoto);
+        int? AddUser(string name, string birthday, byte[] userPhoto);
         bool DeleteUser(string id);
         User GetUserById<T>(T id);
         IEnumerable<User> GetUserByName(string name);

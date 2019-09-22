@@ -55,6 +55,8 @@ namespace UserAward.DAL_Database.DAO
 
                 connection.Open();
 
+                command.ExecuteNonQuery();
+
                 return (int)id.Value;
             }
         }

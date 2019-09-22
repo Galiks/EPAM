@@ -17,7 +17,7 @@ namespace UserAward.DAL_Database.DAO
             _connectionString = ConfigurationManager.ConnectionStrings["Olympics"].ConnectionString;
         }
 
-        public int AddUser(User user)
+        public int? AddUser(User user)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -48,7 +48,7 @@ namespace UserAward.DAL_Database.DAO
                     {
                         ParameterName = "@Age",
                         Value = user.Age,
-                        SqlDbType = SqlDbType.NVarChar,
+                        SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     },
 
@@ -59,6 +59,8 @@ namespace UserAward.DAL_Database.DAO
                         SqlDbType = SqlDbType.VarBinary,
                         Direction = ParameterDirection.Input
                     },
+
+
                 });
 
                 var id = new SqlParameter
@@ -67,10 +69,14 @@ namespace UserAward.DAL_Database.DAO
                     SqlDbType = SqlDbType.Int,
                     Direction = ParameterDirection.Output,
                 };
+
+                command.Parameters.Add(id);
                 
                 connection.Open();
 
-                return (int)id.Value;
+                command.ExecuteNonQuery();
+
+                return (int?)id.Value;
             }
         }
 
@@ -257,7 +263,6 @@ namespace UserAward.DAL_Database.DAO
                                         ,[Name]
                                         ,[Birthday]
                                         ,[Age]
-                                        ,[Email]
                                         ,[UserPhoto]
                                         FROM [Olympics].[dbo].[User]";
 

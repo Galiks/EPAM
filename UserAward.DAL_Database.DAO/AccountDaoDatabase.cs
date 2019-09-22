@@ -69,15 +69,7 @@ namespace UserAward.DAL_Database.DAO
                     new SqlParameter
                     {
                         ParameterName = "@PasswordLifetime",
-                        Value = account.CreatedAt,
-                        SqlDbType = SqlDbType.DateTime,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@PasswordLifetime",
-                        Value = account.CreatedAt,
+                        Value = account.PasswordLifetime,
                         SqlDbType = SqlDbType.DateTime,
                         Direction = ParameterDirection.Input
                     },
@@ -106,9 +98,13 @@ namespace UserAward.DAL_Database.DAO
                     Direction = ParameterDirection.Output,
                 };
 
+                command.Parameters.Add(id);
+
                 connection.Open();
 
-                return (int)id.Value;
+                command.ExecuteNonQuery();
+
+                return (int?)id.Value;
             }
         }
 

@@ -13,18 +13,18 @@ namespace UserAward.BLL.Logic
     public class AccountLogic : IAccountLogic
     {
         private readonly IAccountDao accountDao;
-        private readonly IUserLogic userLogic;
+        private readonly IUserDao userDao;
 
-        public AccountLogic(IAccountDao accountDao, IUserLogic userLogic)
+        public AccountLogic(IAccountDao accountDao, IUserDao userDao)
         {
             this.accountDao = accountDao;
-            this.userLogic = userLogic;
+            this.userDao = userDao;
         }
 
-        public int? AddAccount(string email, string password, string role, string createdAt, string idUser)
+        public int? AddAccount(string email, string password, string role, string idUser)
         {
             #region Validation
-            if (Validation.Validation.IsEmptyStrings(email, password, role, createdAt, idUser))
+            if (Validation.Validation.IsEmptyStrings(email, password, role, idUser))
             {
                 throw new ArgumentNullException("Parametres must be not null");
             }
@@ -39,20 +39,16 @@ namespace UserAward.BLL.Logic
                 throw new ArgumentException("Incorrect user's id");
             }
 
-            if (!DateTime.TryParse(createdAt, out DateTime realCreatedAt))
-            {
-                throw new ArgumentException("Incorrect created time");
-            }
+            bool isUserExists = userDao.GetUserById(realIdUser) is null;
 
-            bool isUserExists = userLogic.GetUserById(idUser) is null;
-
-            if (!isUserExists)
+            if (isUserExists)
             {
                 throw new Exception("User doesn't exists");
             }
             #endregion
 
-            DateTime passwordLifetime = realCreatedAt.AddYears(1);
+            DateTime createdAt = DateTime.Now;
+            DateTime passwordLifetime = createdAt.AddYears(1);
 
             Account account = new Account()
             {
@@ -60,17 +56,24 @@ namespace UserAward.BLL.Logic
                 Password = EncryptionPassword(password).ToString(),
                 Role = role,
                 IdUser = realIdUser,
-                CreatedAt = realCreatedAt,
+                CreatedAt = createdAt,
                 IsBlocked = false,
-                LoggedInto = default,
+                LoggedInto = DateTime.MaxValue,
                 PasswordLifetime = passwordLifetime
             };
 
-            return accountDao.AddAccount(account);
+            try
+            {
+                return accountDao.AddAccount(account);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
         }
 
-        public void DeleteAccount(string idAccount)
+        public bool DeleteAccount(string idAccount)
         {
             if (Validation.Validation.IsEmptyStrings(idAccount))
             {
@@ -82,7 +85,15 @@ namespace UserAward.BLL.Logic
                 throw new ArgumentException("Invalid account's id");
             }
 
-            accountDao.DeleteAccount(realIdAccount);
+            try
+            {
+                accountDao.DeleteAccount(realIdAccount);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public Guid EncryptionPassword(string password)
@@ -116,7 +127,7 @@ namespace UserAward.BLL.Logic
             return accountDao.GetAccountByEmail(email);
         }
 
-        public void UpdateAccount(string email, string password, string role, string createdAt, string loggedInto, string passwordLifetime, bool isBlocked, string idUser)
+        public bool UpdateAccount(string email, string password, string role, string createdAt, string loggedInto, string passwordLifetime, bool isBlocked, string idUser)
         {
             #region Validation
             if (Validation.Validation.IsEmptyStrings(idUser))
@@ -152,20 +163,29 @@ namespace UserAward.BLL.Logic
             }
             #endregion
 
-            Account account = accountDao.GetAccountByIdUser(realIdUser);
+            try
+            {
+                Account account = accountDao.GetAccountByIdUser(realIdUser);
 
-            account.Email = string.IsNullOrWhiteSpace(email) ? account.Email : email;
-            account.Password = string.IsNullOrWhiteSpace(password) ? account.Password : EncryptionPassword(password).ToString();
-            account.Role = string.IsNullOrWhiteSpace(role) ? account.Role : role;
-            account.CreatedAt = realCreatedAt == default ? account.CreatedAt : realCreatedAt;
-            account.LoggedInto = realLoggedInto == default ? account.LoggedInto : realLoggedInto;
-            account.PasswordLifetime = realPasswordLifetime == default ? account.PasswordLifetime : realPasswordLifetime;
-            account.IsBlocked = isBlocked;
+                account.Email = string.IsNullOrWhiteSpace(email) ? account.Email : email;
+                account.Password = string.IsNullOrWhiteSpace(password) ? account.Password : EncryptionPassword(password).ToString();
+                account.Role = string.IsNullOrWhiteSpace(role) ? account.Role : role;
+                account.CreatedAt = realCreatedAt == default(DateTime) ? account.CreatedAt : realCreatedAt;
+                account.LoggedInto = realLoggedInto == default(DateTime) ? account.LoggedInto : realLoggedInto;
+                account.PasswordLifetime = realPasswordLifetime == default(DateTime) ? account.PasswordLifetime : realPasswordLifetime;
+                account.IsBlocked = isBlocked;
 
-            accountDao.UpdateAccount(account);
+                accountDao.UpdateAccount(account);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
-        public void UpdateLoggerIntoAccount(string idUser, string loggerInto)
+        public bool UpdateLoggerIntoAccount(string idUser, string loggerInto)
         {
             #region Validation
             if (Validation.Validation.IsEmptyStrings(loggerInto))
@@ -187,13 +207,21 @@ namespace UserAward.BLL.Logic
             if (isAccountExists)
             {
                 throw new Exception("Account is not exists");
-            } 
+            }
             #endregion
 
-            accountDao.UpdateLoggerIntoAccount(realIdUser, realLoggerInto);
+            try
+            {
+                accountDao.UpdateLoggerIntoAccount(realIdUser, realLoggerInto);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
-        public void UpdatePasswordLifetimeAccount(string idUser, string passwordLifetime)
+        public bool UpdatePasswordLifetimeAccount(string idUser, string passwordLifetime)
         {
             #region Validation
             if (Validation.Validation.IsEmptyStrings(passwordLifetime))
@@ -215,10 +243,18 @@ namespace UserAward.BLL.Logic
             if (isAccountExists)
             {
                 throw new Exception("Account is not exists");
-            } 
+            }
             #endregion
 
-            accountDao.UpdatePasswordLifetimeAccount(realIdUser, realPasswordLifetime);
+            try
+            {
+                accountDao.UpdatePasswordLifetimeAccount(realIdUser, realPasswordLifetime);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

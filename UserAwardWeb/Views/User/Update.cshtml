@@ -10,6 +10,7 @@
 
 @{
     IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    IAccountLogic accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
     List<string> roles = new List<string>() { "Admin", "User" };
     SelectList selectsRole = new SelectList(roles);
     if (IsPost)
@@ -19,16 +20,21 @@
             string userId = Request["userId"];
             string name = Request["name"];
             string email = Request["email"];
-            string date = Request["date"];
+            string date = Request["birthday"];
             string password = Request["password"];
             string role = Request["role"];
+            string createdAt = Request["createdAt"];
+            string loggedInto = Request["loggedInto"];
+            string passwordLifetime = Request["passwordLifetime"];
+            bool isBlocked = Request["isBlocked"] == "on" ? true : false;
             WebImage photo = WebImage.GetImageFromRequest("image");
             byte[] userPhoto = null;
             if (photo != null)
             {
                 userPhoto = photo.GetBytes();
             }
-            bool isRightOperation = userLogic.UpdateUser(userId, name, date, email, password, role, userPhoto);
+            bool isRightOperation = userLogic.UpdateUser(userId, name, date, userPhoto) & accountLogic.UpdateAccount(email, password, role, createdAt, loggedInto, passwordLifetime, isBlocked, userId);
+
         }
         catch (Exception e)
         {
@@ -49,15 +55,24 @@
     {
         <div>
             <form method="post" class="form-group">
-                <p>User's ID</p><input type="number" id="userId" name="userId" />
-                <p>Name</p><input type="text" id="name" name="name" />
-                <p>Email</p><input type="text" id="email" name="email" />
-                <p>Birthday</p><input type="date" id="date" name="date" />
-                <p>Password</p><input type="password" id="password" name="password" />
+                <p>User's ID</p><input type="number" id="userId" name="userId" value="15"/>
+
+                <p>Email</p><input type="text" id="email" name="email" value="test.test@test.ru"/>
+                <p>Password</p><input type="password" id="password" name="password" value="123"/>
+
+                <p>Name</p><input type="text" id="name" name="name" value="Pasha"/>
+                <p>Birthday</p><input type="date" id="birthday" name="birthday" value="1996-12-04" />
+
                 <div class="col-md-6">
                     @Html.DropDownList("role", selectsRole as SelectList)
                 </div>
                 <p>Photo</p><input type="file" id="image" name="image" />
+
+                <p>Created At</p><input type="date" id="createdAt" name="createdAt" value="2019-09-22 19:32:47.210"/>
+                <p>Logged Into</p><input type="date" id="loggedInto" name="loggedInto" value="9999-12-31 23:59:59.997"/>
+                <p>Password Lifetime</p><input type="date" id="passwordLifetime" name="passwordLifetime" value="2020-09-22 19:32:47.210"/>
+                <p>Is Blocked</p><input type="checkbox" id="isBlocked" name="isBlocked" />
+
                 <button class="alert-danger">Update</button>
             </form>
             <form action="~/User/Index">

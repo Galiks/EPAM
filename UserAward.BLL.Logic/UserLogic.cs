@@ -20,9 +20,9 @@ namespace UserAward.BLL.Logic
             _awardDao = awardDao;
         }
 
-        public bool AddUser(string name, string birthday, byte[] userPhoto)
+        public int? AddUser(string name, string birthday, byte[] userPhoto)
         {
-            if (!Validation.Validation.IsEmptyStrings(name, birthday))
+            if (Validation.Validation.IsEmptyStrings(name, birthday))
             {
                 throw new ArgumentNullException(nameof(name), "Parameters must be not null");
             }
@@ -37,11 +37,10 @@ namespace UserAward.BLL.Logic
                     throw new ArgumentException(nameof(birthday), "Incorrect date of birthday");
                 }
 
-                var newUser = new User { IdUser = SetIdUser(), Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), UserPhoto = userPhoto };
+                var newUser = new User { Name = name, Birthday = rightBirthday, Age = SetAge(rightBirthday), UserPhoto = userPhoto };
 
-                _userDao.AddUser(newUser);
+                return _userDao.AddUser(newUser);
 
-                return true;
             }
             else
             {
@@ -135,30 +134,56 @@ namespace UserAward.BLL.Logic
 
         public bool UpdateUser(string id, string name, string birthday, byte[] userPhoto)
         {
-
-            if (DateTime.TryParse(birthday, out DateTime dateTime) && (int.TryParse(id, out int userId)))
+            if (!int.TryParse(id, out int userId))
             {
-                if (GetUserById(userId) != null)
-                {
-                    User user = new User { Name = name, Birthday = dateTime, Age = SetAge(dateTime), UserPhoto = userPhoto };
-
-                    _userDao.UpdateUser(userId, user);
-
-                    return true;
-                }
-                else
-                {
-                    //Console.WriteLine($"DB has no information");
-                    throw new NullReferenceException($"DB has no information");
-                    //return false;
-                }
+                throw new ArgumentException($"Incorrect user's id");
             }
-            else
+
+            if (!DateTime.TryParse(birthday, out DateTime realBirthday) && !string.IsNullOrWhiteSpace(birthday))
             {
-                throw new ArgumentException($"Incorrect id or birthday");
-                //Console.WriteLine($"Incorrect id or birthday");
-                //return false;
+                throw new ArgumentException("Incorrect created time");
             }
+
+            User user = GetUserById(userId);
+
+            user.Name = string.IsNullOrWhiteSpace(name) ? user.Name : name;
+            user.Birthday = realBirthday == default(DateTime) ? user.Birthday : realBirthday;
+            user.Age = realBirthday == default(DateTime) ? user.Age : SetAge(realBirthday);
+            user.UserPhoto = userPhoto == null ? user.UserPhoto : userPhoto;
+
+            try
+            {
+                _userDao.UpdateUser(userId, user);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+            //if (DateTime.TryParse(birthday, out DateTime dateTime) && (int.TryParse(id, out int userId)))
+            //{
+            //    if (GetUserById(userId) != null)
+            //    {
+            //        User user = new User { Name = name, Birthday = dateTime, Age = SetAge(dateTime), UserPhoto = userPhoto };
+
+            //        _userDao.UpdateUser(userId, user);
+
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        //Console.WriteLine($"DB has no information");
+            //        throw new NullReferenceException($"DB has no information");
+            //        //return false;
+            //    }
+            //}
+            //else
+            //{
+            //    throw new ArgumentException($"Incorrect id or birthday");
+            //    //Console.WriteLine($"Incorrect id or birthday");
+            //    //return false;
+            //}
         }
 
         public bool Rewarding(string idUser, string idAward)

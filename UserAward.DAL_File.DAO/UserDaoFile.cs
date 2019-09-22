@@ -32,7 +32,7 @@ namespace UserAward.DAL_File.DAO
             }
         }
 
-        public int AddUser(User user)
+        public int? AddUser(User user)
         {
             using (StreamWriter writer = File.AppendText(pathToUserFile))
             {

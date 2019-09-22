@@ -1,10 +1,5 @@
-﻿using Entity;
-using Ninject;
+﻿using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UserAward.BLL.Interface;
 using UserAward.Container;
 
@@ -103,12 +98,7 @@ namespace UserAward
                         Console.Write($"User's Birthday: ");
                         var birthday = Console.ReadLine();
                         Console.Write($"User's Email: ");
-                        var email = Console.ReadLine();
-                        Console.Write($"User's Password: ");
-                        var password = Console.ReadLine();
-                        Console.Write($"User's Role: ");
-                        var role = Console.ReadLine();
-                        if (userLogic.AddUser(name, birthday, null))
+                        if (userLogic.AddUser(name, birthday, null) != default)
                         {
                             Console.WriteLine($"User is created!{Environment.NewLine}");
                         }
@@ -314,11 +304,6 @@ namespace UserAward
                         Console.Write($"User's Birthday: ");
                         var birthday = Console.ReadLine();
                         Console.Write($"User's Email: ");
-                        var email = Console.ReadLine();
-                        Console.Write($"User's Password: ");
-                        var password = Console.ReadLine();
-                        Console.Write($"User's Role: ");
-                        var role = Console.ReadLine();
                         try
                         {
                             userLogic.UpdateUser(id_6, name_6, birthday, null);
@@ -394,7 +379,6 @@ namespace UserAward
                     case "6":
                         Console.Write($"award's ID: ");
                         var id_6 = Console.ReadLine();
-                        var result_6 = awardLogic.GetAwardById(id_6);
                         Console.Write($"award's Titile: ");
                         var title = Console.ReadLine();
                         Console.Write($"award's Description: ");

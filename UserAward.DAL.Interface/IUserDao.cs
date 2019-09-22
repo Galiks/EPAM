@@ -9,7 +9,7 @@ namespace UserAward.DAL.Interface
 {
     public interface IUserDao
     {
-        int AddUser(User user);
+        int? AddUser(User user);
         int DeleteUser(int id);
         IEnumerable<User> GetUsers();
         User GetUserById(int id);

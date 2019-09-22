@@ -10,6 +10,7 @@
 
 @{
     IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    IAccountLogic accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
     List<string> roles = new List<string>() { "Admin", "User" };
     SelectList selectsRole = new SelectList(roles);
     if (IsPost)
@@ -18,16 +19,21 @@
         {
             string name = Request["name"];
             string email = Request["email"];
-            string date = Request["date"];
+            string birthday = Request["date"];
             string password = Request["password"];
             string role = Request["role"];
+            if (role == null)
+            {
+                role = "User";
+            }
             WebImage photo = WebImage.GetImageFromRequest("image");
             byte[] userPhoto = null;
             if (photo != null)
             {
                 userPhoto = photo.GetBytes();
             }
-            bool isRightOperation = userLogic.AddUser(name, date, email, password, role, userPhoto);
+            int? idUser = userLogic.AddUser(name, birthday, userPhoto);
+            accountLogic.AddAccount(email, password, role, idUser.ToString());
         }
         catch (Exception e)
         {
@@ -44,16 +50,24 @@
     <title>Create</title>
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    @if (!User.Identity.IsAuthenticated || User.IsInRole("Admin"))
     {
         <form method="post" class="form-group" enctype="multipart/form-data">
-            <p>Name</p><input type="text" id="name" name="name" value="Pasha" />
-            <p>Email</p><input type="text" id="email" name="email" value="test.test@test.ru" />
-            <p>Birthday</p><input type="date" id="date" name="date" value="1996-12-04" />
-            <p>Password</p><input type="password" id="password" name="password" value="123" />
-            <div class="col-md-6">
-                Role: @Html.DropDownList("role", selectsRole as SelectList)
-            </div>
+
+            <div>Email: <input type="text" id="email" name="email" value="test.test@test.ru" /></div>
+            <div>Password: <input type="password" id="password" name="password" value="123" /></div>
+
+            <div>Name: <input type="text" id="name" name="name" value="Pasha" /></div>
+            <div>Birthday: <input type="date" id="date" name="date" value="1996-12-04" /></div>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="col-md-6">
+                    Role: @Html.DropDownList("role", selectsRole as SelectList)
+                </div>
+            }
+
+
             <p>Photo</p><input type="file" id="image" name="image" />
             <input type="submit" value="Create" />
         </form>

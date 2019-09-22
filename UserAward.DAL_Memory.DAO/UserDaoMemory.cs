@@ -31,7 +31,7 @@ namespace UserAward.DAL_Memory.DAO
             //UsersAwards = new Dictionary<int?, int?>();
         }
 
-        public int AddUser(User user)
+        public int? AddUser(User user)
         {
             try
             {

@@ -11,7 +11,12 @@ namespace UserAwardWeb.Models
 {
     public static class Auth
     {
-        private static readonly IAccountLogic accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
+        private static readonly IAccountLogic accountLogic;
+
+        static Auth()
+        {
+            accountLogic = NinjectCommon.Kernel.Get<IAccountLogic>();
+        }
         public static bool CanLogin(string email, string password)
         {
             if (email == "admin" && password == "admin")
@@ -30,6 +35,7 @@ namespace UserAwardWeb.Models
 
                 if (user.Password == tempAccount.Password)
                 {
+                    accountLogic.UpdateLoggerIntoAccount(tempAccount.IdUser.ToString(), DateTime.Now.ToString());
                     return true;
                 }
                 else

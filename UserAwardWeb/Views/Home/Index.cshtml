@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Home Pge</title>
+    <title>Home Page</title>
 </head>
 <body>
 
@@ -16,11 +16,22 @@
         <form action="~/Award/Index" method="post" class="form-inline">
             <button class="btn-primary" id="awards">Awards</button>
         </form>
+    </div>
 
+    <div>
         <form action="~/User/Index" method="post" class="form-inline">
             <button class="btn-primary" id="users">Users</button>
         </form>
     </div>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div>
+            <form action="~/Home/Login">
+                <button>Login</button>
+            </form>
+        </div>
+    }
 
     @if (User.Identity.IsAuthenticated)
     {

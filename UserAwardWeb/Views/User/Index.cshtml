@@ -63,7 +63,6 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Age</th>
-                <th>Email</th>
                 <th>Photo</th>
             </tr>
             @foreach (var item in users)
@@ -72,7 +71,6 @@
                     <th>@item.IdUser</th>
                     <th>@item.Name</th>
                     <th>@item.Age</th>
-                    <th>@item.Email</th>
                     <th>
                         @if (item.UserPhoto != null)
                         {
