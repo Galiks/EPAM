@@ -15,5 +15,6 @@ namespace UserAward.DAL.Interface
         void UpdateLoggerIntoAccount(int idUser, DateTime loggedInto);
         void UpdatePasswordLifetimeAccount(int idUser, DateTime passwordLifetime);
         Account GetAccountByEmail(string email);
+        Account GetAccountByIdUser(int idUser);
     }
 }

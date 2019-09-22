@@ -567,7 +567,7 @@ CREATE PROCEDURE UpdateAccount
 	@Email nvarchar(250),
 	@Password nvarchar(500),
 	@Role nvarchar(150),
-	@IsBlocked int,
+	@IsBlocked bit,
 	@Id_user int
 AS
 BEGIN
@@ -627,4 +627,23 @@ BEGIN
 		[IsBlocked]
 	FROM Account
 	WHERE Email = @Email
+END
+GO
+
+CREATE PROCEDURE GetAccountByIdUser
+	@Id_user int
+AS
+BEGIN
+	SELECT id_account,
+		id_user,
+		Email,
+		[Password],
+		[Role],
+		[CreatedAt],
+		[LoggedInto],
+		[PasswordLifetime],
+		id_user,
+		[IsBlocked]
+	FROM Account
+	WHERE id_user = @Id_user
 END

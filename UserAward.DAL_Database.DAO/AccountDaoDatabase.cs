@@ -176,6 +176,47 @@ namespace UserAward.DAL_Database.DAO
             return null;
         }
 
+        public Account GetAccountByIdUser(int idUser)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "GetAccountByIdUser";
+
+                var idUserParameter = new SqlParameter("@Id_user", SqlDbType.Int)
+                {
+                    Value = idUser
+                };
+
+                command.Parameters.Add(idUserParameter);
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return new Account
+                        {
+                            IdAccount = (int)reader["id_account"],
+                            IdUser = (int)reader["id_user"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            CreatedAt = (DateTime?)reader["CreatedAt"],
+                            LoggedInto = (DateTime?)reader["LoggedInto"],
+                            PasswordLifetime = (DateTime?)reader["PasswordLifetime"],
+                            IsBlocked = (bool)reader["IsBlocked"]
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public void UpdateAccount(Account account)
         {
             using (var connection = new SqlConnection(_connectionString))

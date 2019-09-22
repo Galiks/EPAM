@@ -9,11 +9,11 @@ namespace UserAward.BLL.Interface
 {
     public interface IAccountLogic
     {
-        int? AddAccount(string email, string password, string role, string createdAt, DateTime loggedInto, DateTime passwordLifetime, string idUser);
+        int? AddAccount(string email, string password, string role, string createdAt, string idUser);
         void DeleteAccount(string idAccount);
-        void UpdateAccount(string email, string password, string role, string createdAt, DateTime loggedInto, DateTime passwordLifetime, string idUser);
-        void UpdateLoggerIntoAccount(int idUser, DateTime loggerInto);
-        void UpdatePasswordLifetimeAccount(int idUser, DateTime passwordLifetime);
+        void UpdateAccount(string email, string password, string role, string createdAt, string loggedInto, string passwordLifetime, bool isBlocked, string idUser);
+        void UpdateLoggerIntoAccount(string idUser, string loggerInto);
+        void UpdatePasswordLifetimeAccount(string idUser, string passwordLifetime);
         Account GetAccountByEmail(string email);
         Guid EncryptionPassword(string password);
     }
