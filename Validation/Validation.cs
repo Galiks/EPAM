@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Validation
 {
@@ -58,6 +55,27 @@ namespace Validation
             }
 
             return true;
+        }
+
+        public static T GetConvertedString<T>(string input)
+        {
+            try
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                if (converter != null)
+                {
+                    return (T)converter.ConvertFromString(input);
+                }
+                return default(T);
+            }
+            catch (NotSupportedException)
+            {
+                throw new NotSupportedException("Unsupported type");
+            }
+            catch (FormatException)
+            {
+                throw new FormatException("Incorrect date and time");
+            }
         }
     }
 }

@@ -145,21 +145,19 @@ namespace UserAward.BLL.Logic
                 throw new ArgumentException("Incorrect user's id");
             }
 
+            if (!string.IsNullOrWhiteSpace(createdAt) & !DateTime.TryParse(createdAt, out DateTime realCreatedAt))
+            {
+                throw new ArgumentException("Incorrect logged into time");
+            }
 
-            if (!DateTime.TryParse(createdAt, out DateTime realCreatedAt) && !string.IsNullOrWhiteSpace(createdAt))
+            if (!string.IsNullOrWhiteSpace(loggedInto) & !DateTime.TryParse(loggedInto, out DateTime realLoggedInto))
             {
                 throw new ArgumentException("Incorrect created time");
             }
 
-
-            if (!DateTime.TryParse(createdAt, out DateTime realLoggedInto) && !string.IsNullOrWhiteSpace(loggedInto))
+            if (!string.IsNullOrWhiteSpace(passwordLifetime) & !DateTime.TryParse(passwordLifetime, out DateTime realPasswordLifetime))
             {
-                throw new ArgumentException("Incorrect created time");
-            }
-
-            if (!DateTime.TryParse(createdAt, out DateTime realPasswordLifetime) && !string.IsNullOrWhiteSpace(passwordLifetime))
-            {
-                throw new ArgumentException("Incorrect created time");
+                throw new ArgumentException("Incorrect password lifetime time");
             }
             #endregion
 

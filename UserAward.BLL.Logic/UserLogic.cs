@@ -139,7 +139,7 @@ namespace UserAward.BLL.Logic
                 throw new ArgumentException($"Incorrect user's id");
             }
 
-            if (!DateTime.TryParse(birthday, out DateTime realBirthday) && !string.IsNullOrWhiteSpace(birthday))
+            if (!string.IsNullOrWhiteSpace(birthday) & !DateTime.TryParse(birthday, out DateTime realBirthday))
             {
                 throw new ArgumentException("Incorrect created time");
             }
