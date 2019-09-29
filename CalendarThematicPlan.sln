@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.WEB", "CalendarThematicPlan.WEB\CalendarThematicPlan.WEB.csproj", "{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PL", "PL", "{818A971C-F05D-4B3C-A39B-70E3BCBA131A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{5AB7868C-563C-4726-9F9B-F0BD3CD75FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.BLL.Interface", "CalendarThematicPlan.BLL.Interface\CalendarThematicPlan.BLL.Interface.csproj", "{B276FA36-23F3-4A06-8D32-664B777508BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{F9DF3598-B95C-4D70-80FD-2E7DF6766692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.DAL.Interface", "CalendarThematicPlan.DAL.Interface\CalendarThematicPlan.DAL.Interface.csproj", "{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B276FA36-23F3-4A06-8D32-664B777508BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B276FA36-23F3-4A06-8D32-664B777508BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B276FA36-23F3-4A06-8D32-664B777508BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B276FA36-23F3-4A06-8D32-664B777508BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C6A4EDD-5303-4846-A02F-2FD9BC320DCE} = {818A971C-F05D-4B3C-A39B-70E3BCBA131A}
+		{B276FA36-23F3-4A06-8D32-664B777508BB} = {5AB7868C-563C-4726-9F9B-F0BD3CD75FBF}
+		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7} = {F9DF3598-B95C-4D70-80FD-2E7DF6766692}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53F390FB-6723-47A0-A13B-93C5F2CFBFB0}
+	EndGlobalSection
+EndGlobal
