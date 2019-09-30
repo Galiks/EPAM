@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7}</ProjectGuid>
+    <ProjectGuid>{9737D765-67C0-48F0-A2E8-FCDC4B00EFF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalendarThematicPlan.DAL.Interface</RootNamespace>
-    <AssemblyName>CalendarThematicPlan.DAL.Interface</AssemblyName>
+    <RootNamespace>CalendarThematicPlan.Entity</RootNamespace>
+    <AssemblyName>CalendarThematicPlan.Entity</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,18 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IGradeDao.cs" />
-    <Compile Include="IScheduleDao.cs" />
-    <Compile Include="ISubjectDao.cs" />
-    <Compile Include="IUserDao.cs" />
-    <Compile Include="IUserSubjectDao.cs" />
+    <Compile Include="Subject.cs" />
+    <Compile Include="Grade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CalendarThematicPlan.Entity\CalendarThematicPlan.Entity.csproj">
-      <Project>{9737D765-67C0-48F0-A2E8-FCDC4B00EFF3}</Project>
-      <Name>CalendarThematicPlan.Entity</Name>
-    </ProjectReference>
+    <Compile Include="Schedule.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserSubject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
