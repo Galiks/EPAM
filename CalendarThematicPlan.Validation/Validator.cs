@@ -10,7 +10,7 @@ namespace CalendarThematicPlan.Validation
     public static class Validator
     {
         private const string patternEmail = @"\b[A-Za-zА-ЯёЁ0-9]{1}\S+[A-Za-zА-ЯёЁ0-9]{1}\b@[A-Za-zА-ЯёЁ]{2,6}(\.[A-Za-zА-ЯёЁ0-9-]+)+";
-        public static bool IsStringNull(params string[] strings)
+        public static bool IsStringsNull(params string[] strings)
         {
             foreach (var item in strings)
             {
@@ -34,7 +34,7 @@ namespace CalendarThematicPlan.Validation
             }
         }
 
-        public static bool IsStringNumbers(params string[] strings)
+        public static bool IsStringsNumbers(params string[] strings)
         {
             foreach (var item in strings)
             {

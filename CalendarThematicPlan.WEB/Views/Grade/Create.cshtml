@@ -1,0 +1,38 @@
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
+@{
+    Layout = null;
+}
+
+@{ 
+    IGradeLogic gradeLogic = Ninject.Kernel.Get<IGradeLogic>();
+    if (IsPost)
+    {
+        string number = Request["number"];
+        string letter = Request["letter"];
+        string kids = Request["kids"];
+
+        gradeLogic.AddGrade(number, letter, kids);
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create Grade</title>
+</head>
+<body>
+    <div> 
+        <form method="post">
+            <div>Number: <input type="number" name="number" /></div>
+            <div>Letter: <input type="text" name="letter" /></div>
+            <div>Kids in class: <input type="number" name="kids" /></div>
+            <button>Create</button>
+        </form>
+    </div>
+</body>
+</html>
