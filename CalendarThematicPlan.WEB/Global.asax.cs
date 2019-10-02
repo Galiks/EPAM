@@ -1,3 +1,4 @@
+using CalendarThematicPlan.Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace CalendarThematicPlan.WEB
     {
         protected void Application_Start()
         {
+            Ninject.Registration();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

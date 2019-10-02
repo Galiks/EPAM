@@ -21,6 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.Entity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.DAL.DAO", "CalendarThematicPlan.DAL.DAO\CalendarThematicPlan.DAL.DAO.csproj", "{4B0BD744-CB56-4E3D-A02B-3665AC6F7909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.BLL.Logic", "CalendarThematicPlan.BLL.Logic\CalendarThematicPlan.BLL.Logic.csproj", "{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.Container", "CalendarThematicPlan.Container\CalendarThematicPlan.Container.csproj", "{73BF1538-B60B-4900-AC82-5D9DB95517E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarThematicPlan.Validation", "CalendarThematicPlan.Validation\CalendarThematicPlan.Validation.csproj", "{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +53,18 @@ Global
 		{4B0BD744-CB56-4E3D-A02B-3665AC6F7909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B0BD744-CB56-4E3D-A02B-3665AC6F7909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B0BD744-CB56-4E3D-A02B-3665AC6F7909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73BF1538-B60B-4900-AC82-5D9DB95517E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73BF1538-B60B-4900-AC82-5D9DB95517E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73BF1538-B60B-4900-AC82-5D9DB95517E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73BF1538-B60B-4900-AC82-5D9DB95517E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +75,9 @@ Global
 		{860A0DD2-E311-40CE-B9CA-F35C2D7CBAF7} = {F9DF3598-B95C-4D70-80FD-2E7DF6766692}
 		{9737D765-67C0-48F0-A2E8-FCDC4B00EFF3} = {36D2BEB3-08A5-499D-A354-C9FA89A27CF5}
 		{4B0BD744-CB56-4E3D-A02B-3665AC6F7909} = {F9DF3598-B95C-4D70-80FD-2E7DF6766692}
+		{E3EBF6FB-0D7E-4E11-BA83-BD3E16A39AE7} = {5AB7868C-563C-4726-9F9B-F0BD3CD75FBF}
+		{73BF1538-B60B-4900-AC82-5D9DB95517E0} = {36D2BEB3-08A5-499D-A354-C9FA89A27CF5}
+		{0F0D7935-B181-4929-8FCE-B7F1FC3BDBFB} = {36D2BEB3-08A5-499D-A354-C9FA89A27CF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {53F390FB-6723-47A0-A13B-93C5F2CFBFB0}
