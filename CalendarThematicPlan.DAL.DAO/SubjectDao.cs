@@ -37,6 +37,14 @@ namespace CalendarThematicPlan.DAL.DAO
                         Value = subject.Name,
                         SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Hours",
+                        Value = subject.Hours,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
                     }
                 });
 
@@ -112,7 +120,8 @@ namespace CalendarThematicPlan.DAL.DAO
                         return new Subject
                         {
                             Id = id,
-                            Name = (string)reader["Name"]
+                            Name = (string)reader["Name"],
+                            Hours = (int)reader["Hours"]
                         };
                     }
                 }
@@ -138,7 +147,8 @@ namespace CalendarThematicPlan.DAL.DAO
                         yield return new Subject
                         {
                             Id = (int?)reader["id"],
-                            Name = (string)reader["Name"]
+                            Name = (string)reader["Name"],
+                            Hours = (int)reader["Hours"]
                         };
                     }
                 }
@@ -169,6 +179,14 @@ namespace CalendarThematicPlan.DAL.DAO
                         ParameterName = "@Name",
                         Value = subject.Name,
                         SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Hours",
+                        Value = subject.Hours,
+                        SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     }
                 });

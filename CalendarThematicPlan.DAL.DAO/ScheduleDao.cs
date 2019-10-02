@@ -38,6 +38,14 @@ namespace CalendarThematicPlan.DAL.DAO
 
                     new SqlParameter
                     {
+                        ParameterName = "@ActualDate",
+                        Value = schedule.ActualDate,
+                        SqlDbType = SqlDbType.DateTime,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
                         ParameterName = "@Room",
                         Value = schedule.Room,
                         SqlDbType = SqlDbType.NVarChar,
@@ -65,6 +73,22 @@ namespace CalendarThematicPlan.DAL.DAO
                         ParameterName = "@Id_user",
                         Value = schedule.IdUser,
                         SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@LessonTopic",
+                        Value = schedule.LessonTopic,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Comment",
+                        Value = schedule.Comment,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     }
                 });
@@ -143,10 +167,13 @@ namespace CalendarThematicPlan.DAL.DAO
                         {
                             Id = id,
                             Date = (DateTime)reader["Date"],
+                            ActualDate = (DateTime)reader["ActualDate"],
                             Room = (string)reader["Room"],
                             IdSubject = (int)reader["Id_subject"],
                             IdGrade = (int)reader["Id_grade"],
-                            IdUser = (int)reader["Id_user"]
+                            IdUser = (int)reader["Id_user"],
+                            LessonTopic = (string)reader["LessonTopic"],
+                            Comment = (string)reader["Comment"]
                         };
                     }
                 }
@@ -174,10 +201,13 @@ namespace CalendarThematicPlan.DAL.DAO
                         {
                             Id = (int?)reader["id"],
                             Date = (DateTime)reader["Date"],
+                            ActualDate = (DateTime)reader["ActualDate"],
                             Room = (string)reader["Room"],
                             IdSubject = (int)reader["Id_subject"],
                             IdGrade = (int)reader["Id_grade"],
-                            IdUser = (int)reader["Id_user"]
+                            IdUser = (int)reader["Id_user"],
+                            LessonTopic = (string)reader["LessonTopic"],
+                            Comment = (string)reader["Comment"]
                         };
                     }
                 }
@@ -213,6 +243,14 @@ namespace CalendarThematicPlan.DAL.DAO
 
                     new SqlParameter
                     {
+                        ParameterName = "@ActualDate",
+                        Value = schedule.ActualDate,
+                        SqlDbType = SqlDbType.DateTime,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
                         ParameterName = "@Room",
                         Value = schedule.Room,
                         SqlDbType = SqlDbType.NVarChar,
@@ -240,6 +278,22 @@ namespace CalendarThematicPlan.DAL.DAO
                         ParameterName = "@Id_user",
                         Value = schedule.IdUser,
                         SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@LessonTopic",
+                        Value = schedule.LessonTopic,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Comment",
+                        Value = schedule.Comment,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     }
                 });

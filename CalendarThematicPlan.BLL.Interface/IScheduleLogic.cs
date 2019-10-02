@@ -9,10 +9,10 @@ namespace CalendarThematicPlan.BLL.Interface
 {
     public interface IScheduleLogic
     {
-        int? AddSchedule(string date, string room, string idSubject, string idGrade, string idUser);
+        int? AddSchedule(string date, string actualDate, string room, string idSubject, string idGrade, string idUser, string lessonTopic, string comment);
         Schedule GetScheduleById(string id);
         IEnumerable<Schedule> GetSchedules();
-        void UpdateSchedule(string id, string date, string room, string idSubject, string idGrade, string idUser);
+        void UpdateSchedule(string id, string date, string actualDate, string room, string idSubject, string idGrade, string idUser, string lessonTopic, string comment);
         void DeleteSchedule(string id);
     }
 }
