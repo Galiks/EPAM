@@ -45,6 +45,9 @@
     <Compile Include="GradeDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduleDao.cs" />
+    <Compile Include="SubjectDao.cs" />
+    <Compile Include="UserDao.cs" />
+    <Compile Include="UserSubjectDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CalendarThematicPlan.DAL.Interface\CalendarThematicPlan.DAL.Interface.csproj">

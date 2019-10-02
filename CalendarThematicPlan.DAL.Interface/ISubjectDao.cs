@@ -9,9 +9,9 @@ namespace CalendarThematicPlan.DAL.Interface
 {
     public interface ISubjectDao
     {
-        int? AddSubject(Subject grade);
+        int? AddSubject(Subject subject);
         Subject GetSubjectById(int id);
-        void UpdateSubject(Subject grade);
+        void UpdateSubject(Subject subject);
         void DeleteSubject(int id);
     }
 }

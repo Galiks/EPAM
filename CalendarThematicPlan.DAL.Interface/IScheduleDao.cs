@@ -9,9 +9,9 @@ namespace CalendarThematicPlan.DAL.Interface
 {
     public interface IScheduleDao
     {
-        int? AddSchedule(Schedule grade);
+        int? AddSchedule(Schedule schedule);
         Schedule GetScheduleById(int id);
-        void UpdateSchedule(Schedule grade);
+        void UpdateSchedule(Schedule schedule);
         void DeleteSchedule(int id);
     }
 }

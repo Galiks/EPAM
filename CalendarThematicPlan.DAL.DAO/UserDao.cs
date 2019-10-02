@@ -7,65 +7,89 @@ using System.Data.SqlClient;
 
 namespace CalendarThematicPlan.DAL.DAO
 {
-    public class ScheduleDao : IScheduleDao
+    public class UserDao : IUserDao
     {
         private readonly string connectionString;
 
-        public ScheduleDao()
+        public UserDao()
         {
             this.connectionString = ConfigurationManager.ConnectionStrings["CTP"].ConnectionString;
         }
 
-        public int? AddSchedule(Schedule schedule)
+        public int? AddUser(User user)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "AddSchedule";
+                command.CommandText = "AddUser";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
                 {
                     new SqlParameter
                     {
-                        ParameterName = "@Date",
-                        Value = schedule.Date,
-                        SqlDbType = SqlDbType.DateTime,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Room",
-                        Value = schedule.Room,
+                        ParameterName = "@FirstName",
+                        Value = user.FirstName,
                         SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_subject",
-                        Value = schedule.IdSubject,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@LastName",
+                        Value = user.LastName,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_grade",
-                        Value = schedule.IdGrade,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@Patronymic",
+                        Value = user.Patronymic,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_user",
-                        Value = schedule.IdUser,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@Email",
+                        Value = user.Email,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
-                    }
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Password",
+                        Value = user.Password,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Role",
+                        Value = user.Role,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Position",
+                        Value = user.Position,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserPhoto",
+                        Value = user.UserPhoto,
+                        SqlDbType = SqlDbType.VarBinary,
+                        Direction = ParameterDirection.Input
+                    },
                 });
 
                 var id = new SqlParameter
@@ -83,16 +107,15 @@ namespace CalendarThematicPlan.DAL.DAO
 
                 return (int?)id.Value;
             }
-
         }
 
-        public void DeleteSchedule(int id)
+        public void DeleteUser(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "DeleteSchedule";
+                command.CommandText = "DeleteUser";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -112,13 +135,13 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
-        public Schedule GetScheduleById(int id)
+        public User GetUserById(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "GetScheduleById";
+                command.CommandText = "GetUserById";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -138,29 +161,31 @@ namespace CalendarThematicPlan.DAL.DAO
                 {
                     while (reader.Read())
                     {
-                        return new Schedule
+                        return new User
                         {
                             Id = id,
-                            Date = (DateTime?)reader["Date"],
-                            Room = (string)reader["Room"],
-                            IdSubject = (int?)reader["Id_subject"],
-                            IdGrade = (int?)reader["Id_grade"],
-                            IdUser = (int?)reader["Id_user"]
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Patronymic = (string)reader["Patronymic"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            Position = (string)reader["Position"],
+                            UserPhoto = (byte[])reader["UserPhoto"]
                         };
                     }
                 }
             }
-
             return null;
         }
 
-        public void UpdateSchedule(Schedule schedule)
+        public void UpdateUser(User user)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "UpdateSchedule";
+                command.CommandText = "AddUser";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -168,50 +193,74 @@ namespace CalendarThematicPlan.DAL.DAO
                     new SqlParameter
                     {
                         ParameterName = "@Id",
-                        Value = schedule.Id,
+                        Value = user.Id,
                         SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Date",
-                        Value = schedule.Date,
-                        SqlDbType = SqlDbType.DateTime,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Room",
-                        Value = schedule.Room,
+                        ParameterName = "@FirstName",
+                        Value = user.FirstName,
                         SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_subject",
-                        Value = schedule.IdSubject,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@LastName",
+                        Value = user.LastName,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_grade",
-                        Value = schedule.IdGrade,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@Patronymic",
+                        Value = user.Patronymic,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Id_user",
-                        Value = schedule.IdUser,
-                        SqlDbType = SqlDbType.Int,
+                        ParameterName = "@Email",
+                        Value = user.Email,
+                        SqlDbType = SqlDbType.NVarChar,
                         Direction = ParameterDirection.Input
-                    }
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Password",
+                        Value = user.Password,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Role",
+                        Value = user.Role,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@Position",
+                        Value = user.Position,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserPhoto",
+                        Value = user.UserPhoto,
+                        SqlDbType = SqlDbType.VarBinary,
+                        Direction = ParameterDirection.Input
+                    },
                 });
 
                 connection.Open();

@@ -9,9 +9,9 @@ namespace CalendarThematicPlan.DAL.Interface
 {
     public interface IUserDao
     {
-        int? AddUser(User grade);
+        int? AddUser(User user);
         User GetUserById(int id);
-        void UpdateUser(User grade);
+        void UpdateUser(User user);
         void DeleteUser(int id);
     }
 }

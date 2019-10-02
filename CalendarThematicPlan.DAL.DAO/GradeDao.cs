@@ -58,7 +58,11 @@ namespace CalendarThematicPlan.DAL.DAO
                     Direction = ParameterDirection.Output,
                 };
 
+                command.Parameters.Add(id);
+
                 connection.Open();
+
+                command.ExecuteNonQuery();
 
                 return (int?)id.Value;
             }

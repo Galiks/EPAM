@@ -1,76 +1,48 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CalendarThematicPlan.DAL.DAO
 {
-    public class ScheduleDao : IScheduleDao
+    public class SubjectDao : ISubjectDao
     {
         private readonly string connectionString;
 
-        public ScheduleDao()
+        public SubjectDao()
         {
             this.connectionString = ConfigurationManager.ConnectionStrings["CTP"].ConnectionString;
         }
 
-        public int? AddSchedule(Schedule schedule)
+        public int? AddSubject(Subject subject)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "AddSchedule";
+                command.CommandText = "AddSubject";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
                 {
                     new SqlParameter
                     {
-                        ParameterName = "@Date",
-                        Value = schedule.Date,
-                        SqlDbType = SqlDbType.DateTime,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Room",
-                        Value = schedule.Room,
+                        ParameterName = "@Name",
+                        Value = subject.Name,
                         SqlDbType = SqlDbType.NVarChar,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_subject",
-                        Value = schedule.IdSubject,
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_grade",
-                        Value = schedule.IdGrade,
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_user",
-                        Value = schedule.IdUser,
-                        SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     }
                 });
 
                 var id = new SqlParameter
                 {
-                    ParameterName = "@Id_output",
+                    ParameterName = "Id_output",
                     SqlDbType = SqlDbType.Int,
                     Direction = ParameterDirection.Output
                 };
@@ -83,16 +55,15 @@ namespace CalendarThematicPlan.DAL.DAO
 
                 return (int?)id.Value;
             }
-
         }
 
-        public void DeleteSchedule(int id)
+        public void DeleteSubject(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "DeleteSchedule";
+                command.CommandText = "DeleteSubject";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -112,13 +83,13 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
-        public Schedule GetScheduleById(int id)
+        public Subject GetSubjectById(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "GetScheduleById";
+                command.CommandText = "GetSubjectById";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -138,29 +109,24 @@ namespace CalendarThematicPlan.DAL.DAO
                 {
                     while (reader.Read())
                     {
-                        return new Schedule
+                        return new Subject
                         {
                             Id = id,
-                            Date = (DateTime?)reader["Date"],
-                            Room = (string)reader["Room"],
-                            IdSubject = (int?)reader["Id_subject"],
-                            IdGrade = (int?)reader["Id_grade"],
-                            IdUser = (int?)reader["Id_user"]
+                            Name = (string)reader["Name"]
                         };
                     }
                 }
+                return null;
             }
-
-            return null;
         }
 
-        public void UpdateSchedule(Schedule schedule)
+        public void UpdateSubject(Subject subject)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "UpdateSchedule";
+                command.CommandText = "UpdateSubject";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -168,48 +134,16 @@ namespace CalendarThematicPlan.DAL.DAO
                     new SqlParameter
                     {
                         ParameterName = "@Id",
-                        Value = schedule.Id,
+                        Value = subject.Id,
                         SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     },
 
                     new SqlParameter
                     {
-                        ParameterName = "@Date",
-                        Value = schedule.Date,
-                        SqlDbType = SqlDbType.DateTime,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Room",
-                        Value = schedule.Room,
+                        ParameterName = "@Name",
+                        Value = subject.Name,
                         SqlDbType = SqlDbType.NVarChar,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_subject",
-                        Value = schedule.IdSubject,
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_grade",
-                        Value = schedule.IdGrade,
-                        SqlDbType = SqlDbType.Int,
-                        Direction = ParameterDirection.Input
-                    },
-
-                    new SqlParameter
-                    {
-                        ParameterName = "@Id_user",
-                        Value = schedule.IdUser,
-                        SqlDbType = SqlDbType.Int,
                         Direction = ParameterDirection.Input
                     }
                 });

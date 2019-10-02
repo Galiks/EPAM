@@ -16,6 +16,6 @@ namespace CalendarThematicPlan.Entity
         public string Password { get; set; }
         public string Role { get; set; }
         public string Position { get; set; }
-
+        public byte[] UserPhoto { get; set; }
     }
 }
