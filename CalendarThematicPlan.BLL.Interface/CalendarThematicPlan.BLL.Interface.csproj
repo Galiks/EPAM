@@ -42,7 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGradeLogic.cs" />
+    <Compile Include="ISubjectLogic.cs" />
+    <Compile Include="IScheduleLogic.cs" />
+    <Compile Include="IUserLogic.cs" />
+    <Compile Include="IUserSubjectLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CalendarThematicPlan.Entity\CalendarThematicPlan.Entity.csproj">
+      <Project>{9737D765-67C0-48F0-A2E8-FCDC4B00EFF3}</Project>
+      <Name>CalendarThematicPlan.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
