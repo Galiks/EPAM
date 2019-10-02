@@ -8,6 +8,7 @@ namespace CalendarThematicPlan.BLL.Interface
 {
     public interface IGradeLogic
     {
+        int? AddGrade(string number, string letter, string kidsInClass);
         
     }
 }

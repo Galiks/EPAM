@@ -11,6 +11,7 @@ namespace CalendarThematicPlan.DAL.Interface
     {
         int? AddSubject(Subject subject);
         Subject GetSubjectById(int id);
+        IEnumerable<Subject> GetSubjects();
         void UpdateSubject(Subject subject);
         void DeleteSubject(int id);
     }

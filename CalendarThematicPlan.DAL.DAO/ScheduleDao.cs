@@ -1,6 +1,7 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -141,17 +142,46 @@ namespace CalendarThematicPlan.DAL.DAO
                         return new Schedule
                         {
                             Id = id,
-                            Date = (DateTime?)reader["Date"],
+                            Date = (DateTime)reader["Date"],
                             Room = (string)reader["Room"],
-                            IdSubject = (int?)reader["Id_subject"],
-                            IdGrade = (int?)reader["Id_grade"],
-                            IdUser = (int?)reader["Id_user"]
+                            IdSubject = (int)reader["Id_subject"],
+                            IdGrade = (int)reader["Id_grade"],
+                            IdUser = (int)reader["Id_user"]
                         };
                     }
                 }
             }
 
             return null;
+        }
+
+        public IEnumerable<Schedule> GetSchedules()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetSchedules";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new Schedule
+                        {
+                            Id = (int?)reader["id"],
+                            Date = (DateTime)reader["Date"],
+                            Room = (string)reader["Room"],
+                            IdSubject = (int)reader["Id_subject"],
+                            IdGrade = (int)reader["Id_grade"],
+                            IdUser = (int)reader["Id_user"]
+                        };
+                    }
+                }
+            }
         }
 
         public void UpdateSchedule(Schedule schedule)

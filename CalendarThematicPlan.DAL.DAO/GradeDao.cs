@@ -1,6 +1,7 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -132,6 +133,32 @@ namespace CalendarThematicPlan.DAL.DAO
             }
 
             return null;
+        }
+
+        public IEnumerable<Grade> GetGrades()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "GetGrades";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new Grade
+                        {
+                            Id = (int?)reader["id"],
+                            Number = (int)reader["Number"],
+                            Letter = (string)reader["Letter"],
+                            KidsInClass = (int)reader["KidsInClass"]
+                        };
+                    }
+                }
+            }
         }
 
         public void UpdateGrade(Grade grade)

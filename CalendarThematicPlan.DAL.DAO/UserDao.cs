@@ -1,6 +1,7 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -177,6 +178,38 @@ namespace CalendarThematicPlan.DAL.DAO
                 }
             }
             return null;
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUsers";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new User
+                        {
+                            Id = (int?)reader["id"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Patronymic = (string)reader["Patronymic"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            Position = (string)reader["Position"],
+                            UserPhoto = (byte[])reader["UserPhoto"]
+                        };
+                    }
+                }
+            }
         }
 
         public void UpdateUser(User user)

@@ -116,7 +116,32 @@ namespace CalendarThematicPlan.DAL.DAO
                         };
                     }
                 }
-                return null;
+            }
+            return null;
+        }
+
+        public IEnumerable<Subject> GetSubjects()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetSubjects";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new Subject
+                        {
+                            Id = (int?)reader["id"],
+                            Name = (string)reader["Name"]
+                        };
+                    }
+                }
             }
         }
 

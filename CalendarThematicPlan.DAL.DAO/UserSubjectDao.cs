@@ -1,6 +1,7 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -116,13 +117,39 @@ namespace CalendarThematicPlan.DAL.DAO
                         return new UserSubject
                         {
                             Id = id,
-                            IdSubject = (int?)reader["Id_subject"],
-                            IdUser = (int?)reader["Id_user"]
+                            IdSubject = (int)reader["Id_subject"],
+                            IdUser = (int)reader["Id_user"]
                         };
                     }
                 }
             }
             return null;
+        }
+
+        public IEnumerable<UserSubject> GetUserSubjects()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUserSubjects";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new UserSubject
+                        {
+                            Id = (int?)reader["id"],
+                            IdSubject = (int)reader["Id_subject"],
+                            IdUser = (int)reader["Id_user"]
+                        };
+                    }
+                }
+            }
         }
 
         public void UpdateUserSubject(UserSubject userSubject)

@@ -11,6 +11,7 @@ namespace CalendarThematicPlan.DAL.Interface
     {
         int? AddSchedule(Schedule schedule);
         Schedule GetScheduleById(int id);
+        IEnumerable<Schedule> GetSchedules();
         void UpdateSchedule(Schedule schedule);
         void DeleteSchedule(int id);
     }
