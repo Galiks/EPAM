@@ -9,8 +9,8 @@ namespace CalendarThematicPlan.Entity
     public class Grade
     {
         public int? Id { get; set; }
-        public int? Number { get; set; }
+        public int Number { get; set; }
         public string Letter { get; set; }
-        public int? KidsInClass { get; set; }
+        public int KidsInClass { get; set; }
     }
 }
