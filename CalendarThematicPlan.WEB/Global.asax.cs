@@ -13,7 +13,7 @@ namespace CalendarThematicPlan.WEB
     {
         protected void Application_Start()
         {
-            Ninject.Registration();
+            NinjectCommon.Registration();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

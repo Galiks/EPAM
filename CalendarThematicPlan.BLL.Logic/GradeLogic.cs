@@ -5,8 +5,6 @@ using CalendarThematicPlan.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CalendarThematicPlan.BLL.Logic
 {
@@ -26,20 +24,15 @@ namespace CalendarThematicPlan.BLL.Logic
                 throw new ArgumentException("Обязательные поля должны быть заполнены");
             }
 
-            if (!int.TryParse(number, out int realNumber))
+            if (!int.TryParse(number, out int realNumber) & realNumber <= 0)
             {
-                throw new ArgumentException("Номер класса должен быть числом");
+                throw new ArgumentException("Неправильный номер класса");
             }
 
-            if (!int.TryParse(kidsInClass, out int realKidsInClass))
+            if (!int.TryParse(kidsInClass, out int realKidsInClass) & realKidsInClass <= 0)
             {
-                throw new ArgumentException("Количество детей в классе должно быть числом");
+                throw new ArgumentException("Неправильное количество детей в классе");
             }
-
-            //if (!char.TryParse(letter, out char realLetter) & !char.IsLetter(realLetter))
-            //{
-            //    throw new ArgumentException("Буква класса должна быть символом");
-            //}
 
             Grade grade = new Grade { Number = realNumber, Letter = letter, KidsInClass = realKidsInClass };
 
@@ -57,7 +50,7 @@ namespace CalendarThematicPlan.BLL.Logic
 
             if (grade == null)
             {
-                throw new Exception("Класса с таким номером не существует");
+                throw new Exception("Класса с таким идентификатором не существует");
             }
 
             gradeDao.DeleteGrade(idGrade);
@@ -75,35 +68,38 @@ namespace CalendarThematicPlan.BLL.Logic
 
         public IEnumerable<Grade> GetGrades()
         {
-            return gradeDao.GetGrades();
+            return gradeDao.GetGrades().ToList();
         }
 
         public void UpdateGrade(string id, string number, string letter, string kidsInClass)
         {
-            if (Validator.IsStringsNull(id))
-            {
-                throw new ArgumentException("Обязательные поля должны быть заполнены");
-            }
-
             if (!int.TryParse(id, out int idGrade))
             {
                 throw new ArgumentException("Идентификатор класса должен быть числом");
             }
 
-            if (!string.IsNullOrWhiteSpace(number) & !int.TryParse(number, out int realNumber))
+            if (!string.IsNullOrWhiteSpace(number) & !int.TryParse(number, out int realNumber) & realNumber <= 0)
             {
-                throw new ArgumentException("Номер класса должен быть числом");
+                throw new ArgumentException("Неправильный номер класса");
             }
 
-            if (!string.IsNullOrWhiteSpace(kidsInClass) & !int.TryParse(kidsInClass, out int realKidsInClass))
+            if (!string.IsNullOrWhiteSpace(kidsInClass) & !int.TryParse(kidsInClass, out int realKidsInClass) & realKidsInClass <= 0)
             {
-                throw new ArgumentException("Количество детей в классе должно быть числом");
+                throw new ArgumentException("Неправильное количество детей в классе");
             }
 
-            Grade grade = gradeDao.GetGradeById(idGrade);
+            Grade grade;
+            if (idGrade == default)
+            {
+                throw new Exception("Идентификатор класса неправильный");
+            }
+            else
+            {
+                grade = gradeDao.GetGradeById(idGrade);
+            }
 
-            grade.Number = realNumber is default(int) ? grade.Number : realNumber;
-            grade.KidsInClass = realKidsInClass is default(int) ? grade.KidsInClass : realKidsInClass;
+            grade.Number = realNumber == default ? grade.Number : realNumber;
+            grade.KidsInClass = realKidsInClass == default ? grade.KidsInClass : realKidsInClass;
 
             gradeDao.UpdateGrade(grade);
         }

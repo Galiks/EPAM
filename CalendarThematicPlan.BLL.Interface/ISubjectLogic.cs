@@ -9,10 +9,10 @@ namespace CalendarThematicPlan.BLL.Interface
 {
     public interface ISubjectLogic
     {
-        int? AddSubject(string number, string hours);
+        int? AddSubject(string name, string hours);
         Subject GetSubjectById(string id);
         IEnumerable<Subject> GetSubjects();
-        void UpdateSubject(string id, string number, string hours);
+        void UpdateSubject(string id, string name, string hours);
         void DeleteSubject(string id);
     }
 }

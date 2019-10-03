@@ -136,6 +136,51 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public User GetUserByEmail(string email)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUserByEmail";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "@Email",
+                        Value = email,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return new User
+                        {
+                            Id = (int?)reader["id"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Patronymic = (string)reader["Patronymic"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            Position = (string)reader["Position"],
+                            UserPhoto = (byte[])reader["UserPhoto"]
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public User GetUserById(int id)
         {
             using (var connection = new SqlConnection(connectionString))
