@@ -18,5 +18,15 @@ namespace CalendarThematicPlan.WEB.Controllers
         {
             return View();
         }
+
+        public ActionResult Update()
+        {
+            return View();
+        }
+
+        public ActionResult Delete()
+        {
+            return View();
+        }
     }
 }

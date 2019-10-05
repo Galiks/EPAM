@@ -86,17 +86,24 @@
             <div class="form-group">
                 <label for="confirm-password" class="control-label">
                     Подтверждение пароля:
-                    <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" />
+                    <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" onchange="isEqual()" value="" />
                 </label>
             </div>
 
+            <div id="check-password">
+
+            </div>
+
             <script>
-                var $password = document.getElementById("password")
-                var $repeatPassword = document.getElementById("confirm-password")
-                if ($password.nodeValue !== $repeatPassword.nodeValue) {
-                    var body = $('body')
-                    body.append('<span>Пароли не совпадают!</span>')
-                    $password.nodeValue = "";
+                function isEqual(event) {
+                    var password = document.getElementById("password").value;
+                    var repeat = document.getElementById("confirm-password").value;
+						if (repeat !== password){
+							document.getElementById("confirm-password").value = "";
+							var p = document.createElement('p');
+                            p.innerHTML = "<strong>NO</strong>";
+                            document.getElementById("check-password").appendChild(p);
+						}
                 }
             </script>
 

@@ -17,13 +17,7 @@ namespace CalendarThematicPlan.WEB.Controllers
         public ActionResult Create()
         {
             return View();
-        }
-
-        public ActionResult GetGrades()
-        {
-            var grades = gradeLogic.GetGrades();
-            return PartialView(grades);
-        }
+        }       
 
         public ActionResult Update()
         {
@@ -33,6 +27,12 @@ namespace CalendarThematicPlan.WEB.Controllers
         public ActionResult Delete()
         {
             return View();
+        }
+
+        public ActionResult GetGrades()
+        {
+            var grades = gradeLogic.GetGrades();
+            return PartialView(grades);
         }
     }
 }
