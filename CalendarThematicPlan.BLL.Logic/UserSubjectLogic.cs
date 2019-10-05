@@ -44,7 +44,16 @@ namespace CalendarThematicPlan.BLL.Logic
 
             UserSubject userSubject = new UserSubject { IdSubject = realIdSubject, IdUser = realIdUser };
 
-            return userSubjectDao.AddUserSubject(userSubject);
+            try
+            {
+                return userSubjectDao.AddUserSubject(userSubject);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public void DeleteUserSubject(string id)
@@ -65,7 +74,16 @@ namespace CalendarThematicPlan.BLL.Logic
                 throw exception;
             }
 
-            userSubjectDao.DeleteUserSubject(idUserSubject);
+            try
+            {
+                userSubjectDao.DeleteUserSubject(idUserSubject);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public UserSubject GetUserSubjectByid(string id)

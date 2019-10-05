@@ -2,6 +2,7 @@
 using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using CalendarThematicPlan.Validation;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace CalendarThematicPlan.BLL.Logic
 {
     public class SubjectLogic : ISubjectLogic
     {
+        private static readonly Logger loggerException = LogManager.GetLogger("exception");
+
         private readonly ISubjectDao subjectDao;
 
         public SubjectLogic(ISubjectDao subjectDao)
@@ -23,41 +26,69 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (Validator.IsStringsNull(name, hours))
             {
-                throw new ArgumentException("Обязательные поля должны быть заполнены");
+                var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(hours, out int realHours))
             {
-                throw new ArgumentException("Неправильное количество часов");
+                var exception = new ArgumentException($"Неправильное количество часов{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Subject subject = new Subject { Name = name, Hours = realHours };
 
-            return subjectDao.AddSubject(subject);
+            try
+            {
+                return subjectDao.AddSubject(subject);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public void DeleteSubject(string id)
         {
             if (!int.TryParse(id, out int idSubject))
             {
-                throw new ArgumentException("Идентификатор предмета должен быть числом");
+                var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Subject subject = subjectDao.GetSubjectById(idSubject);
 
             if (subject == null)
             {
-                throw new Exception("Предмета с таким идентификатором не существует");
+                var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
-            subjectDao.DeleteSubject(idSubject);
+            try
+            {
+                subjectDao.DeleteSubject(idSubject);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public Subject GetSubjectById(string id)
         {
             if (!int.TryParse(id, out int idSubject))
             {
-                throw new ArgumentException("Идентификатор предмета должен быть числом");
+                var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             return subjectDao.GetSubjectById(idSubject);
@@ -72,18 +103,24 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (!int.TryParse(id, out int idSubject))
             {
-                throw new ArgumentException("Идентификатор урока должен быть числом");
+                var exception = new ArgumentException($"Идентификатор урока должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(hours) & !int.TryParse(hours, out int realHours))
             {
-                throw new ArgumentException("Неправильное количество часов");
+                var exception = new ArgumentException($"Неправильное количество часов{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Subject subject;
             if (idSubject == default)
             {
-                throw new Exception("Идентификатор урока неправильный");
+                var exception = new ArgumentException($"Идентификатор урока неправильный{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
             else
             {
@@ -93,7 +130,16 @@ namespace CalendarThematicPlan.BLL.Logic
             subject.Name = string.IsNullOrWhiteSpace(name) ? subject.Name : name;
             subject.Hours = hours == default ? subject.Hours : realHours;
 
-            subjectDao.UpdateSubject(subject);
+            try
+            {
+                subjectDao.UpdateSubject(subject);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
     }
 }

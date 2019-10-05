@@ -11,11 +11,26 @@ namespace CalendarThematicPlan.WEB.Controllers
         // GET: Grade
         public ActionResult Index()
         {
-            var grades = gradeLogic.GetGrades();
-            return View(grades);
+            return View();
         }
 
         public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult GetGrades()
+        {
+            var grades = gradeLogic.GetGrades();
+            return PartialView(grades);
+        }
+
+        public ActionResult Update()
+        {
+            return View();
+        }
+
+        public ActionResult Delete()
         {
             return View();
         }

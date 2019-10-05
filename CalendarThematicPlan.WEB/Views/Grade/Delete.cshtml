@@ -1,6 +1,22 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+@using CalendarThematicPlan.Entity
+
 @{
     Layout = null;
+}
+
+@{
+    IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
+    List<Grade> grades = gradeLogic.GetGrades().ToList();
+    SelectList selectsGrade = new SelectList(grades);
+    if (IsPost)
+    {
+        string grade = Request["grade"];
+
+        gradeLogic.DeleteGrade(grade);
+    }
 }
 
 <!DOCTYPE html>
@@ -11,7 +27,14 @@
     <title>Delete</title>
 </head>
 <body>
-    <div> 
+    <div>
+        <form method="post">
+            <div class="col-md-6">
+                Класс: @Html.DropDownList("grade", selectsGrade as SelectList)
+            </div>
+
+            <button>Удалить класс</button>
+        </form>
     </div>
 </body>
 </html>

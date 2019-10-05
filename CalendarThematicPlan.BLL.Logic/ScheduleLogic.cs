@@ -2,6 +2,7 @@
 using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using CalendarThematicPlan.Validation;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace CalendarThematicPlan.BLL.Logic
 {
     public class ScheduleLogic : IScheduleLogic
     {
+        private static readonly Logger loggerException = LogManager.GetLogger("exception");
+
         private readonly IScheduleDao scheduleDao;
 
         public ScheduleLogic(IScheduleDao scheduleDao)
@@ -22,32 +25,44 @@ namespace CalendarThematicPlan.BLL.Logic
             #region Validation
             if (Validator.IsStringsNull(date, actualDate, room, idSubject, idGrade, idUser))
             {
-                throw new ArgumentException("Обязательные поля должны быть заполнены");
+                var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!DateTime.TryParse(date, out DateTime realDate))
             {
-                throw new ArgumentException("Неправильная дата урока");
+                var exception = new ArgumentException($"Неправильная дата урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!DateTime.TryParse(actualDate, out DateTime realActualDate))
             {
-                throw new ArgumentException("Неправильная актуальная дата урока");
+                var exception = new ArgumentException($"Неправильная актуальная дата урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(idSubject, out int realIdSubject))
             {
-                throw new ArgumentException("Неправильный идентификатор урока");
+                var exception = new ArgumentException($"Неправильный идентификатор урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(idGrade, out int realIdGrade))
             {
-                throw new ArgumentException("Неправильный идентификатор класса");
+                var exception = new ArgumentException($"Неправильный идентификатор класса{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(idUser, out int realIdUser))
             {
-                throw new ArgumentException("Неправильный идентификатор учителя");
+                var exception = new ArgumentException($"Неправильный идентификатор учителя{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
             #endregion
 
@@ -63,14 +78,25 @@ namespace CalendarThematicPlan.BLL.Logic
                 Comment = comment
             };
 
-            return scheduleDao.AddSchedule(schedule);
+            try
+            {
+                return scheduleDao.AddSchedule(schedule);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public void DeleteSchedule(string id)
         {
             if (!int.TryParse(id, out int idSchedule))
             {
-                throw new ArgumentException("Неправильный идентификатор расписания");
+                var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Schedule schedule = scheduleDao.GetScheduleById(idSchedule);
@@ -78,10 +104,21 @@ namespace CalendarThematicPlan.BLL.Logic
             //А вот с EF можно было сделать проще context.Schedules.Where(id => id = idSchedule).Any();
             if (schedule == null)
             {
-                throw new Exception("Расписания с таким номером не существует");
+                var exception = new ArgumentException($"Расписания с таким номером не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
-            scheduleDao.DeleteSchedule(idSchedule);
+            try
+            {
+                scheduleDao.DeleteSchedule(idSchedule);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public Schedule GetScheduleById(string id)
@@ -104,32 +141,44 @@ namespace CalendarThematicPlan.BLL.Logic
             #region Validation
             if (!int.TryParse(id, out int IdSchedule))
             {
-                throw new ArgumentException("Неправильный идентификатор расписания");
+                var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(date) & !DateTime.TryParse(date, out DateTime realDate))
             {
-                throw new ArgumentException("Неправильная дата урока");
+                var exception = new ArgumentException($"Неправильная дата урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(actualDate) & !DateTime.TryParse(actualDate, out DateTime realActualDate))
             {
-                throw new ArgumentException("Неправильная актуальная дата урока");
+                var exception = new ArgumentException($"Неправильная актуальная дата урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idSubject) & !int.TryParse(idSubject, out int realIdSubject))
             {
-                throw new ArgumentException("Неправильный идентификатор урока");
+                var exception = new ArgumentException($"Неправильный идентификатор урока{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idGrade) & !int.TryParse(idGrade, out int realIdGrade))
             {
-                throw new ArgumentException("Неправильный идентификатор класса");
+                var exception = new ArgumentException($"Неправильный идентификатор класса{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idUser) & !int.TryParse(idUser, out int realIdUser))
             {
-                throw new ArgumentException("Неправильный идентификатор учителя");
+                var exception = new ArgumentException($"Неправильный идентификатор учителя{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
             #endregion
 
@@ -158,7 +207,16 @@ namespace CalendarThematicPlan.BLL.Logic
             schedule.LessonTopic = string.IsNullOrWhiteSpace(lessonTopic) ? schedule.LessonTopic : lessonTopic;
             schedule.Comment = string.IsNullOrWhiteSpace(comment) ? schedule.Comment : comment;
 
-            scheduleDao.UpdateSchedule(schedule);
+            try
+            {
+                scheduleDao.UpdateSchedule(schedule);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
     }
 }

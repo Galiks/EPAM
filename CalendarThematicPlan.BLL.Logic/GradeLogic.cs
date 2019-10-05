@@ -2,14 +2,19 @@
 using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
 using CalendarThematicPlan.Validation;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CalendarThematicPlan.BLL.Logic
 {
     public class GradeLogic : IGradeLogic
     {
+        private static readonly Logger loggerException = LogManager.GetLogger("exception");
+
+        private readonly string patternForGradeId = @"\d+";
         private readonly IGradeDao gradeDao;
 
         public GradeLogic(IGradeDao gradeDao)
@@ -21,46 +26,80 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (Validator.IsStringsNull(number, letter, kidsInClass))
             {
-                throw new ArgumentException("Обязательные поля должны быть заполнены");
+                var exception = new ArgumentException($"Обязательные поля должны быть заполнены{ Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(number, out int realNumber) & realNumber <= 0)
             {
-                throw new ArgumentException("Неправильный номер класса");
+                var exception = new ArgumentException($"Неправильный номер класса{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!int.TryParse(kidsInClass, out int realKidsInClass) & realKidsInClass <= 0)
             {
-                throw new ArgumentException("Неправильное количество детей в классе");
+                var exception = new ArgumentException($"Неправильное количество детей в классе{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Grade grade = new Grade { Number = realNumber, Letter = letter, KidsInClass = realKidsInClass };
 
-            return gradeDao.AddGrade(grade);
+            try
+            {
+                return gradeDao.AddGrade(grade);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public void DeleteGrade(string id)
         {
-            if (!int.TryParse(id, out int idGrade))
+            var matches = Regex.Matches(id, patternForGradeId);
+
+            if (!int.TryParse(matches[0].ToString(), out int idGrade))
             {
-                throw new ArgumentException("Идентификатор класса должен быть числом");
+                var exception = new ArgumentException($"Идентификатор класса должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Grade grade = gradeDao.GetGradeById(idGrade);
 
             if (grade == null)
             {
-                throw new Exception("Класса с таким идентификатором не существует");
+                var exception = new ArgumentException($"Класса с таким идентификатором не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
-            gradeDao.DeleteGrade(idGrade);
+            try
+            {
+                gradeDao.DeleteGrade(idGrade);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
 
         public Grade GetGradeById(string id)
         {
-            if (!int.TryParse(id, out int idGrade))
+            var matches = Regex.Matches(id, patternForGradeId);
+            
+            if (!int.TryParse(matches[0].ToString(), out int idGrade))
             {
-                throw new ArgumentException("Идентификатор класса должен быть числом");
+                var exception = new ArgumentException($"Идентификатор класса должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             return gradeDao.GetGradeById(idGrade);
@@ -75,23 +114,31 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (!int.TryParse(id, out int idGrade))
             {
-                throw new ArgumentException("Идентификатор класса должен быть числом");
+                var exception = new ArgumentException($"Идентификатор класса должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(number) & !int.TryParse(number, out int realNumber) & realNumber <= 0)
             {
-                throw new ArgumentException("Неправильный номер класса");
+                var exception = new ArgumentException($"Неправильный номер класса{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(kidsInClass) & !int.TryParse(kidsInClass, out int realKidsInClass) & realKidsInClass <= 0)
             {
-                throw new ArgumentException("Неправильное количество детей в классе");
+                var exception = new ArgumentException($"Неправильное количество детей в классе{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             Grade grade;
             if (idGrade == default)
             {
-                throw new Exception("Идентификатор класса неправильный");
+                var exception = new ArgumentException($"Идентификатор класса неправильный{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
             else
             {
@@ -101,7 +148,16 @@ namespace CalendarThematicPlan.BLL.Logic
             grade.Number = realNumber == default ? grade.Number : realNumber;
             grade.KidsInClass = realKidsInClass == default ? grade.KidsInClass : realKidsInClass;
 
-            gradeDao.UpdateGrade(grade);
+            try
+            {
+                gradeDao.UpdateGrade(grade);
+            }
+            catch (Exception e)
+            {
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
         }
     }
 }
