@@ -194,5 +194,10 @@ namespace CalendarThematicPlan.BLL.Logic
             //заносить в БД пароль в стринговом представлении не стоит, лучше использовать тип ячейки Uniqueidentifier.
             return new Guid(hash).ToString();
         }
+
+        public IEnumerable<User> GetUsersByWord(string word)
+        {
+            return userDao.GetUsersByWord(word);
+        }
     }
 }

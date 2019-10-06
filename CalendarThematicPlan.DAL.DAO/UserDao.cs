@@ -257,6 +257,49 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public IEnumerable<User> GetUsersByWord(string word)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUsersByWord";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "@Word",
+                        Value = word,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new User
+                        {
+                            Id = (int?)reader["id"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Patronymic = (string)reader["Patronymic"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            Position = (string)reader["Position"],
+                            UserPhoto = (byte[])reader["UserPhoto"]
+                        };
+                    }
+                }
+            }
+        }
+
         public void UpdateUser(User user)
         {
             using (var connection = new SqlConnection(connectionString))

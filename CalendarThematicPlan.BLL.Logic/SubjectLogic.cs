@@ -99,6 +99,11 @@ namespace CalendarThematicPlan.BLL.Logic
             return subjectDao.GetSubjects().ToList();
         }
 
+        public IEnumerable<Subject> GetSubjectsByWord(string word)
+        {
+            return subjectDao.GetSubjectsByWord(word);
+        }
+
         public void UpdateSubject(string id, string name, string hours)
         {
             if (!int.TryParse(id, out int idSubject))

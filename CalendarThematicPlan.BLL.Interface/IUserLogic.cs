@@ -16,5 +16,6 @@ namespace CalendarThematicPlan.BLL.Interface
         void UpdateUser(string id, string firstName, string lastName, string patronymic, string email, string password, string role, string position, byte[] userPhoto);
         void DeleteUser(string id);
         string EncryptionPassword(string password);
+        IEnumerable<User> GetUsersByWord(string word);
     }
 }
