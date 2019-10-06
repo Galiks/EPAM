@@ -137,6 +137,40 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public IEnumerable<ReadableSchedule> GetReadableSchedules()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetReadableSchedules";
+                command.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new ReadableSchedule
+                        {
+                            Date = (DateTime)reader["Date"],
+                            ActualDate = (DateTime)reader["Actual date"],
+                            Room = (string)reader["Room"],
+                            GradeNumber = (int)reader["Grade number"],
+                            GradeLetter = (string)reader["Grade letter"],
+                            SubjectName = (string)reader["Subject name"],
+                            TeacherFirstName = (string)reader["Teacher last name"],
+                            TeacherLastName = (string)reader["Teacher first name"],
+                            TecaherPatronymic = (string)reader["Teacher patronymic"],
+                            LessonTopic = (string)reader["Lesson Topic"],
+                            Comment = (string)reader["Comment"]
+                        };
+                    }
+                }
+            }
+        }
+
         public Schedule GetScheduleById(int id)
         {
             using (var connection = new SqlConnection(connectionString))
@@ -207,6 +241,91 @@ namespace CalendarThematicPlan.DAL.DAO
                             IdGrade = (int)reader["Id_grade"],
                             IdUser = (int)reader["Id_user"],
                             LessonTopic = (string)reader["LessonTopic"],
+                            Comment = (string)reader["Comment"]
+                        };
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<ReadableSchedule> GetSchedulesByParameters(string firstName, string lastName, string patronymic, string subjectName, int gradeNumber, string gradeLetter)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetSchedulesByParameters";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserFirstName",
+                        Value = firstName,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserLastName",
+                        Value = lastName,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@UserPatronymic",
+                        Value = patronymic,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@SubjectName",
+                        Value = subjectName,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@GradeNumber",
+                        Value = gradeNumber,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    },
+
+                    new SqlParameter
+                    {
+                        ParameterName = "@GradeLetter",
+                        Value = gradeLetter,
+                        SqlDbType = SqlDbType.NVarChar,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new ReadableSchedule
+                        {
+                            Date = (DateTime)reader["Date"],
+                            ActualDate = (DateTime)reader["Actual date"],
+                            Room = (string)reader["Room"],
+                            GradeNumber = (int)reader["Grade number"],
+                            GradeLetter = (string)reader["Grade letter"],
+                            SubjectName = (string)reader["Subject name"],
+                            TeacherFirstName = (string)reader["Teacher last name"],
+                            TeacherLastName = (string)reader["Teacher first name"],
+                            TecaherPatronymic = (string)reader["Teacher patronymic"],
+                            LessonTopic = (string)reader["Lesson Topic"],
                             Comment = (string)reader["Comment"]
                         };
                     }

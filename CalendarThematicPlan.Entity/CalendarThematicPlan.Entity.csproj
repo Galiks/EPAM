@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReadableSchedule.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Grade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

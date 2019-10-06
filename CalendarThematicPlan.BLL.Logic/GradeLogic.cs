@@ -143,9 +143,16 @@ namespace CalendarThematicPlan.BLL.Logic
             else
             {
                 grade = gradeDao.GetGradeById(idGrade);
+                if (grade == null)
+                {
+                    var exception = new ArgumentException($"Класса с таким идентификатором не существует{Environment.NewLine}");
+                    loggerException.Error(exception);
+                    throw exception;
+                }
             }
 
             grade.Number = realNumber == default ? grade.Number : realNumber;
+            grade.Letter = string.IsNullOrWhiteSpace(letter) ? grade.Letter : letter;
             grade.KidsInClass = realKidsInClass == default ? grade.KidsInClass : realKidsInClass;
 
             try

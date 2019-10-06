@@ -15,7 +15,16 @@
     {
         string grade = Request["grade"];
 
-        gradeLogic.DeleteGrade(grade);
+        try
+        {
+            gradeLogic.DeleteGrade(grade);
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
     }
 }
 

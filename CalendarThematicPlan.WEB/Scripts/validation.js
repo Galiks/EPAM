@@ -26,3 +26,16 @@ function isEqual(event) {
         document.getElementById("check-password").appendChild(p);
     }
 }
+
+function isRightNumber(event, idTag, idNameMain, idNameHelper) {
+    var helper = document.getElementById(idNameHelper);
+    if (helper !== null) {
+        helper.remove();
+    }
+    if (event <= 0) {
+        document.getElementById(idTag).value = "";
+        var p = document.createElement('p');
+        p.innerHTML = "<strong id=" + idNameHelper + ">Поле должно быть больше нуля!</strong>";
+        document.getElementById(idNameMain).appendChild(p);
+    }
+}

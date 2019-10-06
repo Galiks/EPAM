@@ -584,9 +584,12 @@
     <Content Include="Views\Grade\PartialGetGrades.cshtml" />
     <Content Include="Views\Home\LogIn.cshtml" />
     <Content Include="Views\Home\SignOut.cshtml" />
+    <Content Include="Views\User\PartialGetUsers.cshtml" />
+    <Content Include="Views\Schedule\PartialGetSchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -121,6 +121,11 @@ namespace CalendarThematicPlan.BLL.Logic
             }
         }
 
+        public IEnumerable<ReadableSchedule> GetReadableSchedules()
+        {
+            return scheduleDao.GetReadableSchedules();
+        }
+
         public Schedule GetScheduleById(string id)
         {
             if (!int.TryParse(id, out int idSchedule))
@@ -134,6 +139,18 @@ namespace CalendarThematicPlan.BLL.Logic
         public IEnumerable<Schedule> GetSchedules()
         {
             return scheduleDao.GetSchedules().ToList();
+        }
+
+        public IEnumerable<ReadableSchedule> GetSchedulesByParametres(string firstName, string lastName, string patronymic, string subjectName, string gradeNumber, string gradeLetter)
+        {
+            if (!string.IsNullOrWhiteSpace(gradeNumber) & !int.TryParse(gradeNumber, out int realGradeNumber))
+            {
+                var exception = new ArgumentException($"Неправильный номер класса{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            return scheduleDao.GetSchedulesByParameters(firstName, lastName, patronymic, subjectName, realGradeNumber, gradeLetter);
         }
 
         public void UpdateSchedule(string id, string date, string actualDate, string room, string idSubject, string idGrade, string idUser, string lessonTopic, string comment)

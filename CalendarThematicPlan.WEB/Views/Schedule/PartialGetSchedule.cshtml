@@ -1,0 +1,71 @@
+﻿@using Ninject
+@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.BLL.Interface
+@using CalendarThematicPlan.Entity
+
+@{
+    IScheduleLogic scheduleLogic = NinjectCommon.Kernel.Get<IScheduleLogic>();
+    List<ReadableSchedule> readableSchedules;
+    if (IsPost)
+    {
+        string firstName = Request["firstName"];
+        string lastName = Request["lastName"];
+        string patronymic = Request["patronymic"];
+        string subjectName = Request["subjectName"];
+        string gradeNumber = Request["gradeNumber"];
+        string gradeLetter = Request["gradeLetter"];
+        readableSchedules = scheduleLogic.GetSchedulesByParametres(firstName, lastName, patronymic, subjectName, gradeNumber, gradeLetter).ToList();
+    }
+    else
+    {
+        readableSchedules = scheduleLogic.GetReadableSchedules().ToList();
+    }
+}
+
+<div class="mb-5">
+    <form method="post">
+        <div class="form-group">
+            <label for="firstName">
+                Поиск расписания :
+                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Фамилия учителя" />
+                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Имя учителя" />
+                <input type="text" id="patronymic" name="patronymic" class="form-control" placeholder="Отчество учителя" />
+                <input type="text" id="subjectName" name="subjectName" class="form-control" placeholder="Название урока" />
+                <input type="number" id="gradeNumber" name="gradeNumber" class="form-control" placeholder="Номер класса" />
+                <input type="text" id="gradeLetter" name="gradeLetter" class="form-control" placeholder="Буква класса" />
+            </label>
+        </div>
+
+        <button>Поиск</button>
+    </form>
+</div>
+
+
+<div class="mb-5">
+
+
+    <table class="border-dark" border="1">
+        <tr>
+            <td>Дата</td>
+            <td>Актуальная дата</td>
+            <td>Комната</td>
+            <td>Класс</td>
+            <td>Предмет</td>
+            <td>Учитель</td>
+            <td>Тема урока</td>
+            <td>Заметка</td>
+        </tr>
+        @foreach (var item in readableSchedules)
+        {
+            <tr class="align-middle">
+                <td>@item.Date</td>
+                <td>@item.ActualDate</td>
+                <td>@item.Room</td>
+                <td>@item.SubjectName</td>
+                <td>@item.TeacherLastName @item.TeacherFirstName @item.TecaherPatronymic</td>
+                <td>@item.LessonTopic</td>
+                <td>@item.Comment</td>
+            </tr>
+        }
+    </table>
+</div>

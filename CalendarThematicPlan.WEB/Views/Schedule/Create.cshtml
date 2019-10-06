@@ -6,15 +6,31 @@
     Layout = null;
 }
 
-@{ 
-    IGradeLogic gradeLogic = Ninject.Kernel.Get<IGradeLogic>();
+@{
+    IScheduleLogic scheduleLogic = NinjectCommon.Kernel.Get<IScheduleLogic>();
     if (IsPost)
     {
-        string number = Request["number"];
-        string letter = Request["letter"];
-        string kids = Request["kids"];
+        string date = $"{Request["date"]} {Request["time"]}";
+        string actualDate = $"{Request["actual-date"]} {Request["actual-time"]}";
+        string room = Request["room"];
+        string idSubject = Request["idSubject"];
+        string idGrade = Request["idGrade"];
+        string idUser = Request["idUser"];
+        string lessonTopic = Request["lesson"];
+        string comment = Request["comment"];
 
-        gradeLogic.AddGrade(number, letter, kids);
+        try
+        {
+            scheduleLogic.AddSchedule(date, actualDate, room, idSubject, idGrade, idUser, lessonTopic, comment);
+
+            Response.Redirect("~/Schedule/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
     }
 }
 
@@ -25,28 +41,66 @@
     <meta name="viewport" content="width=device-width" />
     <title>Create Grade</title>
     <link rel="stylesheet" href="~/Content/styles.css" />
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
     <div class="form-group required">
         <form method="post">
             <div class="form-group">
-                <label for="number">
-                    Number:
-                    <input type="number" id="number" name="number" class="form-control" required="required" />
+                <label for="date" class="control-label">
+                    Дата занятия :
+                    <input type="date" id="date" name="date" class="form-control" required />
+                    <input type="time" id="time" name="time" class="form-control" required />
                 </label>
             </div>
 
             <div class="form-group">
-                <label for="letter">
-                    Letter:
-                    <input type="text" id="letter" name="letter" class="form-control" required />
+                <label for="actual-date" class="control-label">
+                    Актуальная дата занятия :
+                    <input type="date" id="actual-date" name="actual-date" class="form-control" required="required" />
+                    <input type="time" id="actual-time" name="actual-time" class="form-control" required />
                 </label>
             </div>
 
             <div class="form-group">
-                <label for="kids">
-                    Kids in class:
-                    <input type="number" id="kids" name="kids" class="form-control" required />
+                <label for="room" class="control-label">
+                    Комната :
+                    <input type="text" id="room" name="room" class="form-control" required />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idSubject" class="control-label">
+                    Идентификатор урока :
+                    <input type="number" id="idSubject" name="idSubject" class="form-control" required />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idGrade" class="control-label">
+                    Идентификатор класса :
+                    <input type="number" id="idGrade" name="idGrade" class="form-control" required />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idUser" class="control-label">
+                    Идентификатор пользователя :
+                    <input type="number" id="idUser" name="idUser" class="form-control" required />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="lesson">
+                    Название предмета :
+                    <input type="text" id="lesson" name="lesson" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">
+                    Примечание :
+                    <input type="text" id="comment" name="comment" class="form-control" />
                 </label>
             </div>
 

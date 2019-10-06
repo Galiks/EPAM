@@ -1,6 +1,13 @@
-﻿
+﻿@using Ninject
+@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.BLL.Interface
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
 }
 
 <!DOCTYPE html>
@@ -12,6 +19,7 @@
 </head>
 <body>
 
-    
+    @{Html.RenderPartial("PartialGetUsers");}
+
 </body>
 </html>

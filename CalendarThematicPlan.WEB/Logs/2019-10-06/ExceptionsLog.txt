@@ -1,0 +1,6 @@
+CalendarThematicPlan.BLL.Logic.UserLogic.AddUser  Error Пользователь с таким Email уже есть
+ System.ArgumentException: Пользователь с таким Email уже есть
+ 2019/10/06 18:18:20.170
+CalendarThematicPlan.BLL.Logic.GradeLogic.UpdateGrade  Error Класса с таким идентификатором не существует
+ System.ArgumentException: Класса с таким идентификатором не существует
+ 2019/10/06 20:03:23.301
