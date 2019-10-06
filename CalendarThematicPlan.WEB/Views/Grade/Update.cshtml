@@ -1,6 +1,21 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
+    if (IsPost)
+    {
+        string number = Request["number"];
+        string letter = Request["letter"];
+        string kids = Request["kids"];
+
+        gradeLogic.UpdateGrade("", number, letter, kids);
+    }
 }
 
 <!DOCTYPE html>
@@ -11,7 +26,10 @@
     <title>Update</title>
 </head>
 <body>
-    <div> 
+    <div>
+
+
+
     </div>
 </body>
 </html>

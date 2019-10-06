@@ -23,14 +23,14 @@
             role = "User";
         }
 
+        string position = Request["position"];
+
         WebImage photo = WebImage.GetImageFromRequest("image");
         byte[] userPhoto = null;
         if (photo != null)
         {
             userPhoto = photo.GetBytes();
         }
-
-        string position = Request["position"];
 
         userLogic.AddUser(firstName, lastName, patronymic, email, password, role, position, userPhoto);
     }
@@ -43,50 +43,55 @@
     <meta name="viewport" content="width=device-width" />
     <title>Create User</title>
     <link rel="stylesheet" href="~/Content/styles.css" />
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
     <div class="form-group required">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="lastName" class="control-label">
                     Фамилия:
-                    <input type="text" id="lastName" name="lastName" class="form-control" required />
+                    <input type="text" id="lastName" name="lastName" class="form-control" required value="Ivanov" />
                 </label>
             </div>
 
             <div class="form-group">
                 <label for="firstName" class="control-label">
                     Имя:
-                    <input type="text" id="firstName" name="firstName" class="form-control" required="required" />
+                    <input type="text" id="firstName" name="firstName" class="form-control" required="required" value="Ivan" />
                 </label>
             </div>
 
             <div class="form-group">
                 <label for="patronymic" class="control-label">
                     Отчество:
-                    <input type="text" id="patronymic" name="patronymic" class="form-control" required />
+                    <input type="text" id="patronymic" name="patronymic" class="form-control" required value="Ivanovich" />
                 </label>
             </div>
 
             <div class="form-group">
                 <label for="email" class="control-label">
                     Email:
-                    <input type="text" id="email" name="email" class="form-control" required />
+                    <input type="text" id="email" name="email" class="form-control" required onchange="IsRightEmail(this.value)" value="test.test@test.ru" />
                 </label>
+            </div>
+
+            <div id="check-email">
+
             </div>
 
             <div class="form-group">
                 <label for="password" class="control-label">
                     Пароль:
-                    <input type="text" id="password" name="password" class="form-control" required placeholder="Пароль" />
+                    <input type="text" id="password" name="password" class="form-control" required placeholder="Пароль" value="123" />
                 </label>
             </div>
 
             <div class="form-group">
                 <label for="confirm-password" class="control-label">
                     Подтверждение пароля:
-                    <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" onchange="isEqual()" value="" />
+                    <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" onchange="isEqual(this.value)" value="123" />
                 </label>
             </div>
 
@@ -94,18 +99,7 @@
 
             </div>
 
-            <script>
-                function isEqual(event) {
-                    var password = document.getElementById("password").value;
-                    var repeat = document.getElementById("confirm-password").value;
-						if (repeat !== password){
-							document.getElementById("confirm-password").value = "";
-							var p = document.createElement('p');
-                            p.innerHTML = "<strong>NO</strong>";
-                            document.getElementById("check-password").appendChild(p);
-						}
-                }
-            </script>
+            <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
 
             <div class="col-md-6">
                 Role: @Html.DropDownList("role", selectsRole as SelectList)
@@ -118,12 +112,7 @@
                 </label>
             </div>
 
-            <div class="form-group">
-                <label for="position">
-                    Фото:
-                    <input type="file" id="image" name="image" />
-                </label>
-            </div>
+            <p>Photo</p><input type="file" id="image" name="image" />
 
             <button id="button">Create User</button>
 

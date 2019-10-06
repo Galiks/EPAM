@@ -538,6 +538,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\validation.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -580,7 +581,7 @@
     <Content Include="Views\UserSubject\Delete.cshtml" />
     <Content Include="Views\UserSubject\Index.cshtml" />
     <Content Include="Views\UserSubject\Update.cshtml" />
-    <Content Include="Views\Grade\GetGrades.cshtml" />
+    <Content Include="Views\Grade\PartialGetGrades.cshtml" />
     <Content Include="Views\Home\LogIn.cshtml" />
     <Content Include="Views\Home\SignOut.cshtml" />
   </ItemGroup>

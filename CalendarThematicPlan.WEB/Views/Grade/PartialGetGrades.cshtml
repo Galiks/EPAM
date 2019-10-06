@@ -1,0 +1,30 @@
+﻿@using Ninject
+@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.BLL.Interface
+
+@{ 
+    IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
+    var grades = gradeLogic.GetGrades();
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div class="mb-5">
+    <table class="border-dark" border="1">
+        <tr>
+            <td>ID</td>
+            <td>Номер</td>
+            <td>Буква</td>
+            <td>Детей в классе</td>
+        </tr>
+        @foreach (var item in grades)
+        {
+            <tr class="align-middle">
+                <td>@item.Id</td>
+                <td>@item.Number</td>
+                <td>@item.Letter</td>
+                <td>@item.KidsInClass</td>
+            </tr>
+        }
+    </table>
+</div>

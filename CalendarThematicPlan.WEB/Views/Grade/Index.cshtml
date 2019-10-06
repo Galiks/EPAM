@@ -15,25 +15,9 @@
 </head>
 <body>
 
-    @*<div class="mb-5">
-        <table class="border-dark">
-            <tr>
-                <td>ID</td>
-                <td>Номер</td>
-                <td>Буква</td>
-                <td>Детей в классе</td>
-            </tr>
-            @foreach (var item in Model)
-            {
-                <tr class="align-middle">
-                    <td>@item.Id</td>
-                    <td>@item.Number</td>
-                    <td>@item.Letter</td>
-                    <td>@item.KidsInClass</td>
-                </tr>
-            }
-        </table>
-    </div>*@
+    <div>
+        @{Html.RenderPartial("PartialGetGrades"); }
+    </div>
 
     <div>
         @using (Html.BeginForm("Index", "Grade"))

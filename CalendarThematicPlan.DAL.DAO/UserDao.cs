@@ -87,7 +87,7 @@ namespace CalendarThematicPlan.DAL.DAO
                     new SqlParameter
                     {
                         ParameterName = "@UserPhoto",
-                        Value = user.UserPhoto,
+                        Value = user.UserPhoto ?? System.Data.SqlTypes.SqlBinary.Null,
                         SqlDbType = SqlDbType.VarBinary,
                         Direction = ParameterDirection.Input
                     },
