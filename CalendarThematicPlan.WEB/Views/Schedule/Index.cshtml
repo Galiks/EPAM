@@ -12,7 +12,17 @@
 </head>
 <body>
 
-    @{Html.RenderPartial("PartialGetSchedule");}
+    <div>
+        @{Html.RenderPartial("PartialGetSchedule");}
+    </div>
 
+    <div>
+        @using (Html.BeginForm("Index", "Grade"))
+        {
+            <button name="action" value="create" class="list-inline">Create</button>
+            <button name="action" value="update">Update</button>
+            <button name="action" value="delete">Delete</button>
+        }
+    </div>
 </body>
 </html>

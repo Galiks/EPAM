@@ -582,7 +582,7 @@
     <Content Include="Views\UserSubject\Index.cshtml" />
     <Content Include="Views\UserSubject\Update.cshtml" />
     <Content Include="Views\Grade\PartialGetGrades.cshtml" />
-    <Content Include="Views\Home\LogIn.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\SignOut.cshtml" />
     <Content Include="Views\User\PartialGetUsers.cshtml" />
     <Content Include="Views\Schedule\PartialGetSchedule.cshtml" />

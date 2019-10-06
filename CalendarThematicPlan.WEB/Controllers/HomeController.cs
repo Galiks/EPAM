@@ -10,8 +10,7 @@ namespace CalendarThematicPlan.WEB.Controllers
     {
         public ActionResult Index()
         {
-            List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
-            return View(numbers);
+            return View();
         }
 
         public ActionResult Calendar()
@@ -19,7 +18,7 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }
 
-        public ActionResult LogIn()
+        public ActionResult Login()
         {
             return View();
         }

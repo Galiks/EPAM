@@ -172,7 +172,7 @@ namespace CalendarThematicPlan.DAL.DAO
                             Password = (string)reader["Password"],
                             Role = (string)reader["Role"],
                             Position = (string)reader["Position"],
-                            UserPhoto = (byte[])reader["UserPhoto"]
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"]
                         };
                     }
                 }

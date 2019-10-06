@@ -20,11 +20,15 @@
     </div>
 
     <div>
-        @using (Html.BeginForm("Index", "Grade"))
+        @if (User.IsInRole("Admin"))
         {
+            
+            using (Html.BeginForm("Index", "Grade"))
+            {
             <button name="action" value="create" class="list-inline">Create</button>
             <button name="action" value="update">Update</button>
             <button name="action" value="delete">Delete</button>
+            }
         }
     </div>
 </body>
