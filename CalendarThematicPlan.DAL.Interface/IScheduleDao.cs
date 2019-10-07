@@ -16,5 +16,6 @@ namespace CalendarThematicPlan.DAL.Interface
         void DeleteSchedule(int id);
         IEnumerable<ReadableSchedule> GetSchedulesByParameters(string firstName, string lastName, string patronymic, string subjectName, int gradeNumber, string gradeLetter);
         IEnumerable<ReadableSchedule> GetReadableSchedules();
+        ReadableSchedule GetReadableScheduleById(int id);
     }
 }

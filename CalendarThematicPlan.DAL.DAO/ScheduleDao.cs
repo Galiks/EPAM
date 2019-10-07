@@ -137,6 +137,54 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public ReadableSchedule GetReadableScheduleById(int id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetReadableScheduleById";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return new ReadableSchedule
+                        {
+                            Id = (int)reader["Id"],
+                            Date = (DateTime)reader["Date"],
+                            ActualDate = (DateTime)reader["Actual date"],
+                            Room = (string)reader["Room"],
+                            GradeNumber = (int)reader["Grade number"],
+                            GradeLetter = (string)reader["Grade letter"],
+                            SubjectName = (string)reader["Subject name"],
+                            TeacherFirstName = (string)reader["Teacher last name"],
+                            TeacherLastName = (string)reader["Teacher first name"],
+                            TecaherPatronymic = (string)reader["Teacher patronymic"],
+                            LessonTopic = (string)reader["Lesson Topic"],
+                            Comment = (string)reader["Comment"]
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public IEnumerable<ReadableSchedule> GetReadableSchedules()
         {
             using (var connection = new SqlConnection(connectionString))
@@ -154,6 +202,7 @@ namespace CalendarThematicPlan.DAL.DAO
                     {
                         yield return new ReadableSchedule
                         {
+                            Id = (int)reader["Id"],
                             Date = (DateTime)reader["Date"],
                             ActualDate = (DateTime)reader["Actual date"],
                             Room = (string)reader["Room"],
@@ -254,7 +303,7 @@ namespace CalendarThematicPlan.DAL.DAO
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "GetSchedulesByParameters";
+                command.CommandText = "GetReadableSchedulesByParameters";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]
@@ -316,6 +365,7 @@ namespace CalendarThematicPlan.DAL.DAO
                     {
                         yield return new ReadableSchedule
                         {
+                            Id = (int)reader["Id"],
                             Date = (DateTime)reader["Date"],
                             ActualDate = (DateTime)reader["Actual date"],
                             Room = (string)reader["Room"],

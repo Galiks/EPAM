@@ -121,6 +121,16 @@ namespace CalendarThematicPlan.BLL.Logic
             }
         }
 
+        public ReadableSchedule GetReadableScheduleById(string id)
+        {
+            if (!int.TryParse(id, out int idSchedule))
+            {
+                throw new ArgumentException("Неправильный идентификатор расписания");
+            }
+
+            return scheduleDao.GetReadableScheduleById(idSchedule);
+        }
+
         public IEnumerable<ReadableSchedule> GetReadableSchedules()
         {
             return scheduleDao.GetReadableSchedules();

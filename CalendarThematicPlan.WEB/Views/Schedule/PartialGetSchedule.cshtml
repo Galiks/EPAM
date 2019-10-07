@@ -54,6 +54,7 @@
             <td>Учитель</td>
             <td>Тема урока</td>
             <td>Заметка</td>
+            <td>Доп действия</td>
         </tr>
         @foreach (var item in readableSchedules)
         {
@@ -61,10 +62,15 @@
                 <td>@item.Date</td>
                 <td>@item.ActualDate</td>
                 <td>@item.Room</td>
+                <td>@item.GradeNumber@item.GradeLetter</td>
                 <td>@item.SubjectName</td>
                 <td>@item.TeacherLastName @item.TeacherFirstName @item.TecaherPatronymic</td>
                 <td>@item.LessonTopic</td>
                 <td>@item.Comment</td>
+                <td>
+                    @Html.ActionLink("Update", "Update", new { id = item.Id})
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id})
+                </td>
             </tr>
         }
     </table>

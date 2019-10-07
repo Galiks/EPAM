@@ -16,5 +16,6 @@ namespace CalendarThematicPlan.BLL.Interface
         void DeleteSchedule(string id);
         IEnumerable<ReadableSchedule> GetSchedulesByParametres(string firstName, string lastName, string patronymic, string subjectName, string gradeNumber, string gradeLetter);
         IEnumerable<ReadableSchedule> GetReadableSchedules();
+        ReadableSchedule GetReadableScheduleById(string id);
     }
 }

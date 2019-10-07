@@ -1,6 +1,19 @@
-﻿
+﻿@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.BLL.Interface
+@using CalendarThematicPlan.Entity
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{ 
+    IScheduleLogic scheduleLogic = NinjectCommon.Kernel.Get<IScheduleLogic>();
+    if (IsPost)
+    {
+        string id = Model.Id.ToString();
+        scheduleLogic.DeleteSchedule(id);
+    }
 }
 
 <!DOCTYPE html>
@@ -11,8 +24,34 @@
     <title>Delete</title>
 </head>
 <body>
-    <div>
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>Дата</td>
+                <td>Актуальная дата</td>
+                <td>Комната</td>
+                <td>Класс</td>
+                <td>Предмет</td>
+                <td>Учитель</td>
+                <td>Тема урока</td>
+                <td>Заметка</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Date</td>
+                <td>@Model.ActualDate</td>
+                <td>@Model.Room</td>
+                <td>@Model.SubjectName</td>
+                <td>@Model.TeacherLastName @Model.TeacherFirstName @Model.TecaherPatronymic</td>
+                <td>@Model.LessonTopic</td>
+                <td>@Model.Comment</td>
+            </tr>
+        </table>
+    </div>
 
+    <div>
+        <form method="post">
+            <button>Удалить расписание</button>
+        </form>
     </div>
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace CalendarThematicPlan.Entity
 {
     public class ReadableSchedule
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public DateTime ActualDate { get; set; }
         public string Room { get; set; }
