@@ -28,9 +28,10 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }
 
-        public ActionResult Error()
+        public ActionResult Error(string errorMessage)
         {
-            return View("~/Views/Shared/Error.cshtml");
+            string message = errorMessage;
+            return View(message);
         }
     }
 }

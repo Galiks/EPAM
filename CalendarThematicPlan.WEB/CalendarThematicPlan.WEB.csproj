@@ -585,8 +585,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\SignOut.cshtml" />
     <Content Include="Views\User\PartialGetUsers.cshtml" />
-    <Content Include="Views\Schedule\PartialGetSchedule.cshtml" />
+    <Content Include="Views\Schedule\PartialGetSchedules.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,40 @@
-﻿
+﻿@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.BLL.Interface
+@using CalendarThematicPlan.Entity
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    IScheduleLogic scheduleLogic = NinjectCommon.Kernel.Get<IScheduleLogic>();
+    if (IsPost)
+    {
+        string id = Model.Id.ToString();
+        string date = $"{Request["date"]} {Request["time"]}";
+        string actualDate = $"{Request["actual-date"]} {Request["actual-time"]}";
+        string room = Request["room"];
+        string idSubject = Request["idSubject"];
+        string idGrade = Request["idGrade"];
+        string idUser = Request["idUser"];
+        string lessonTopic = Request["lesson"];
+        string comment = Request["comment"];
+
+        try
+        {
+            scheduleLogic.UpdateSchedule(id, date, actualDate, room, idSubject, idGrade, idUser, lessonTopic, comment);
+
+            Response.Redirect("~/Schedule/Index");
+        }
+        catch (Exception e)
+        {
+            @*@Html.ActionLink("Error", "Error", "Home", new { error = e.Message })*@
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -9,9 +43,97 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Update</title>
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div> 
+
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>Дата</td>
+                <td>Актуальная дата</td>
+                <td>Комната</td>
+                <td>Класс</td>
+                <td>Предмет</td>
+                <td>Учитель</td>
+                <td>Тема урока</td>
+                <td>Заметка</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Date</td>
+                <td>@Model.ActualDate</td>
+                <td>@Model.Room</td>
+                <td>@Model.GradeNumber@Model.GradeLetter</td>
+                <td>@Model.SubjectName</td>
+                <td>@Model.TeacherLastName @Model.TeacherFirstName @Model.TecaherPatronymic</td>
+                <td>@Model.LessonTopic</td>
+                <td>@Model.Comment</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-group required">
+        <form method="post">
+            <div class="form-group">
+                <label for="date">
+                    Дата занятия :
+                    <input type="date" id="date" name="date" class="form-control" />
+                    <input type="time" id="time" name="time" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="actual-date">
+                    Актуальная дата занятия :
+                    <input type="date" id="actual-date" name="actual-date" class="form-control" />
+                    <input type="time" id="actual-time" name="actual-time" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="room">
+                    Комната :
+                    <input type="text" id="room" name="room" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idSubject">
+                    Идентификатор урока :
+                    <input type="number" id="idSubject" name="idSubject" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idGrade">
+                    Идентификатор класса :
+                    <input type="number" id="idGrade" name="idGrade" class="form-control"/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="idUser">
+                    Идентификатор пользователя :
+                    <input type="number" id="idUser" name="idUser" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="lesson">
+                    Название предмета :
+                    <input type="text" id="lesson" name="lesson" class="form-control" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">
+                    Примечание :
+                    <input type="text" id="comment" name="comment" class="form-control" />
+                </label>
+            </div>
+
+            <button>Create</button>
+        </form>
     </div>
 </body>
 </html>

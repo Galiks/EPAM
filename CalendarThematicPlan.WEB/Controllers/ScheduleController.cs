@@ -33,14 +33,30 @@ namespace CalendarThematicPlan.WEB.Controllers
 
         public ActionResult Update(int? id)
         {
-            var schedule = scheduleLogic.GetScheduleById(id.ToString());
-            return View(schedule);
+            try
+            {
+                var schedule = scheduleLogic.GetReadableScheduleById(id.ToString());
+                return View(schedule);
+            }
+            catch (Exception e)
+            {
+                //return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+                return Redirect("~/Home/Error");
+            }
         }
 
         public ActionResult Delete(int? id)
         {
-            var schedule = scheduleLogic.GetScheduleById(id.ToString());
-            return View(schedule);
+            try
+            {
+                var schedule = scheduleLogic.GetReadableScheduleById(id.ToString());
+                return View(schedule);
+            }
+            catch (Exception e)
+            {
+                //return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+                return Redirect("~/Home/Error");
+            }
         }
     }
 }

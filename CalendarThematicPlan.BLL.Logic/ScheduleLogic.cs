@@ -125,7 +125,9 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (!int.TryParse(id, out int idSchedule))
             {
-                throw new ArgumentException("Неправильный идентификатор расписания");
+                var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             return scheduleDao.GetReadableScheduleById(idSchedule);
@@ -140,7 +142,9 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             if (!int.TryParse(id, out int idSchedule))
             {
-                throw new ArgumentException("Неправильный идентификатор расписания");
+                var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             return scheduleDao.GetScheduleById(idSchedule);
@@ -212,7 +216,9 @@ namespace CalendarThematicPlan.BLL.Logic
             Schedule schedule;
             if (IdSchedule == default)
             {
-                throw new ArgumentException("Неправильный идентификатор расписания");
+                var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
             else
             {
@@ -222,7 +228,9 @@ namespace CalendarThematicPlan.BLL.Logic
             //Вот, вроде, надо эту проверку поставить второй, так как, если нет таких данных, то все остальные проверки теряют смысл. С другой стороны есть чёткий порядок проверок
             if (schedule == null)
             {
-                throw new Exception("Расписания с таким номером не существует");
+                var exception = new ArgumentException($"Расписания с таким номером не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
             }
 
             schedule.Date = realDate == default ? schedule.Date : realDate;
