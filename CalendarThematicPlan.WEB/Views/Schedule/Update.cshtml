@@ -30,6 +30,7 @@
         catch (Exception e)
         {
             @*@Html.ActionLink("Error", "Error", "Home", new { error = e.Message })*@
+            //Response.RedirectToRoute("~/Home/Error", new {errorMessage = e.Message });
             <div class="card-header">
                 <h2>@e.Message</h2>
             </div>
@@ -132,7 +133,7 @@
                 </label>
             </div>
 
-            <button>Create</button>
+            <button>Обновить</button>
         </form>
     </div>
 </body>

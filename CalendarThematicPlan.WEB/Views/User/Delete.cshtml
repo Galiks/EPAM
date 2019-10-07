@@ -1,6 +1,30 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    if (IsPost)
+    {
+        string id = Model.Id.ToString();
+
+        try
+        {
+            userLogic.DeleteUser(id);
+
+            Response.Redirect("~/User/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -11,7 +35,44 @@
     <title>Delete</title>
 </head>
 <body>
-    <div> 
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td>Должность</td>
+                <td>Фото</td>
+                <td>Доп действия (тест)</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Id</td>
+                <td>@Model.LastName</td>
+                <td>@Model.FirstName</td>
+                <td>@Model.Patronymic</td>
+                <td>@Model.Position</td>
+                <td>
+                    @if (Model.UserPhoto != null)
+                    {
+                        @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
+                                 + Convert.ToBase64String(Model.UserPhoto) + "\" />")
+                    }
+                    else
+                    {
+                        <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
+                    }
+                </td>
+                <td>@Html.ActionLink("Details", "Details", new { idUser = Model.Id })</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div>
+        <form method="post">
+            <button>Удалить предмет</button>
+        </form>
     </div>
 </body>
 </html>

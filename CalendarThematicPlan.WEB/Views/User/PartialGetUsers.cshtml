@@ -60,7 +60,11 @@
                         <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
                     }
                 </td>
-                <td>@Html.ActionLink("Details", "Details", new { idUser = item.Id })</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Update", "Update", new { id = item.Id })
+                </td>
             </tr>
         }
     </table>

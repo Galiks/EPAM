@@ -1,6 +1,32 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    ISubjectLogic subjectLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
+    if (IsPost)
+    {
+        string id = Model.Id.ToString();
+        string name = Request["name"];
+        string hours = Request["hours"];
+
+        try
+        {
+            subjectLogic.UpdateSubject(id, name, hours);
+
+            Response.Redirect("~/Subject/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -9,9 +35,51 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Update</title>
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div> 
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Название предмета</td>
+                <td>Количество часов за четверть</td>
+            </tr>
+
+            <tr class="align-middle">
+                <td>@Model.Id</td>
+                <td>@Model.Name</td>
+                <td>@Model.Hours</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div>
+        <div class="form-group required">
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">
+                        Название предмета :
+                        <input type="text" id="name" name="name" class="form-control" />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="hours" class="control-label">
+                        Часов за четверть:
+                        <input type="number" id="hours" name="hours" class="form-control"
+                               onchange="isRightNumber(this.value, 'hours', 'check-hours', 'check-hours-helper')" value="" />
+                    </label>
+                </div>
+
+                <div id="check-hours">
+
+                </div>
+
+                <button>Обновить предмет</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

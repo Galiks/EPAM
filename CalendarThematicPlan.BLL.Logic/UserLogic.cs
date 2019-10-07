@@ -17,10 +17,12 @@ namespace CalendarThematicPlan.BLL.Logic
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
 
         private readonly IUserDao userDao;
+        private readonly ISubjectDao subjectDao;
 
-        public UserLogic(IUserDao userDao)
+        public UserLogic(IUserDao userDao, ISubjectDao subjectDao)
         {
             this.userDao = userDao;
+            this.subjectDao = subjectDao;
         }
 
         public int? AddUser(string firstName, string lastName, string patronymic, string email, string password, string role, string position, byte[] userPhoto)
@@ -148,6 +150,13 @@ namespace CalendarThematicPlan.BLL.Logic
             else
             {
                 user = userDao.GetUserById(idUser);
+
+                if (user == null)
+                {
+                    var exception = new ArgumentException($"Пользователя с таким идентификатором не существует{Environment.NewLine}");
+                    loggerException.Error(exception);
+                    throw exception;
+                }
             }
 
             user.FirstName = string.IsNullOrWhiteSpace(firstName) ? user.FirstName : firstName;
@@ -198,6 +207,25 @@ namespace CalendarThematicPlan.BLL.Logic
         public IEnumerable<User> GetUsersByWord(string word)
         {
             return userDao.GetUsersByWord(word);
+        }
+
+        public IEnumerable<User> GetUsersBySubject(string id)
+        {
+            if (!int.TryParse(id, out int idSubject))
+            {
+                var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            if (subjectDao.GetSubjectById(idSubject) == null)
+            {
+                var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            return userDao.GetUsersBySubject(idSubject);
         }
     }
 }

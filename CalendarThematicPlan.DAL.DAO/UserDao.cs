@@ -257,6 +257,49 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public IEnumerable<User> GetUsersBySubject(string id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUsersBySubject";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]
+                {
+                    new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new User
+                        {
+                            Id = (int?)reader["id"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Patronymic = (string)reader["Patronymic"],
+                            Email = (string)reader["Email"],
+                            Password = (string)reader["Password"],
+                            Role = (string)reader["Role"],
+                            Position = (string)reader["Position"],
+                            UserPhoto = reader["UserPhoto"] is System.DBNull ? null : (byte[])reader["UserPhoto"]
+                        };
+                    }
+                }
+            }
+        }
+
         public IEnumerable<User> GetUsersByWord(string word)
         {
             using (var connection = new SqlConnection(connectionString))
@@ -306,7 +349,7 @@ namespace CalendarThematicPlan.DAL.DAO
             {
                 var command = connection.CreateCommand();
 
-                command.CommandText = "AddUser";
+                command.CommandText = "UpdateUser";
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(new[]

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CalendarThematicPlan.BLL.Interface;
+using CalendarThematicPlan.Container;
+using Ninject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,14 @@ namespace CalendarThematicPlan.WEB.Controllers
 {
     public class SubjectController : Controller
     {
+        private readonly ISubjectLogic subjectLogic;
+
+        public SubjectController()
+        {
+            this.subjectLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
+        }
+
+
         // GET: Subject
         public ActionResult Index()
         {
@@ -19,14 +30,16 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }
 
-        public ActionResult Update()
+        public ActionResult Update(int? id)
         {
-            return View();
+            var subject = subjectLogic.GetSubjectById(id.ToString());
+            return View(subject);
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(int? id)
         {
-            return View();
+            var subject = subjectLogic.GetSubjectById(id.ToString());
+            return View(subject);
         }
     }
 }

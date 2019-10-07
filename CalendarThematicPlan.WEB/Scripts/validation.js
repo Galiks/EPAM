@@ -1,15 +1,17 @@
 ﻿function IsRightEmail(event) {
-    var helper = document.getElementById("check-email-helper");
-    if (helper !== null) {
-        helper.remove();
-    }
-    let regexp = /\b[A-Za-zА-ЯёЁ0-9]{1}\S+[A-Za-zА-ЯёЁ0-9]{1}\b@[A-Za-zА-ЯёЁ]{2,6}(\.[A-Za-zА-ЯёЁ0-9-]+)+/gm;
-    let matches = event.match(regexp);
-    if (matches === null || matches.length !== 1) {
-        document.getElementById("email").value = "";
-        var p = document.createElement('p');
-        p.innerHTML = "<strong id='check-email-helper'>Некорректный Email!</strong>";
-        document.getElementById("check-email").appendChild(p);
+    if (event.length > 1) {
+        var helper = document.getElementById("check-email-helper");
+        if (helper !== null) {
+            helper.remove();
+        }
+        let regexp = /\b[A-Za-zА-ЯёЁ0-9]{1}\S+[A-Za-zА-ЯёЁ0-9]{1}\b@[A-Za-zА-ЯёЁ]{2,6}(\.[A-Za-zА-ЯёЁ0-9-]+)+/gm;
+        let matches = event.match(regexp);
+        if (matches === null || matches.length !== 1) {
+            document.getElementById("email").value = "";
+            var p = document.createElement('p');
+            p.innerHTML = "<strong id='check-email-helper'>Некорректный Email!</strong>";
+            document.getElementById("check-email").appendChild(p);
+        }
     }
 }
 

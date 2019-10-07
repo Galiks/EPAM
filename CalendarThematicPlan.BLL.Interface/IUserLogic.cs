@@ -17,5 +17,6 @@ namespace CalendarThematicPlan.BLL.Interface
         void DeleteUser(string id);
         string EncryptionPassword(string password);
         IEnumerable<User> GetUsersByWord(string word);
+        IEnumerable<User> GetUsersBySubject(string id);
     }
 }

@@ -16,10 +16,12 @@ namespace CalendarThematicPlan.BLL.Logic
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
 
         private readonly ISubjectDao subjectDao;
+        private readonly IUserDao userDao;
 
-        public SubjectLogic(ISubjectDao subjectDao)
+        public SubjectLogic(ISubjectDao subjectDao, IUserDao userDao)
         {
             this.subjectDao = subjectDao;
+            this.userDao = userDao;
         }
 
         public int? AddSubject(string name, string hours)
@@ -97,6 +99,25 @@ namespace CalendarThematicPlan.BLL.Logic
         public IEnumerable<Subject> GetSubjects()
         {
             return subjectDao.GetSubjects().ToList();
+        }
+
+        public IEnumerable<Subject> GetSubjectsByUser(string id)
+        {
+            if (!int.TryParse(id, out int idUser))
+            {
+                var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            if (userDao.GetUserById(idUser) == null)
+            {
+                var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            return subjectDao.GetSubjectsByUser(idUser);
         }
 
         public IEnumerable<Subject> GetSubjectsByWord(string word)

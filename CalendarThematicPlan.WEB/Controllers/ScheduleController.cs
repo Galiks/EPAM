@@ -40,7 +40,7 @@ namespace CalendarThematicPlan.WEB.Controllers
             }
             catch (Exception e)
             {
-                //return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+                //return RedirectToAction("Error", "Home", e.Message);
                 return Redirect("~/Home/Error");
             }
         }

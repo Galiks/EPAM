@@ -4,3 +4,6 @@ CalendarThematicPlan.BLL.Logic.ScheduleLogic.GetReadableScheduleById  Error Непр
 CalendarThematicPlan.BLL.Logic.ScheduleLogic.GetReadableScheduleById  Error Неправильный идентификатор расписания
  System.ArgumentException: Неправильный идентификатор расписания
  2019/10/07 16:27:08.599
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.AddSchedule  Error Такого класса не существует
+ System.ArgumentException: Такого класса не существует
+ 2019/10/07 23:42:38.392

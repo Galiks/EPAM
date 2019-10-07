@@ -16,5 +16,6 @@ namespace CalendarThematicPlan.DAL.Interface
         void DeleteUser(int id);
         User GetUserByEmail(string email);
         IEnumerable<User> GetUsersByWord(string word);
+        IEnumerable<User> GetUsersBySubject(int id);
     }
 }

@@ -35,11 +35,11 @@
         try
         {
             userLogic.AddUser(firstName, lastName, patronymic, email, password, role, position, userPhoto);
+
+            Response.Redirect("~/User/Index");
         }
         catch (Exception e)
         {
-            //Response.Redirect("~/Home/Error");
-
             <div class="card-header">
                 <h2>@e.Message</h2>
             </div>
@@ -63,7 +63,7 @@
             <div class="form-group">
                 <label for="lastName" class="control-label">
                     Фамилия:
-                    <input type="text" id="lastName" name="lastName" class="form-control" required value="Турченкоа" />
+                    <input type="text" id="lastName" name="lastName" class="form-control" required value="Турченков" />
                 </label>
             </div>
 

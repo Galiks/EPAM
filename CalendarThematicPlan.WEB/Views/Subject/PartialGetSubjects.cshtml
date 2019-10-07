@@ -2,9 +2,9 @@
 @using CalendarThematicPlan.Container
 @using CalendarThematicPlan.BLL.Interface
 
-@{ 
-    IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
-    var grades = gradeLogic.GetGrades();
+@{
+    ISubjectLogic subjectLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
+    var subjects = subjectLogic.GetSubjects();
 }
 
 <div class="mb-5">
@@ -13,18 +13,16 @@
     <table class="border-dark" border="1">
         <tr>
             <td>ID</td>
-            <td>Номер</td>
-            <td>Буква</td>
-            <td>Детей в классе</td>
-            <td>Доп действия</td>
+            <td>Название предмета</td>
+            <td>Количество часов за четверть</td>
+            <td>Доп дейтсвия</td>
         </tr>
-        @foreach (var item in grades)
+        @foreach (var item in subjects)
         {
             <tr class="align-middle">
                 <td>@item.Id</td>
-                <td>@item.Number</td>
-                <td>@item.Letter</td>
-                <td>@item.KidsInClass</td>
+                <td>@item.Name</td>
+                <td>@item.Hours</td>
                 <td>
                     @Html.ActionLink("Update", "Update", new { id = item.Id })
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
@@ -33,3 +31,4 @@
         }
     </table>
 </div>
+

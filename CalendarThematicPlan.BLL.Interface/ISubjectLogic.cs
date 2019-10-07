@@ -15,5 +15,6 @@ namespace CalendarThematicPlan.BLL.Interface
         void UpdateSubject(string id, string name, string hours);
         void DeleteSubject(string id);
         IEnumerable<Subject> GetSubjectsByWord(string word);
+        IEnumerable<Subject> GetSubjectsByUser(string id);
     }
 }

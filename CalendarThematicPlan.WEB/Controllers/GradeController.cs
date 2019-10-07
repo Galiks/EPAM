@@ -9,22 +9,8 @@ namespace CalendarThematicPlan.WEB.Controllers
     {
         private readonly IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
         // GET: Grade
-        public ActionResult Index(string action)
+        public ActionResult Index()
         {
-            ViewBag.Message = "Это частичное представление.";
-            if (action == "create")
-            {
-                return Redirect("~/Grade/Create");
-            }
-            if (action == "update")
-            {
-                return Redirect("~/Grade/Update");
-            }
-            if (action == "delete")
-            {
-                return Redirect("~/Grade/Delete");
-            }
-
             return View();
         }
 
@@ -33,20 +19,20 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }       
 
-        public ActionResult Update()
+        public ActionResult Update(int? id)
         {
-            return View();
+            var grade = gradeLogic.GetGradeById(id.ToString());
+            return View(grade);
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(int? id)
         {
-            return View();
+            var grade = gradeLogic.GetGradeById(id.ToString());
+            return View(grade);
         }
 
         public ActionResult PartialGetGrades()
         {
-            
-            //var grades = gradeLogic.GetGrades();
             return PartialView();
         }
     }

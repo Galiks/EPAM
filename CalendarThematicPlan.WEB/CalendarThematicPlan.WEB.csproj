@@ -588,6 +588,8 @@
     <Content Include="Views\Schedule\PartialGetSchedules.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Subject\PartialGetSubjects.cshtml" />
+    <Content Include="Views\User\UpdatePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

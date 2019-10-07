@@ -29,19 +29,21 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }
 
-        public ActionResult Update()
+        public ActionResult Update(int? id)
         {
-            return View();
+            var user = userLogic.GetUserById(id.ToString());
+            return View(user);
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(int? id)
         {
-            return View();
+            var user = userLogic.GetUserById(id.ToString());
+            return View(user);
         }
 
-        public ActionResult Details(int? idUser)
+        public ActionResult Details(int? id)
         {
-            var user = userLogic.GetUserById(idUser.ToString());
+            var user = userLogic.GetUserById(id.ToString());
             return View(user);
         }
     }

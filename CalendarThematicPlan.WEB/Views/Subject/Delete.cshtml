@@ -1,6 +1,30 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    ISubjectLogic subjectLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
+    if (IsPost)
+    {
+        string id = Model.Id;
+
+        try
+        {
+            subjectLogic.DeleteSubject(id);
+
+            Response.Redirect("~/Subject/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -11,7 +35,28 @@
     <title>Delete</title>
 </head>
 <body>
-    <div> 
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Название предмета</td>
+                <td>Количество часов за четверть</td>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr class="align-middle">
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Hours</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div>
+        <form method="post">
+            <button>Удалить предмет</button>
+        </form>
     </div>
 </body>
 </html>

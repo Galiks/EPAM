@@ -155,6 +155,42 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
+        public IEnumerable<Subject> GetSubjectsByUser(int id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var command = connection.CreateCommand();
+
+                command.CommandText = "GetUsersBySubject";
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(new[]{
+                    new SqlParameter
+                    {
+                        ParameterName = "@Id",
+                        Value = id,
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.Input
+                    }
+                });
+
+                connection.Open();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        yield return new Subject
+                        {
+                            Id = (int?)reader["id"],
+                            Name = (string)reader["Name"],
+                            Hours = (int)reader["Hours"]
+                        };
+                    }
+                }
+            }
+        }
+
         public IEnumerable<Subject> GetSubjectsByWord(string word)
         {
             using (var connection = new SqlConnection(connectionString))

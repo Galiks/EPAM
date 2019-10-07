@@ -10,7 +10,7 @@
     IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
     if (IsPost)
     {
-        string idUser = Request["idUser"];
+        string idUser = Model.Id.ToString();
         string number = Request["number"];
         string letter = Request["letter"];
         string kids = Request["kids"];
@@ -40,15 +40,26 @@
     <link rel="stylesheet" href="~/Content/styles.css" />
 </head>
 <body>
+
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Номер</td>
+                <td>Буква</td>
+                <td>Детей в классе</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Id</td>
+                <td>@Model.Number</td>
+                <td>@Model.Letter</td>
+                <td>@Model.KidsInClass</td>
+            </tr>
+        </table>
+    </div>
+
     <div class="form-group required">
         <form method="post">
-
-            <div class="form-group">
-                <label for="idUser" class="control-label">
-                    Идентификатор класса:
-                    <input type="number" id="idUser" name="idUser" class="form-control" onchange="isRightNumber(this.value, 'idUser', 'check-id', 'check-id-helper')" value="" />
-                </label>
-            </div>
 
             <div id="check-id">
 

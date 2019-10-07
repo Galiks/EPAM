@@ -14,10 +14,16 @@ namespace CalendarThematicPlan.BLL.Logic
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
 
         private readonly IScheduleDao scheduleDao;
+        private readonly IUserDao userDao;
+        private readonly IGradeDao gradeDao;
+        private readonly ISubjectDao subjectDao;
 
-        public ScheduleLogic(IScheduleDao scheduleDao)
+        public ScheduleLogic(IScheduleDao scheduleDao, IUserDao userDao, IGradeDao gradeDao, ISubjectDao subjectDao)
         {
             this.scheduleDao = scheduleDao;
+            this.userDao = userDao;
+            this.gradeDao = gradeDao;
+            this.subjectDao = subjectDao;
         }
 
         public int? AddSchedule(string date, string actualDate, string room, string idSubject, string idGrade, string idUser, string lessonTopic, string comment)
@@ -61,6 +67,27 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(idUser, out int realIdUser))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор учителя{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            if (userDao.GetUserById(realIdUser) == null)
+            {
+                var exception = new ArgumentException($"Такого пользователя не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            if (gradeDao.GetGradeById(realIdGrade) == null)
+            {
+                var exception = new ArgumentException($"Такого класса не существует{Environment.NewLine}");
+                loggerException.Error(exception);
+                throw exception;
+            }
+
+            if (subjectDao.GetSubjectById(realIdSubject) == null)
+            {
+                var exception = new ArgumentException($"Такого предмета не существует{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }

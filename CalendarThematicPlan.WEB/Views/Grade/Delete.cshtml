@@ -9,15 +9,14 @@
 
 @{
     IGradeLogic gradeLogic = NinjectCommon.Kernel.Get<IGradeLogic>();
-    List<Grade> grades = gradeLogic.GetGrades().ToList();
-    SelectList selectsGrade = new SelectList(grades);
     if (IsPost)
     {
-        string grade = Request["grade"];
+        string id = Model.Id.ToString();
 
         try
         {
-            gradeLogic.DeleteGrade(grade);
+            gradeLogic.DeleteGrade(id);
+            Response.Redirect("~/Grade/Index");
         }
         catch (Exception e)
         {
@@ -28,6 +27,7 @@
     }
 }
 
+
 <!DOCTYPE html>
 
 <html>
@@ -36,12 +36,25 @@
     <title>Delete</title>
 </head>
 <body>
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Номер</td>
+                <td>Буква</td>
+                <td>Детей в классе</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Id</td>
+                <td>@Model.Number</td>
+                <td>@Model.Letter</td>
+                <td>@Model.KidsInClass</td>
+            </tr>
+        </table>
+    </div>
+
     <div>
         <form method="post">
-            <div class="col-md-6">
-                Класс: @Html.DropDownList("grade", selectsGrade as SelectList)
-            </div>
-
             <button>Удалить класс</button>
         </form>
     </div>

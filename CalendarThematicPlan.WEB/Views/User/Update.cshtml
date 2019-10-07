@@ -1,6 +1,51 @@
-﻿
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
 @{
     Layout = null;
+}
+
+@{
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    List<string> roles = Enum.GetNames(typeof(CalendarThematicPlan.WEB.Models.Roles)).ToList();
+    SelectList selectsRole = new SelectList(roles);
+    if (IsPost)
+    {
+        string id = Model.Id.ToString();
+        string firstName = Request["firstName"];
+        string lastName = Request["lastName"];
+        string patronymic = Request["patronymic"];
+        string email = Request["email"];
+        string password = Request["password"];
+        string role = Request["role"];
+        if (role == null)
+        {
+            role = "User";
+        }
+
+        string position = Request["position"];
+
+        WebImage photo = WebImage.GetImageFromRequest("image");
+        byte[] userPhoto = null;
+        if (photo != null)
+        {
+            userPhoto = photo.GetBytes();
+        }
+
+        try
+        {
+            userLogic.UpdateUser(id, firstName, lastName, patronymic, email, password, role, position, userPhoto);
+
+            Response.Redirect("~/User/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -9,9 +54,102 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Update</title>
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div> 
+    <div class="mb-5">
+        <table class="border-dark" border="1">
+            <tr>
+                <td>ID</td>
+                <td>Фамилия</td>
+                <td>Имя</td>
+                <td>Отчество</td>
+                <td>Должность</td>
+                <td>Фото</td>
+                <td>Доп действия (тест)</td>
+            </tr>
+            <tr class="align-middle">
+                <td>@Model.Id</td>
+                <td>@Model.LastName</td>
+                <td>@Model.FirstName</td>
+                <td>@Model.Patronymic</td>
+                <td>@Model.Position</td>
+                <td>
+                    @if (Model.UserPhoto != null)
+                    {
+                        @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
+                                 + Convert.ToBase64String(Model.UserPhoto) + "\" />")
+                    }
+                    else
+                    {
+                        <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
+                    }
+                </td>
+                <td>@Html.ActionLink("Details", "Details", new { idUser = Model.Id })</td>
+            </tr>
+
+        </table>
+    </div>
+
+
+    <div class="form-group required">
+        <form method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="lastName">
+                    Фамилия:
+                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Фамилия"/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">
+                    Имя:
+                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Имя" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="patronymic">
+                    Отчество:
+                    <input type="text" id="patronymic" name="patronymic" class="form-control" placeholder="Отчество" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    Email:
+                    <input type="text" id="email" name="email" class="form-control" onchange="IsRightEmail(this.value)" value="" placeholder="Email"/>
+                </label>
+            </div>
+
+            <div id="check-email">
+
+            </div>
+
+            <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
+
+            <div class="col-md-6">
+                Role: @Html.DropDownList("role", selectsRole as SelectList)
+            </div>
+
+            <div class="form-group">
+                <label for="position" class="control-label">
+                    Должность:
+                    <input type="text" id="position" name="position" class="form-control" placeholder="Должность" />
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="image">
+                    Фото:
+                    <input type="file" id="image" name="image" />
+                </label>
+            </div>
+
+            <button id="button">Обновить пользователя</button>
+
+        </form>
     </div>
 </body>
 </html>

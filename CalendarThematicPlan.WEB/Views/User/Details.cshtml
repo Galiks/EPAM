@@ -1,6 +1,29 @@
-﻿
+﻿@using CalendarThematicPlan.BLL.Interface
+@using Ninject
+@using CalendarThematicPlan.Container
+
 @{
     Layout = null;
+}
+
+@{
+    IUserSubjectLogic userSubjectLogic = NinjectCommon.Kernel.Get<IUserSubjectLogic>();
+    if (IsPost)
+    {
+        string idUser = Model.Id.ToString();
+        string idSubject = Request["number"];
+
+        try
+        {
+            userSubjectLogic.AddUserSubject(idSubject, idUser);
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
 }
 
 <!DOCTYPE html>
@@ -9,6 +32,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
     <div>
@@ -40,8 +64,21 @@
                     }
                 </td>
             </tr>
-            
         </table>
+
+        <h1>Назначить преподавателю предмет</h1>
+        <form method="post">
+            <label for="number">
+                <input type="number" id="number" name="number" placeholder="Идентификатор предмета"
+                       onchange="isRightNumber(this.value, 'number', 'check-number', 'check-number-helper')" value="" />
+            </label>
+
+            <div id="check-number">
+
+            </div>
+
+            <button>Привязать предмет</button>
+        </form>
     </div>
 </body>
 </html>

@@ -13,14 +13,16 @@
 <body>
 
     <div>
-        @{Html.RenderPartial("PartialGetSchedules" +
-                "");}
+        @{Html.RenderPartial("PartialGetSchedules");}
     </div>
 
     <div>
-        @using (Html.BeginForm("Index", "Schedule"))
+        @if (User.IsInRole("Admin"))
         {
-            <button name="action" value="create" class="list-inline">Create</button>
+            using (Html.BeginForm("Create", "Schedule"))
+            {
+                <button class="list-inline">Создать расписание</button>
+            }
         }
     </div>
 </body>
