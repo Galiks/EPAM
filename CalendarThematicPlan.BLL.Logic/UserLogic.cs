@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CalendarThematicPlan.BLL.Logic
 {
@@ -113,7 +112,7 @@ namespace CalendarThematicPlan.BLL.Logic
 
         public User GetUserById(string id)
         {
-            if(!int.TryParse(id, out int idUser))
+            if (!int.TryParse(id, out int idUser))
             {
                 var exception = new ArgumentException($"Идентификатор пользователя должен быть числом{Environment.NewLine}");
                 loggerException.Error(exception);

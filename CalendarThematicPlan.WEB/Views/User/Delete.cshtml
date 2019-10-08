@@ -35,44 +35,51 @@
     <title>Delete</title>
 </head>
 <body>
-    <div class="mb-5">
-        <table class="border-dark" border="1">
-            <tr>
-                <td>ID</td>
-                <td>Фамилия</td>
-                <td>Имя</td>
-                <td>Отчество</td>
-                <td>Должность</td>
-                <td>Фото</td>
-                <td>Доп действия (тест)</td>
-            </tr>
-            <tr class="align-middle">
-                <td>@Model.Id</td>
-                <td>@Model.LastName</td>
-                <td>@Model.FirstName</td>
-                <td>@Model.Patronymic</td>
-                <td>@Model.Position</td>
-                <td>
-                    @if (Model.UserPhoto != null)
-                    {
-                        @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
-                                 + Convert.ToBase64String(Model.UserPhoto) + "\" />")
-                    }
-                    else
-                    {
-                        <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
-                    }
-                </td>
-                <td>@Html.ActionLink("Details", "Details", new { idUser = Model.Id })</td>
-            </tr>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <div class="mb-5">
+            <table class="border-dark" border="1">
+                <tr>
+                    <td>ID</td>
+                    <td>Фамилия</td>
+                    <td>Имя</td>
+                    <td>Отчество</td>
+                    <td>Должность</td>
+                    <td>Фото</td>
+                    <td>Доп действия (тест)</td>
+                </tr>
+                <tr class="align-middle">
+                    <td>@Model.Id</td>
+                    <td>@Model.LastName</td>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.Patronymic</td>
+                    <td>@Model.Position</td>
+                    <td>
+                        @if (Model.UserPhoto != null)
+                        {
+                            @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
+                          + Convert.ToBase64String(Model.UserPhoto) + "\" />")
+                        }
+                        else
+                        {
+                            <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
+                        }
+                    </td>
+                    <td>@Html.ActionLink("Details", "Details", new { idUser = Model.Id })</td>
+                </tr>
 
-        </table>
-    </div>
+            </table>
+        </div>
 
-    <div>
-        <form method="post">
-            <button>Удалить предмет</button>
-        </form>
-    </div>
-</body>
+        <div>
+            <form method="post">
+                <button>Удалить предмет</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+    </body>
 </html>

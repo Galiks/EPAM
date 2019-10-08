@@ -1,8 +1,8 @@
 ﻿using CalendarThematicPlan.BLL.Interface;
-using Ninject;
-using System.Web.Mvc;
 using CalendarThematicPlan.Container;
+using Ninject;
 using System;
+using System.Web.Mvc;
 
 namespace CalendarThematicPlan.WEB.Controllers
 {
@@ -18,7 +18,7 @@ namespace CalendarThematicPlan.WEB.Controllers
         public ActionResult Create()
         {
             return View();
-        }       
+        }
 
         public ActionResult Update(int? id)
         {
@@ -27,9 +27,9 @@ namespace CalendarThematicPlan.WEB.Controllers
                 var grade = gradeLogic.GetGradeById(id.ToString());
                 return View(grade);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/Grade/Index");
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
             }
         }
 
@@ -40,9 +40,9 @@ namespace CalendarThematicPlan.WEB.Controllers
                 var grade = gradeLogic.GetGradeById(id.ToString());
                 return View(grade);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/Grade/Index");
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
             }
         }
 

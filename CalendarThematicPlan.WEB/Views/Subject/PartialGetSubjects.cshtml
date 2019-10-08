@@ -15,19 +15,25 @@
             <td>ID</td>
             <td>Название предмета</td>
             <td>Количество часов за четверть</td>
-            <td>Доп дейтсвия</td>
-        </tr>
+            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+                <td>Доп дейтсвия</td>
+            }
+            </tr>
         @foreach (var item in subjects)
         {
-            <tr class="align-middle">
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Hours</td>
-                <td>
-                    @Html.ActionLink("Update", "Update", new { id = item.Id })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+    <tr class="align-middle">
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.Hours</td>
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+        {
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        }
+        </tr>
         }
     </table>
 </div>

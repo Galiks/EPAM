@@ -38,24 +38,31 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div class="form-group required">
-        <form method="post">
-            <div class="form-group">
-                <label for="name" class="control-label">
-                    Название предмета :
-                    <input type="text" id="name" name="name" class="form-control" required />
-                </label>
-            </div>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <div class="form-group required">
+            <form method="post">
+                <div class="form-group">
+                    <label for="name" class="control-label">
+                        Название предмета :
+                        <input type="text" id="name" name="name" class="form-control" required />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="hours" class="control-label">
-                    Часов за четверть:
-                    <input type="number" id="hours" name="hours" class="form-control" required />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="hours" class="control-label">
+                        Часов за четверть:
+                        <input type="number" id="hours" name="hours" class="form-control" required />
+                    </label>
+                </div>
 
-            <button>Создать предмет</button>
-        </form>
-    </div>
-</body>
+                <button>Создать предмет</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+    </body>
 </html>

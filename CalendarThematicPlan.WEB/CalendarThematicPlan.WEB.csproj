@@ -484,6 +484,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\accessDenied.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -492,6 +493,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\calendar.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\logIn.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -499,6 +501,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -553,7 +556,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Grade\Index.cshtml" />
     <Content Include="Views\Grade\Create.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -592,6 +594,10 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Subject\PartialGetSubjects.cshtml" />
     <Content Include="Views\User\UpdatePassword.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Home\PartialCalendar.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
+    <Content Include="Views\Shared\PartialAccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

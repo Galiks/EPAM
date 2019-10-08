@@ -1,7 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@using Ninject
+@using CalendarThematicPlan.BLL.Interface
+@using CalendarThematicPlan.Container
+@using CalendarThematicPlan.Entity
+
+
+@{ 
+    IUserLogic userLogic = NinjectCommon.Kernel.Get<IUserLogic>();
+    User user = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        user = userLogic.GetUserByEmail(User.Identity.Name);
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
@@ -9,9 +24,30 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+
+   
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+
+                @if (user == null)
+                {
+                    <h1 class="navbar-header">Hello, Stranger !</h1>
+                    <form action="~/Home/Login">
+                        <button class="btn-light">Login</button>
+                    </form>
+                }
+                else
+                {
+                    <h1 class="navbar-header">
+                        Hello, 
+                         <a href="~/User/Details/@user.Id">@user.FirstName @user.Patronymic</a>
+                </h1>
+                    <form action="~/Home/SignOut">
+                        <button class="btn-danger">Sign out</button>
+                    </form>
+                }
+
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     #
                     <span class="icon-bar"></span>
@@ -27,12 +63,13 @@
                     <li>@Html.ActionLink("Пользователи", "Index", "User")</li>
                     <li>@Html.ActionLink("Классы", "Index", "Grade")</li>
                     <li>@Html.ActionLink("Расписание", "Index", "Schedule")</li>
-                    <li>@Html.ActionLink("Уроки","Index", "Subject")</li>
-                    <li>@Html.ActionLink("Календарь","Calendar", "Home")</li>
+                    <li>@Html.ActionLink("Уроки", "Index", "Subject")</li>
+                    <li>@Html.ActionLink("Календарь", "Calendar", "Home")</li>
                 </ul>
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />

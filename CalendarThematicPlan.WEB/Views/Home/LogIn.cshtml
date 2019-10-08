@@ -8,7 +8,7 @@
     string errorMessage = null;
     if (IsPost)
     {
-        string email = Request["email"];
+        string email = Request["login"];
         string password = Request["password"];
 
         if (Auth.CanLogin(email, password))
@@ -29,30 +29,34 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>LogIn</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/logIn.css" rel="stylesheet" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    @if (errorMessage != null)
-    {
-        <div class="alert alert-danger">
-            <p>@errorMessage</p>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/Images/user.jpg" id="icon" alt="User Icon" style="width:120px; height:120px;"/>
+            </div>
+
+            <!-- Login Form -->
+            <form method="post">
+                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+                <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+
         </div>
-    }
-    <div>
-        <form method="post">
-            <div>Email: <input type="text" name="email" value="" /></div>
-            <div>Password: <input type="password" name="password" value="" /></div>
-            <button>Sign In</button>
-        </form>
-    </div>
-    <div>
-        <form action="~/Home/Index">
-            <button class="alert-success">Go to Main page</button>
-        </form>
-    </div>
-    <div>
-        <form action="~/User/Create">
-            <button>Registration</button>
-        </form>
     </div>
 </body>
 </html>

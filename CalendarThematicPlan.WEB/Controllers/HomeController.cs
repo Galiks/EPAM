@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace CalendarThematicPlan.WEB.Controllers
 {
@@ -30,8 +26,15 @@ namespace CalendarThematicPlan.WEB.Controllers
 
         public ActionResult Error(string errorMessage)
         {
-            string message = errorMessage;
-            return View(model: message);
+
+            if (errorMessage != null)
+            {
+                return View(model: errorMessage);
+            }
+            else
+            {
+                return View(model: "Ошибка");
+            }
         }
     }
 }

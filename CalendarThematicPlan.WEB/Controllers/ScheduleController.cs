@@ -2,9 +2,6 @@
 using CalendarThematicPlan.Container;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CalendarThematicPlan.WEB.Controllers
@@ -38,9 +35,9 @@ namespace CalendarThematicPlan.WEB.Controllers
                 var schedule = scheduleLogic.GetReadableScheduleById(id.ToString());
                 return View(schedule);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/Schedule/Index");
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
             }
         }
 
@@ -54,7 +51,6 @@ namespace CalendarThematicPlan.WEB.Controllers
             catch (Exception e)
             {
                 return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
-                //return Redirect("~/Home/Error");
             }
         }
     }

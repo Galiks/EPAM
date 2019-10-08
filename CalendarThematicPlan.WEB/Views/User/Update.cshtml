@@ -57,99 +57,107 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div class="mb-5">
-        <table class="border-dark" border="1">
-            <tr>
-                <td>ID</td>
-                <td>Фамилия</td>
-                <td>Имя</td>
-                <td>Отчество</td>
-                <td>Должность</td>
-                <td>Фото</td>
-                <td>Доп действия (тест)</td>
-            </tr>
-            <tr class="align-middle">
-                <td>@Model.Id</td>
-                <td>@Model.LastName</td>
-                <td>@Model.FirstName</td>
-                <td>@Model.Patronymic</td>
-                <td>@Model.Position</td>
-                <td>
-                    @if (Model.UserPhoto != null)
-                    {
-                        @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
-                                 + Convert.ToBase64String(Model.UserPhoto) + "\" />")
-                    }
-                    else
-                    {
-                        <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
-                    }
-                </td>
-                <td>@Html.ActionLink("Details", "Details", new { idUser = Model.Id })</td>
-            </tr>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.Identity.Name == Model.Email.ToString())
+    {
+        <div class="mb-5">
+            <table class="border-dark" border="1">
+                <tr>
+                    <td>ID</td>
+                    <td>Фамилия</td>
+                    <td>Имя</td>
+                    <td>Отчество</td>
+                    <td>Должность</td>
+                    <td>Фото</td>
+                </tr>
+                <tr class="align-middle">
+                    <td>@Model.Id</td>
+                    <td>@Model.LastName</td>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.Patronymic</td>
+                    <td>@Model.Position</td>
+                    <td>
+                        @if (Model.UserPhoto != null)
+                        {
+                            @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
+                          + Convert.ToBase64String(Model.UserPhoto) + "\" />")
+                        }
+                        else
+                        {
+                            <img style='width:80px; height:60px;' src="~/Images/user.jpg" />
+                        }
+                    </td>
+                </tr>
 
-        </table>
-    </div>
+            </table>
+        </div>
 
 
-    <div class="form-group required">
-        <form method="post" enctype="multipart/form-data">
+        <div class="form-group required">
+            <form method="post" enctype="multipart/form-data">
 
-            <div class="form-group">
-                <label for="lastName">
-                    Фамилия:
-                    <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Фамилия"/>
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="lastName">
+                        Фамилия:
+                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Фамилия" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="firstName">
-                    Имя:
-                    <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Имя" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="firstName">
+                        Имя:
+                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Имя" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="patronymic">
-                    Отчество:
-                    <input type="text" id="patronymic" name="patronymic" class="form-control" placeholder="Отчество" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="patronymic">
+                        Отчество:
+                        <input type="text" id="patronymic" name="patronymic" class="form-control" placeholder="Отчество" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="email">
-                    Email:
-                    <input type="text" id="email" name="email" class="form-control" onchange="IsRightEmail(this.value)" value="" placeholder="Email"/>
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="email">
+                        Email:
+                        <input type="text" id="email" name="email" class="form-control" onchange="IsRightEmail(this.value)" value="" placeholder="Email" />
+                    </label>
+                </div>
 
-            <div id="check-email">
+                <div id="check-email">
 
-            </div>
+                </div>
 
-            <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
+                <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
 
-            <div class="col-md-6">
-                Role: @Html.DropDownList("role", selectsRole as SelectList)
-            </div>
+                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                {
+                    <div class="col-md-6">
+                        Role: @Html.DropDownList("role", selectsRole as SelectList)
+                    </div>
 
-            <div class="form-group">
-                <label for="position" class="control-label">
-                    Должность:
-                    <input type="text" id="position" name="position" class="form-control" placeholder="Должность" />
-                </label>
-            </div>
+                    <div class="form-group">
+                        <label for="position" class="control-label">
+                            Должность:
+                            <input type="text" id="position" name="position" class="form-control" placeholder="Должность" />
+                        </label>
+                    </div>
+                }
 
-            <div class="form-group">
-                <label for="image">
-                    Фото:
-                    <input type="file" id="image" name="image" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="image">
+                        Фото:
+                        <input type="file" id="image" name="image" />
+                    </label>
+                </div>
 
-            <button id="button">Обновить пользователя</button>
+                <button id="button">Обновить пользователя</button>
 
-        </form>
-    </div>
-</body>
+            </form>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+    </body>
 </html>

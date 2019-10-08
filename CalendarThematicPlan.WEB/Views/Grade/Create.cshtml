@@ -39,6 +39,8 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
     <div class="form-group required">
         <form method="post">
             <div class="form-group">
@@ -74,5 +76,10 @@
             <button>Записать класс</button>
         </form>
     </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
 </body>
 </html>

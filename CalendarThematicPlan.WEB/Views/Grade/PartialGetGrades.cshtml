@@ -16,20 +16,26 @@
             <td>Номер</td>
             <td>Буква</td>
             <td>Детей в классе</td>
-            <td>Доп действия</td>
+            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+                <td>Доп действия</td>
+            }
         </tr>
         @foreach (var item in grades)
         {
-            <tr class="align-middle">
-                <td>@item.Id</td>
-                <td>@item.Number</td>
-                <td>@item.Letter</td>
-                <td>@item.KidsInClass</td>
-                <td>
-                    @Html.ActionLink("Update", "Update", new { id = item.Id })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+    <tr class="align-middle">
+        <td>@item.Id</td>
+        <td>@item.Number</td>
+        <td>@item.Letter</td>
+        <td>@item.KidsInClass</td>
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+        {
+            <td>
+                @Html.ActionLink("Update", "Update", new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        }
+        </tr>
         }
     </table>
 </div>

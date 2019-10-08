@@ -1,6 +1,5 @@
 ﻿using CalendarThematicPlan.DAL.Interface;
 using CalendarThematicPlan.Entity;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;

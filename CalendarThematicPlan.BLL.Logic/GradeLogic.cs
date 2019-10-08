@@ -101,7 +101,7 @@ namespace CalendarThematicPlan.BLL.Logic
         public Grade GetGradeById(string id)
         {
             var matches = Regex.Matches(id, patternForGradeId);
-            
+
             if (!int.TryParse(matches[0].ToString(), out int idGrade))
             {
                 var exception = new ArgumentException($"Идентификатор класса должен быть числом{Environment.NewLine}");

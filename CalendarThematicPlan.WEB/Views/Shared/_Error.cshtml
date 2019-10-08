@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar-header">
+        <form action="~/Home/Index" class="justify-content-md-center">
+            <button>Возврат на главную страницу</button>
+        </form>
+    </div>
+
+    <div class="navbar-nav">
+        <h1>Ошибка</h1>
+    </div>
+    @RenderBody()
+</body>
+</html>

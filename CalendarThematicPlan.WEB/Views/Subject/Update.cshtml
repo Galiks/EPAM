@@ -38,48 +38,55 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div class="mb-5">
-        <table class="border-dark" border="1">
-            <tr>
-                <td>ID</td>
-                <td>Название предмета</td>
-                <td>Количество часов за четверть</td>
-            </tr>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <div class="mb-5">
+            <table class="border-dark" border="1">
+                <tr>
+                    <td>ID</td>
+                    <td>Название предмета</td>
+                    <td>Количество часов за четверть</td>
+                </tr>
 
-            <tr class="align-middle">
-                <td>@Model.Id</td>
-                <td>@Model.Name</td>
-                <td>@Model.Hours</td>
-            </tr>
+                <tr class="align-middle">
+                    <td>@Model.Id</td>
+                    <td>@Model.Name</td>
+                    <td>@Model.Hours</td>
+                </tr>
 
-        </table>
-    </div>
-
-    <div>
-        <div class="form-group required">
-            <form method="post">
-                <div class="form-group">
-                    <label for="name">
-                        Название предмета :
-                        <input type="text" id="name" name="name" class="form-control" />
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label for="hours" class="control-label">
-                        Часов за четверть:
-                        <input type="number" id="hours" name="hours" class="form-control"
-                               onchange="isRightNumber(this.value, 'hours', 'check-hours', 'check-hours-helper')" value="" />
-                    </label>
-                </div>
-
-                <div id="check-hours">
-
-                </div>
-
-                <button>Обновить предмет</button>
-            </form>
+            </table>
         </div>
-    </div>
-</body>
+
+        <div>
+            <div class="form-group required">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="name">
+                            Название предмета :
+                            <input type="text" id="name" name="name" class="form-control" />
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hours" class="control-label">
+                            Часов за четверть:
+                            <input type="number" id="hours" name="hours" class="form-control"
+                                   onchange="isRightNumber(this.value, 'hours', 'check-hours', 'check-hours-helper')" value="" />
+                        </label>
+                    </div>
+
+                    <div id="check-hours">
+
+                    </div>
+
+                    <button>Обновить предмет</button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+    </body>
 </html>

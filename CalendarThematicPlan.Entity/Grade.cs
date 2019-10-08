@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CalendarThematicPlan.Entity
 {
     public class Grade
     {
         public int? Id { get; set; }
-        [Required (ErrorMessage = "Номер класса обязателен")]
+        [Required(ErrorMessage = "Номер класса обязателен")]
         public int Number { get; set; }
         [Required(ErrorMessage = "Буква класса обязательна")]
         public string Letter { get; set; }

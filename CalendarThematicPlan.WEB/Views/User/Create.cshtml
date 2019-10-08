@@ -57,83 +57,90 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
-    <div class="form-group required">
-        <form method="post" enctype="multipart/form-data">
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <div class="form-group required">
+            <form method="post" enctype="multipart/form-data">
 
-            <div class="form-group">
-                <label for="lastName" class="control-label">
-                    Фамилия:
-                    <input type="text" id="lastName" name="lastName" class="form-control" required value="Турченков" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="lastName" class="control-label">
+                        Фамилия:
+                        <input type="text" id="lastName" name="lastName" class="form-control" required value="Турченков" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="firstName" class="control-label">
-                    Имя:
-                    <input type="text" id="firstName" name="firstName" class="form-control" required="required" value="Павел" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="firstName" class="control-label">
+                        Имя:
+                        <input type="text" id="firstName" name="firstName" class="form-control" required="required" value="Павел" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="patronymic" class="control-label">
-                    Отчество:
-                    <input type="text" id="patronymic" name="patronymic" class="form-control" required value="Александрович" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="patronymic" class="control-label">
+                        Отчество:
+                        <input type="text" id="patronymic" name="patronymic" class="form-control" required value="Александрович" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="email" class="control-label">
-                    Email:
-                    <input type="text" id="email" name="email" class="form-control" required onchange="IsRightEmail(this.value)" value="test.test@test.ru" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="email" class="control-label">
+                        Email:
+                        <input type="text" id="email" name="email" class="form-control" required onchange="IsRightEmail(this.value)" value="test.test@test.ru" />
+                    </label>
+                </div>
 
-            <div id="check-email">
+                <div id="check-email">
 
-            </div>
+                </div>
 
-            <div class="form-group">
-                <label for="password" class="control-label">
-                    Пароль:
-                    <input type="text" id="password" name="password" class="form-control" required placeholder="Пароль" value="123" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">
+                        Пароль:
+                        <input type="text" id="password" name="password" class="form-control" required placeholder="Пароль" value="123" />
+                    </label>
+                </div>
 
-            <div class="form-group">
-                <label for="confirm-password" class="control-label">
-                    Подтверждение пароля:
-                    <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" onchange="isEqual(this.value)" value="123" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="control-label">
+                        Подтверждение пароля:
+                        <input type="text" id="confirm-password" name="confirm-password" class="form-control" required placeholder="Повторите пароль" onchange="isEqual(this.value)" value="123" />
+                    </label>
+                </div>
 
-            <div id="check-password">
+                <div id="check-password">
 
-            </div>
+                </div>
 
-            <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
+                <noscript>Проверка совпадения паролей не будет осуществляться</noscript>
 
-            <div class="col-md-6">
-                Role: @Html.DropDownList("role", selectsRole as SelectList)
-            </div>
+                <div class="col-md-6">
+                    Role: @Html.DropDownList("role", selectsRole as SelectList)
+                </div>
 
-            <div class="form-group">
-                <label for="position" class="control-label">
-                    Должность:
-                    <input type="text" id="position" name="position" class="form-control" required placeholder="Должность" value="Учитель" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="position" class="control-label">
+                        Должность:
+                        <input type="text" id="position" name="position" class="form-control" required placeholder="Должность" value="Учитель" />
+                    </label>
+                </div>
 
 
-            <div class="form-group">
-                <label for="image">
-                    Фото:
-                    <input type="file" id="image" name="image" />
-                </label>
-            </div>
+                <div class="form-group">
+                    <label for="image">
+                        Фото:
+                        <input type="file" id="image" name="image" />
+                    </label>
+                </div>
 
-            <button id="button">Create User</button>
+                <button id="button">Create User</button>
 
-        </form>
-    </div>
-</body>
+            </form>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+    </body>
 </html>

@@ -2,9 +2,6 @@
 using CalendarThematicPlan.Container;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CalendarThematicPlan.WEB.Controllers
@@ -32,14 +29,28 @@ namespace CalendarThematicPlan.WEB.Controllers
 
         public ActionResult Update(int? id)
         {
-            var subject = subjectLogic.GetSubjectById(id.ToString());
-            return View(subject);
+            try
+            {
+                var subject = subjectLogic.GetSubjectById(id.ToString());
+                return View(subject);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
         }
 
         public ActionResult Delete(int? id)
         {
-            var subject = subjectLogic.GetSubjectById(id.ToString());
-            return View(subject);
+            try
+            {
+                var subject = subjectLogic.GetSubjectById(id.ToString());
+                return View(subject);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
         }
     }
 }

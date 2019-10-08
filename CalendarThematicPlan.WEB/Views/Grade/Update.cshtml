@@ -40,7 +40,8 @@
     <link rel="stylesheet" href="~/Content/styles.css" />
 </head>
 <body>
-
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
     <div class="mb-5">
         <table class="border-dark" border="1">
             <tr>
@@ -97,5 +98,10 @@
             <button>Обновите данные о классе</button>
         </form>
     </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
 </body>
 </html>

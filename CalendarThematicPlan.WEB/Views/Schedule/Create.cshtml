@@ -44,6 +44,8 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
     <div class="form-group required">
         <form method="post">
             <div class="form-group">
@@ -84,8 +86,8 @@
             <div class="form-group">
                 <label for="idGrade" class="control-label">
                     Идентификатор класса :
-                    <input type="number" id="idGrade" name="idGrade" class="form-control" required 
-                           onchange="isRightNumber(this.value, 'idGrade', 'check-idGrade', 'check-idGrade-helper')" value=""/>
+                    <input type="number" id="idGrade" name="idGrade" class="form-control" required
+                           onchange="isRightNumber(this.value, 'idGrade', 'check-idGrade', 'check-idGrade-helper')" value="" />
                 </label>
             </div>
 
@@ -96,8 +98,8 @@
             <div class="form-group">
                 <label for="idUser" class="control-label">
                     Идентификатор пользователя :
-                    <input type="number" id="idUser" name="idUser" class="form-control" required 
-                          onchange="isRightNumber(this.value, 'idUser', 'check-idUser', 'check-idUser-helper')" value="" />
+                    <input type="number" id="idUser" name="idUser" class="form-control" required
+                           onchange="isRightNumber(this.value, 'idUser', 'check-idUser', 'check-idUser-helper')" value="" />
                 </label>
             </div>
 
@@ -122,5 +124,10 @@
             <button>Создать</button>
         </form>
     </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
 </body>
 </html>

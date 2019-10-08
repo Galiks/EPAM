@@ -2,9 +2,6 @@
 using CalendarThematicPlan.Container;
 using Ninject;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CalendarThematicPlan.WEB.Controllers
@@ -31,20 +28,54 @@ namespace CalendarThematicPlan.WEB.Controllers
 
         public ActionResult Update(int? id)
         {
-            var user = userLogic.GetUserById(id.ToString());
-            return View(user);
+            try
+            {
+                var user = userLogic.GetUserById(id.ToString());
+                return View(user);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
+        }
+
+        public ActionResult UpdatePassword(int? id)
+        {
+            try
+            {
+                var user = userLogic.GetUserById(id.ToString());
+                return View(user);
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
         }
 
         public ActionResult Delete(int? id)
         {
-            var user = userLogic.GetUserById(id.ToString());
-            return View(user);
+            try
+            {
+                var user = userLogic.GetUserById(id.ToString());
+                return View(user);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
         }
 
         public ActionResult Details(int? id)
         {
-            var user = userLogic.GetUserById(id.ToString());
-            return View(user);
+            try
+            {
+                var user = userLogic.GetUserById(id.ToString());
+                return View(user);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+            }
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using CalendarThematicPlan.BLL.Interface;
 using CalendarThematicPlan.Container;
-using CalendarThematicPlan.Entity;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace CalendarThematicPlan.WEB.Models
 {

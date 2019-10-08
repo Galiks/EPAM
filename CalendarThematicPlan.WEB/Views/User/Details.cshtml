@@ -35,6 +35,7 @@
     <script type="text/javascript" src="~/Scripts/validation.js"></script>
 </head>
 <body>
+    
     <div>
         <table class="border-dark" border="1">
             <tr>
@@ -56,7 +57,7 @@
                     @if (Model.UserPhoto != null)
                     {
                         @Html.Raw("<img style='width:80px; height:60px;' src=\"data:image/jpeg;base64,"
-                                 + Convert.ToBase64String(Model.UserPhoto) + "\" />")
+                      + Convert.ToBase64String(Model.UserPhoto) + "\" />")
                     }
                     else
                     {
@@ -66,19 +67,32 @@
             </tr>
         </table>
 
-        <h1>Назначить преподавателю предмет</h1>
-        <form method="post">
-            <label for="number">
-                <input type="number" id="number" name="number" placeholder="Идентификатор предмета"
-                       onchange="isRightNumber(this.value, 'number', 'check-number', 'check-number-helper')" value="" />
-            </label>
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.Identity.Name == Model.Email.ToString())
+        {
+            <h1>Назначить преподавателю предмет</h1>
+            <form method="post">
+                <label for="number">
+                    <input type="number" id="number" name="number" placeholder="Идентификатор предмета"
+                           onchange="isRightNumber(this.value, 'number', 'check-number', 'check-number-helper')" value="" />
+                </label>
 
-            <div id="check-number">
+                <div id="check-number">
 
-            </div>
+                </div>
 
-            <button>Привязать предмет</button>
-        </form>
+                <button>Привязать предмет</button>
+            </form>
+
+            <h1>Сменить пароль</h1>
+            <form action="~/User/UpdatePassword/@Model.Id">
+                <button>Сменить пароль</button>
+            </form>
+
+            <h1>Обновить информацию</h1>
+            <form action="~/User/Update/@Model.Id">
+                <button>Обновить информацию</button>
+            </form>
+        }
     </div>
-</body>
+    </body>
 </html>

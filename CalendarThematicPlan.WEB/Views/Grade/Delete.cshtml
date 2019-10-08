@@ -36,6 +36,8 @@
     <title>Delete</title>
 </head>
 <body>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
     <div class="mb-5">
         <table class="border-dark" border="1">
             <tr>
@@ -58,5 +60,10 @@
             <button>Удалить класс</button>
         </form>
     </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
 </body>
 </html>
