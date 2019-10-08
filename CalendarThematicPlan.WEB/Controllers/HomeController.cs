@@ -31,7 +31,7 @@ namespace CalendarThematicPlan.WEB.Controllers
         public ActionResult Error(string errorMessage)
         {
             string message = errorMessage;
-            return View(message);
+            return View(model: message);
         }
     }
 }

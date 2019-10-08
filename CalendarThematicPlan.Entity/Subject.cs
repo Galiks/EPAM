@@ -14,5 +14,10 @@ namespace CalendarThematicPlan.Entity
         public string Name { get; set; }
         [Required]
         public int Hours { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Name} {Hours}";
+        }
     }
 }

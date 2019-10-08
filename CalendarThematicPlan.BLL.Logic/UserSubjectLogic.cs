@@ -12,6 +12,8 @@ namespace CalendarThematicPlan.BLL.Logic
     public class UserSubjectLogic : IUserSubjectLogic
     {
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
+        private static readonly Logger loggerUser = LogManager.GetLogger("user");
+
         private readonly IUserSubjectDao userSubjectDao;
 
         public UserSubjectLogic(IUserSubjectDao userSubjectDao)
@@ -46,11 +48,13 @@ namespace CalendarThematicPlan.BLL.Logic
 
             try
             {
-                return userSubjectDao.AddUserSubject(userSubject);
+                var result = userSubjectDao.AddUserSubject(userSubject);
+                loggerUser.Info($"Добавлена новая связь Пользователь-Предмет {userSubject}");
+                return result;
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -77,10 +81,11 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 userSubjectDao.DeleteUserSubject(idUserSubject);
+                loggerUser.Info($"Удалена связь Пользователь-Предмет {userSubject}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -134,10 +139,12 @@ namespace CalendarThematicPlan.BLL.Logic
                 userSubject.IdUser = realIdUser == default ? userSubject.IdUser : realIdUser;
 
                 userSubjectDao.UpdateUserSubject(userSubject);
+
+                loggerUser.Info($"Обновлена связь Пользователь-Предмет {userSubject}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }

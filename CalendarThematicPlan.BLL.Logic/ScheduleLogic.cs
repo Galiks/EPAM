@@ -12,6 +12,7 @@ namespace CalendarThematicPlan.BLL.Logic
     public class ScheduleLogic : IScheduleLogic
     {
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
+        private static readonly Logger loggerUser = LogManager.GetLogger("user");
 
         private readonly IScheduleDao scheduleDao;
         private readonly IUserDao userDao;
@@ -73,9 +74,9 @@ namespace CalendarThematicPlan.BLL.Logic
 
             if (userDao.GetUserById(realIdUser) == null)
             {
-                var exception = new ArgumentException($"Такого пользователя не существует{Environment.NewLine}");
-                loggerException.Error(exception);
-                throw exception;
+                //var exception = new ArgumentException($"Такого пользователя не существует{Environment.NewLine}");
+                loggerException.Error(new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"));
+                throw new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"); ;
             }
 
             if (gradeDao.GetGradeById(realIdGrade) == null)
@@ -107,13 +108,18 @@ namespace CalendarThematicPlan.BLL.Logic
 
             try
             {
-                return scheduleDao.AddSchedule(schedule);
+                var result = scheduleDao.AddSchedule(schedule);
+                loggerUser.Info($"Добавлено новое расписание {schedule}");
+                return result;
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                string errorMessage = e.Message;
+                string innerErrorMessage = e.InnerException?.Message;
+                var exception = new Exception($"{errorMessage}{Environment.NewLine}Inner Message: {innerErrorMessage}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
+
             }
         }
 
@@ -139,10 +145,11 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 scheduleDao.DeleteSchedule(idSchedule);
+                loggerUser.Info($"Удалено расписание расписание {schedule}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -272,10 +279,11 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 scheduleDao.UpdateSchedule(schedule);
+                loggerUser.Info($"Обновлено расписание {schedule}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }

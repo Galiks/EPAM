@@ -15,6 +15,7 @@ namespace CalendarThematicPlan.BLL.Logic
     public class UserLogic : IUserLogic
     {
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
+        private static readonly Logger loggerUser = LogManager.GetLogger("user");
 
         private readonly IUserDao userDao;
         private readonly ISubjectDao subjectDao;
@@ -55,11 +56,13 @@ namespace CalendarThematicPlan.BLL.Logic
 
                 User newUser = new User { FirstName = firstName, LastName = lastName, Patronymic = patronymic, Email = email, Password = password, Position = position, Role = role, UserPhoto = userPhoto };
 
-                return userDao.AddUser(newUser);
+                var result = userDao.AddUser(newUser);
+                loggerUser.Info($"Добавлен новый пользователь {newUser}");
+                return result;
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -86,10 +89,11 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 userDao.DeleteUser(idUser);
+                loggerUser.Info($"Удалён пользователь {user}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -171,10 +175,11 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 userDao.UpdateUser(user);
+                loggerUser.Info($"Обновлён пользователь {user}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }

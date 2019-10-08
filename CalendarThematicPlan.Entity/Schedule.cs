@@ -24,5 +24,10 @@ namespace CalendarThematicPlan.Entity
         public int IdUser { get; set; }
         public string LessonTopic { get; set; }
         public string Comment { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Date} {ActualDate} {Room} {IdSubject} {IdGrade} {IdUser} {LessonTopic} {Comment}";
+        }
     }
 }

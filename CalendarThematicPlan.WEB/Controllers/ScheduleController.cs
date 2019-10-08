@@ -38,10 +38,9 @@ namespace CalendarThematicPlan.WEB.Controllers
                 var schedule = scheduleLogic.GetReadableScheduleById(id.ToString());
                 return View(schedule);
             }
-            catch (Exception e)
+            catch
             {
-                //return RedirectToAction("Error", "Home", e.Message);
-                return Redirect("~/Home/Error");
+                return Redirect("~/Schedule/Index");
             }
         }
 
@@ -54,8 +53,8 @@ namespace CalendarThematicPlan.WEB.Controllers
             }
             catch (Exception e)
             {
-                //return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
-                return Redirect("~/Home/Error");
+                return RedirectToAction("Error", "Home", new { errorMessage = e.Message });
+                //return Redirect("~/Home/Error");
             }
         }
     }

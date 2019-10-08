@@ -25,5 +25,10 @@ namespace CalendarThematicPlan.Entity
         [Required]
         public string Position { get; set; }
         public byte[] UserPhoto { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {FirstName} {LastName} {Patronymic} {Email} {Role} {Position}";
+        }
     }
 }

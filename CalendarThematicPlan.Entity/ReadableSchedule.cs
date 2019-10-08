@@ -16,5 +16,10 @@ namespace CalendarThematicPlan.Entity
         public string TecaherPatronymic { get; set; }
         public string LessonTopic { get; set; }
         public string Comment { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Date} {ActualDate} {Room} {GradeNumber}{GradeLetter} {TeacherFirstName} {TeacherLastName} {TecaherPatronymic} {LessonTopic} {Comment}";
+        }
     }
 }

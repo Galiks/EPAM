@@ -1,0 +1,8 @@
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.AddSchedule  Error Переполнение SqlDateTime. Должно находиться в пределах от 1/1/1753 12:00:00 AM и 12/31/9999 11:59:59 PM.
+Inner Message: 
+ System.Exception: Переполнение SqlDateTime. Должно находиться в пределах от 1/1/1753 12:00:00 AM и 12/31/9999 11:59:59 PM.
+Inner Message: 
+ 2019/10/08 18:34:44.645
+CalendarThematicPlan.BLL.Logic.UserLogic.GetUserById  Error Идентификатор пользователя должен быть числом
+ System.ArgumentException: Идентификатор пользователя должен быть числом
+ 2019/10/08 18:45:50.835

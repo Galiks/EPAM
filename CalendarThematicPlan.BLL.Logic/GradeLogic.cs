@@ -13,6 +13,7 @@ namespace CalendarThematicPlan.BLL.Logic
     public class GradeLogic : IGradeLogic
     {
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
+        private static readonly Logger loggerUser = LogManager.GetLogger("user");
 
         private readonly string patternForGradeId = @"\d+";
         private readonly IGradeDao gradeDao;
@@ -49,11 +50,15 @@ namespace CalendarThematicPlan.BLL.Logic
 
             try
             {
-                return gradeDao.AddGrade(grade);
+                var result = gradeDao.AddGrade(grade);
+
+                loggerUser.Info($"Доабвлен новый класс {grade}");
+
+                return result;
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -82,10 +87,12 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 gradeDao.DeleteGrade(idGrade);
+
+                loggerUser.Info($"Удалён класс {grade}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }
@@ -158,10 +165,12 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 gradeDao.UpdateGrade(grade);
+
+                loggerUser.Info($"Обновлён класс {grade}");
             }
             catch (Exception e)
             {
-                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException.Message}{Environment.NewLine}");
+                var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
                 loggerException.Error(exception);
                 throw exception;
             }

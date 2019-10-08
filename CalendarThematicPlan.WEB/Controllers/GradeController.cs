@@ -2,6 +2,7 @@
 using Ninject;
 using System.Web.Mvc;
 using CalendarThematicPlan.Container;
+using System;
 
 namespace CalendarThematicPlan.WEB.Controllers
 {
@@ -21,14 +22,28 @@ namespace CalendarThematicPlan.WEB.Controllers
 
         public ActionResult Update(int? id)
         {
-            var grade = gradeLogic.GetGradeById(id.ToString());
-            return View(grade);
+            try
+            {
+                var grade = gradeLogic.GetGradeById(id.ToString());
+                return View(grade);
+            }
+            catch
+            {
+                return Redirect("~/Grade/Index");
+            }
         }
 
         public ActionResult Delete(int? id)
         {
-            var grade = gradeLogic.GetGradeById(id.ToString());
-            return View(grade);
+            try
+            {
+                var grade = gradeLogic.GetGradeById(id.ToString());
+                return View(grade);
+            }
+            catch
+            {
+                return Redirect("~/Grade/Index");
+            }
         }
 
         public ActionResult PartialGetGrades()

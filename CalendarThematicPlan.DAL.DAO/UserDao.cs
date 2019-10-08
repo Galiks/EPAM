@@ -257,7 +257,7 @@ namespace CalendarThematicPlan.DAL.DAO
             }
         }
 
-        public IEnumerable<User> GetUsersBySubject(string id)
+        public IEnumerable<User> GetUsersBySubject(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
