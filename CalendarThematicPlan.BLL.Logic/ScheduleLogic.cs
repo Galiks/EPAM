@@ -74,7 +74,6 @@ namespace CalendarThematicPlan.BLL.Logic
 
             if (userDao.GetUserById(realIdUser) == null)
             {
-                //var exception = new ArgumentException($"Такого пользователя не существует{Environment.NewLine}");
                 loggerException.Error(new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"));
                 throw new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"); ;
             }

@@ -52,8 +52,13 @@
                 <div class="form-group">
                     <label for="hours" class="control-label">
                         Часов за четверть:
-                        <input type="number" id="hours" name="hours" class="form-control" required />
+                        <input type="number" id="hours" name="hours" class="form-control" required 
+                               onchange="isRightNumber(this.value, 'hours', 'check-hours', 'check-hours-hepler')" value=""/>
                     </label>
+                </div>
+
+                <div id="check-hours">
+
                 </div>
 
                 <button>Создать предмет</button>
