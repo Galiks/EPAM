@@ -13,6 +13,15 @@
 <body>
 
     @{ Html.RenderPartial("PartialGetSubjects");}
-    
+
+
+    @if (User.IsInRole("Admin"))
+    {
+
+        using (Html.BeginForm("Create", "Grade"))
+        {
+            <button class="list-inline">Новый предмет</button>
+        }
+    }
 </body>
 </html>

@@ -21,5 +21,14 @@
 
     @{Html.RenderPartial("PartialGetUsers");}
 
+
+    @if (User.IsInRole("Admin"))
+    {
+
+        using (Html.BeginForm("Create", "Grade"))
+        {
+            <button class="list-inline">Новый пользователь</button>
+        }
+    }
 </body>
 </html>
