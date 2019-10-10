@@ -7,20 +7,20 @@
 }
 
 @{ 
-    ISubjectLogic scheduleLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
-    if (IsPost)
-    {
-        string name = Request["name"];
-        string hours = Request["hours"];
+            ISubjectLogic scheduleLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
+            if (IsPost)
+            {
+                string name = Request["name"];
+                string hours = Request["hours"];
 
-        try
-        {
-            scheduleLogic.AddSubject(name, hours);
+                try
+                {
+                    scheduleLogic.AddSubject(name, hours);
 
-            Response.Redirect("~/Subject/Index");
-        }
-        catch (Exception e)
-        {
+                    Response.Redirect("~/Subject/Index");
+                }
+                catch (Exception e)
+                {
             <div class="card-header">
                 <h2>@e.Message</h2>
             </div>

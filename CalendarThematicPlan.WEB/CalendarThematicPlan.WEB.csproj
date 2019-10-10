@@ -494,6 +494,7 @@
     <Content Include="Content\calendar.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\logIn.css" />
+    <Content Include="Content\userCreate.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -543,6 +544,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\userCreate.js" />
     <Content Include="Scripts\validation.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

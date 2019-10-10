@@ -136,11 +136,15 @@ namespace CalendarThematicPlan.BLL.Logic
                 throw exception;
             }
 
-            if (!string.IsNullOrWhiteSpace(email) & !Validator.IsRightEmail(email))
+
+            if (!string.IsNullOrWhiteSpace(email))
             {
-                var exception = new ArgumentException($"Email не соответствует требованиям{Environment.NewLine}");
-                loggerException.Error(exception);
-                throw exception;
+                if (!Validator.IsRightEmail(email))
+                {
+                    var exception = new ArgumentException($"Email не соответствует требованиям{Environment.NewLine}");
+                    loggerException.Error(exception);
+                    throw exception; 
+                }
             }
 
             User user;
