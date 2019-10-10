@@ -5,6 +5,7 @@ using CalendarThematicPlan.Validation;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -89,6 +90,11 @@ namespace CalendarThematicPlan.BLL.Logic
                 gradeDao.DeleteGrade(idGrade);
 
                 loggerUser.Info($"Удалён класс {grade}");
+            }
+            catch (SqlException e)
+            {    
+                loggerException.Error($"Попытка удалить класс, который является элементом расписания");
+                throw e;
             }
             catch (Exception e)
             {

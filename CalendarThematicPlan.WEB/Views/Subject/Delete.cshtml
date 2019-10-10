@@ -1,6 +1,7 @@
 ﻿@using CalendarThematicPlan.Container;
 @using CalendarThematicPlan.BLL.Interface;
 @using Ninject
+@using CalendarThematicPlan.Entity
 
 @{
     Layout = null;
@@ -10,13 +11,19 @@
     ISubjectLogic subjectLogic = NinjectCommon.Kernel.Get<ISubjectLogic>();
     if (IsPost)
     {
-        string id = Model.Id;
+        string id = Model.Id.ToString();
 
         try
         {
             subjectLogic.DeleteSubject(id);
 
             Response.Redirect("~/Subject/Index");
+        }
+        catch (System.Data.SqlClient.SqlException e)
+        {
+            <div class="card-header">
+                <h2>Предмет является элементом расписания</h2>
+            </div>
         }
         catch (Exception e)
         {
@@ -44,14 +51,13 @@
                     <td>Название предмета</td>
                     <td>Количество часов за четверть</td>
                 </tr>
-                @foreach (var item in Model)
-                {
-                    <tr class="align-middle">
-                        <td>@item.Id</td>
-                        <td>@item.Name</td>
-                        <td>@item.Hours</td>
-                    </tr>
-                }
+
+                <tr class="align-middle">
+                    <td>@Model.Id</td>
+                    <td>@Model.Name</td>
+                    <td>@Model.Hours</td>
+                </tr>
+
             </table>
         </div>
 
@@ -65,5 +71,5 @@
     {
         Html.RenderPartial("PartialAccessDenied");
     }
-    </body>
+</body>
 </html>

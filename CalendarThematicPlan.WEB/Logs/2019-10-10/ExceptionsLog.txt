@@ -10,3 +10,27 @@ Inner Message:
 Выполнение данной инструкции было прервано.
 Inner Message: 
  2019/10/10 19:22:22.423
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ System.Exception: Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ 2019/10/10 23:18:33.469
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ System.Exception: Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ 2019/10/10 23:18:48.818
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ System.Exception: Конфликт инструкции DELETE с ограничением REFERENCE "FK__Schedule__id_gra__68487DD7". Конфликт произошел в базе данных "CalendarThematicPlan", таблица "dbo.Schedule", column 'id_grade'.
+Выполнение данной инструкции было прервано.
+Inner Message: 
+ 2019/10/10 23:18:54.580
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error  Попытка удалить класс, который является элементом расписания 2019/10/10 23:25:01.906
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error  Попытка удалить класс, который является элементом расписания 2019/10/10 23:26:12.780
+CalendarThematicPlan.BLL.Logic.GradeLogic.DeleteGrade  Error  Попытка удалить класс, который является элементом расписания 2019/10/10 23:31:08.781

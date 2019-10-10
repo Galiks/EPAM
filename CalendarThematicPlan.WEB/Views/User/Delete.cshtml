@@ -18,6 +18,12 @@
 
             Response.Redirect("~/User/Index");
         }
+        catch (System.Data.SqlClient.SqlException e)
+        {
+            <div class="card-header">
+                <h2>Пользователь является элементом расписания</h2>
+            </div>
+        }
         catch (Exception e)
         {
             <div class="card-header">
@@ -82,5 +88,5 @@
     {
         Html.RenderPartial("PartialAccessDenied");
     }
-    </body>
+</body>
 </html>

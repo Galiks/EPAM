@@ -1,7 +1,7 @@
 ﻿@using CalendarThematicPlan.Container;
 @using CalendarThematicPlan.BLL.Interface;
 @using Ninject
-@using CalendarThematicPlan.Entity
+@using System.Data.SqlClient
 
 @{
     Layout = null;
@@ -17,6 +17,12 @@
         {
             gradeLogic.DeleteGrade(id);
             Response.Redirect("~/Grade/Index");
+        }
+        catch (System.Data.SqlClient.SqlException e)
+        {
+            <div class="card-header">
+                <h2>Класс является элементом расписания</h2>
+            </div>
         }
         catch (Exception e)
         {
@@ -38,28 +44,28 @@
 <body>
     @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
     {
-    <div class="mb-5">
-        <table class="border-dark" border="1">
-            <tr>
-                <td>ID</td>
-                <td>Номер</td>
-                <td>Буква</td>
-                <td>Детей в классе</td>
-            </tr>
-            <tr class="align-middle">
-                <td>@Model.Id</td>
-                <td>@Model.Number</td>
-                <td>@Model.Letter</td>
-                <td>@Model.KidsInClass</td>
-            </tr>
-        </table>
-    </div>
+        <div class="mb-5">
+            <table class="border-dark" border="1">
+                <tr>
+                    <td>ID</td>
+                    <td>Номер</td>
+                    <td>Буква</td>
+                    <td>Детей в классе</td>
+                </tr>
+                <tr class="align-middle">
+                    <td>@Model.Id</td>
+                    <td>@Model.Number</td>
+                    <td>@Model.Letter</td>
+                    <td>@Model.KidsInClass</td>
+                </tr>
+            </table>
+        </div>
 
-    <div>
-        <form method="post">
-            <button>Удалить класс</button>
-        </form>
-    </div>
+        <div>
+            <form method="post">
+                <button>Удалить класс</button>
+            </form>
+        </div>
     }
     else
     {
