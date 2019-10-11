@@ -75,6 +75,10 @@
     }
 }
 
+function onChange() {
+    console.log('10');
+}
+
 calendarBig(new Date().getFullYear());
 document.querySelector('#calendarBig > thead td:nth-child(1)').onclick = calendarBigG;
 document.querySelector('#calendarBig > thead td:nth-child(3)').onclick = calendarBigG;

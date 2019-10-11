@@ -495,6 +495,7 @@
     <Content Include="Content\styles.css" />
     <Content Include="Content\logIn.css" />
     <Content Include="Content\userCreate.css" />
+    <Content Include="Content\userList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
