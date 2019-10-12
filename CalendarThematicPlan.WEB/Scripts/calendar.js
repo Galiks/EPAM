@@ -1,4 +1,6 @@
 ﻿function calendarBig(year) {
+    var funcOnClick = "onclick='onClick()'";
+    var table = document.getElementById('calendarBig');
     for (var m = 0; m <= 11; m++) {
         var D = new Date(year, [m], 1),
             Dlast = new Date(D.getFullYear(), D.getMonth() + 1, 0).getDate(),
@@ -14,7 +16,7 @@
 
         for (var i = 1; i <= Dlast; i++) {
             if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-                calendar += '<td class="today">' + i;
+                calendar += '<td class="today" onclick="onClick('+ i + ',' + m +')">' + i;
             } else {
                 if (
                     (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) ||
@@ -30,9 +32,9 @@
                     (i == 8 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 1992)) ||
                     (i == 4 && D.getMonth() == 10 && D.getFullYear() > 2004)
                 ) {
-                    calendar += '<td class="holiday">' + i;
+                    calendar += '<td class="holiday" onclick="onClick(' + i + ',' + m +')">' + i;
                 } else {
-                    calendar += '<td>' + i;
+                    calendar += '<td onclick="onClick(' + i + ',' + m +')">' + i;
                 }
             }
             if (new Date(D.getFullYear(), D.getMonth(), i).getDay() == 0) {
@@ -75,8 +77,8 @@
     }
 }
 
-function onChange() {
-    console.log('10');
+function onClick(day, month) {
+    console.log('Dey: ' + day + ' and Month: ' + Number(1 + month));
 }
 
 calendarBig(new Date().getFullYear());
