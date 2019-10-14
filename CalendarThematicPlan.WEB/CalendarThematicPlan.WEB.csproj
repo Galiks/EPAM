@@ -602,6 +602,7 @@
     <Content Include="Views\Home\Calendar.cshtml" />
     <Content Include="Views\Shared\PartialAccessDenied.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Schedule\CreateFromCalendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

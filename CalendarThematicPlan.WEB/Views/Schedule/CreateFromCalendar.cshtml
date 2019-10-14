@@ -1,0 +1,133 @@
+﻿@using CalendarThematicPlan.Container;
+@using CalendarThematicPlan.BLL.Interface;
+@using Ninject
+
+@{
+    Layout = "~/Views/Shared/_Menu.cshtml";
+}
+
+@{
+    IScheduleLogic scheduleLogic = NinjectCommon.Kernel.Get<IScheduleLogic>();
+    if (IsPost)
+    {
+        string date = $"{Request["date"]} {Request["time"]}";
+        string actualDate = $"{Request["actual-date"]} {Request["actual-time"]}";
+        string room = Request["room"];
+        string idSubject = Request["idSubject"];
+        string idGrade = Request["idGrade"];
+        string idUser = Request["idUser"];
+        string lessonTopic = Request["lesson"];
+        string comment = Request["comment"];
+
+        try
+        {
+            scheduleLogic.AddSchedule(date, actualDate, room, idSubject, idGrade, idUser, lessonTopic, comment);
+
+            Response.Redirect("~/Schedule/Index");
+        }
+        catch (Exception e)
+        {
+            <div class="card-header">
+                <h2>@e.Message</h2>
+            </div>
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create Grade</title>
+    <link rel="stylesheet" href="~/Content/styles.css" />
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
+</head>
+<body>
+    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+    {
+        <div class="form-group required">
+            <form method="post">
+                <div class="form-group">
+                    <label for="date" class="control-label">
+                        Дата занятия :
+                        <input type="date" id="date" name="date" class="form-control" required />
+                        <input type="time" id="time" name="time" class="form-control" required />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="actual-date" class="control-label">
+                        Актуальная дата занятия :
+                        <input type="date" id="actual-date" name="actual-date" class="form-control" required />
+                        <input type="time" id="actual-time" name="actual-time" class="form-control" required />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="room" class="control-label">
+                        Комната :
+                        <input type="text" id="room" name="room" class="form-control" required />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="idSubject" class="control-label">
+                        Идентификатор урока :
+                        <input type="number" id="idSubject" name="idSubject" class="form-control" required
+                               onchange="isRightNumber(this.value, 'idSubject', 'check-idSubject', 'check-idSubject-helper')" value="" />
+                    </label>
+                </div>
+
+                <div id="check-idSubject">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="idGrade" class="control-label">
+                        Идентификатор класса :
+                        <input type="number" id="idGrade" name="idGrade" class="form-control" required
+                               onchange="isRightNumber(this.value, 'idGrade', 'check-idGrade', 'check-idGrade-helper')" value="" />
+                    </label>
+                </div>
+
+                <div id="check-idGrade">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="idUser" class="control-label">
+                        Идентификатор пользователя :
+                        <input type="number" id="idUser" name="idUser" class="form-control" required
+                               onchange="isRightNumber(this.value, 'idUser', 'check-idUser', 'check-idUser-helper')" value="" />
+                    </label>
+                </div>
+
+                <div id="check-idUser">
+
+                </div>
+
+                <div class="form-group">
+                    <label for="lesson">
+                        Название предмета :
+                        <input type="text" id="lesson" name="lesson" class="form-control" />
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">
+                        Примечание :
+                        <input type="text" id="comment" name="comment" class="form-control" />
+                    </label>
+                </div>
+
+                <button>Создать</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        Html.RenderPartial("PartialAccessDenied");
+    }
+</body>
+</html>

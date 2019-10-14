@@ -19,10 +19,16 @@ namespace CalendarThematicPlan.BLL.Logic
         private readonly IUserDao userDao;
         private readonly ISubjectDao subjectDao;
 
+        public event EventHandler LogException;
+        public event EventHandler LogUser;
+
         public UserLogic(IUserDao userDao, ISubjectDao subjectDao)
         {
             this.userDao = userDao;
             this.subjectDao = subjectDao;
+
+            LogException += LoggerException;
+            LogUser += LoggerUser;
         }
 
         public int? AddUser(string firstName, string lastName, string patronymic, string email, string password, string role, string position, byte[] userPhoto)
@@ -30,14 +36,14 @@ namespace CalendarThematicPlan.BLL.Logic
             if (Validator.IsStringsNull(firstName, lastName, patronymic, email, password, role, position))
             {
                 var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!Validator.IsRightEmail(email))
             {
                 var exception = new ArgumentException($"Email не соответствует требованиям{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -45,7 +51,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (user != null)
             {
                 var exception = new ArgumentException($"Пользователь с таким Email уже есть{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -56,13 +62,13 @@ namespace CalendarThematicPlan.BLL.Logic
                 User newUser = new User { FirstName = firstName, LastName = lastName, Patronymic = patronymic, Email = email, Password = password, Position = position, Role = role, UserPhoto = userPhoto };
 
                 var result = userDao.AddUser(newUser);
-                loggerUser.Info($"Добавлен новый пользователь {newUser}");
+                LogUser($"Добавлен новый пользователь {newUser}", new EventArgs());
                 return result;
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -72,7 +78,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idUser))
             {
                 var exception = new ArgumentException($"Идентификатор пользователя должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -81,19 +87,19 @@ namespace CalendarThematicPlan.BLL.Logic
             if (user == null)
             {
                 var exception = new ArgumentException($"Пользователя с таким идентификатором не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             try
             {
                 userDao.DeleteUser(idUser);
-                loggerUser.Info($"Удалён пользователь {user}");
+                LogUser($"Удалён пользователь {user}", new EventArgs());
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -103,7 +109,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (Validator.IsStringsNull(email))
             {
                 var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -115,7 +121,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idUser))
             {
                 var exception = new ArgumentException($"Идентификатор пользователя должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -132,7 +138,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idUser))
             {
                 var exception = new ArgumentException($"Идентификатор пользователя должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -142,7 +148,7 @@ namespace CalendarThematicPlan.BLL.Logic
                 if (!Validator.IsRightEmail(email))
                 {
                     var exception = new ArgumentException($"Email не соответствует требованиям{Environment.NewLine}");
-                    loggerException.Error(exception);
+                    LogException(exception, new EventArgs());
                     throw exception; 
                 }
             }
@@ -151,7 +157,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (idUser == default)
             {
                 var exception = new ArgumentException($"Идентификатор пользователя неправильный{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
             else
@@ -178,12 +184,12 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 userDao.UpdateUser(user);
-                loggerUser.Info($"Обновлён пользователь {user}");
+                LogUser($"Обновлён пользователь {user}", new EventArgs());
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -222,18 +228,28 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSubject))
             {
                 var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (subjectDao.GetSubjectById(idSubject) == null)
             {
                 var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             return userDao.GetUsersBySubject(idSubject);
+        }
+
+        public void LoggerException(object sender, EventArgs e)
+        {
+            loggerException.Error(sender.ToString());
+        }
+
+        public void LoggerUser(object sender, EventArgs e)
+        {
+            loggerUser.Info(sender.ToString());
         }
     }
 }

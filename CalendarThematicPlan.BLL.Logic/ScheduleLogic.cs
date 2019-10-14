@@ -11,6 +11,9 @@ namespace CalendarThematicPlan.BLL.Logic
 {
     public class ScheduleLogic : IScheduleLogic
     {
+        public event EventHandler LogException;
+        public event EventHandler LogUser;
+
         private static readonly Logger loggerException = LogManager.GetLogger("exception");
         private static readonly Logger loggerUser = LogManager.GetLogger("user");
 
@@ -25,6 +28,9 @@ namespace CalendarThematicPlan.BLL.Logic
             this.userDao = userDao;
             this.gradeDao = gradeDao;
             this.subjectDao = subjectDao;
+
+            LogException += LoggerException;
+            LogUser += LoggerUser;
         }
 
         public int? AddSchedule(string date, string actualDate, string room, string idSubject, string idGrade, string idUser, string lessonTopic, string comment)
@@ -33,62 +39,63 @@ namespace CalendarThematicPlan.BLL.Logic
             if (Validator.IsStringsNull(date, actualDate, room, idSubject, idGrade, idUser))
             {
                 var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!DateTime.TryParse(date, out DateTime realDate))
             {
                 var exception = new ArgumentException($"Неправильная дата урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!DateTime.TryParse(actualDate, out DateTime realActualDate))
             {
                 var exception = new ArgumentException($"Неправильная актуальная дата урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(idSubject, out int realIdSubject))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(idGrade, out int realIdGrade))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор класса{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(idUser, out int realIdUser))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор учителя{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (userDao.GetUserById(realIdUser) == null)
             {
-                loggerException.Error(new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"));
+                var exception = new ArgumentException($"Такого пользователя не существует{Environment.NewLine}");
+                LogException(exception, new EventArgs());
                 throw new ArgumentException($"Такого пользователя не существует{Environment.NewLine}"); ;
             }
 
             if (gradeDao.GetGradeById(realIdGrade) == null)
             {
                 var exception = new ArgumentException($"Такого класса не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (subjectDao.GetSubjectById(realIdSubject) == null)
             {
                 var exception = new ArgumentException($"Такого предмета не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
             #endregion
@@ -108,7 +115,7 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 var result = scheduleDao.AddSchedule(schedule);
-                loggerUser.Info($"Добавлено новое расписание {schedule}");
+                LogUser($"Добавлено новое расписание {schedule}", new EventArgs());
                 return result;
             }
             catch (Exception e)
@@ -116,7 +123,7 @@ namespace CalendarThematicPlan.BLL.Logic
                 string errorMessage = e.Message;
                 string innerErrorMessage = e.InnerException?.Message;
                 var exception = new Exception($"{errorMessage}{Environment.NewLine}Inner Message: {innerErrorMessage}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
 
             }
@@ -127,7 +134,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSchedule))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -137,19 +144,19 @@ namespace CalendarThematicPlan.BLL.Logic
             if (schedule == null)
             {
                 var exception = new ArgumentException($"Расписания с таким номером не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             try
             {
                 scheduleDao.DeleteSchedule(idSchedule);
-                loggerUser.Info($"Удалено расписание расписание {schedule}");
+                LogUser($"Удалено расписание расписание {schedule}", new EventArgs());
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -159,7 +166,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSchedule))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -176,7 +183,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSchedule))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -193,7 +200,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!string.IsNullOrWhiteSpace(gradeNumber) & !int.TryParse(gradeNumber, out int realGradeNumber))
             {
                 var exception = new ArgumentException($"Неправильный номер класса{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -206,42 +213,42 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int IdSchedule))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(date) & !DateTime.TryParse(date, out DateTime realDate))
             {
                 var exception = new ArgumentException($"Неправильная дата урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(actualDate) & !DateTime.TryParse(actualDate, out DateTime realActualDate))
             {
                 var exception = new ArgumentException($"Неправильная актуальная дата урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idSubject) & !int.TryParse(idSubject, out int realIdSubject))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор урока{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idGrade) & !int.TryParse(idGrade, out int realIdGrade))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор класса{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(idUser) & !int.TryParse(idUser, out int realIdUser))
             {
                 var exception = new ArgumentException($"Неправильный идентификатор учителя{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
             #endregion
@@ -250,7 +257,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (IdSchedule == default)
             {
                 var exception = new ArgumentException($"Неправильный идентификатор расписания{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
             else
@@ -262,7 +269,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (schedule == null)
             {
                 var exception = new ArgumentException($"Расписания с таким номером не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -278,14 +285,24 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 scheduleDao.UpdateSchedule(schedule);
-                loggerUser.Info($"Обновлено расписание {schedule}");
+                LogUser($"Обновлено расписание {schedule}", new EventArgs());
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
+        }
+
+        public void LoggerException(object sender, EventArgs e)
+        {
+            loggerException.Error(sender.ToString());
+        }
+
+        public void LoggerUser(object sender, EventArgs e)
+        {
+            loggerUser.Info(sender.ToString());
         }
     }
 }

@@ -21,21 +21,27 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             this.subjectDao = subjectDao;
             this.userDao = userDao;
+
+            LogException = LoggerException;
+            LogUser = LoggerUser;
         }
+
+        public event EventHandler LogException;
+        public event EventHandler LogUser;
 
         public int? AddSubject(string name, string hours)
         {
             if (Validator.IsStringsNull(name, hours))
             {
                 var exception = new ArgumentException($"Обязательные поля должны быть заполнены{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(hours, out int realHours))
             {
                 var exception = new ArgumentException($"Неправильное количество часов{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -44,13 +50,13 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 var result = subjectDao.AddSubject(subject);
-                loggerUser.Info($"Добавлен новый предмет {subject}");
+                LogUser($"Добавлен новый предмет {subject}", new EventArgs());
                 return result;
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -60,7 +66,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSubject))
             {
                 var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -69,14 +75,14 @@ namespace CalendarThematicPlan.BLL.Logic
             if (subject == null)
             {
                 var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             try
             {
                 subjectDao.DeleteSubject(idSubject);
-                loggerUser.Info($"Удалён предмет {subject}");
+                LogUser($"Удалён предмет {subject}", new EventArgs());
             }
             catch (Exception e)
             {
@@ -91,7 +97,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idSubject))
             {
                 var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -108,14 +114,14 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(id, out int idUser))
             {
                 var exception = new ArgumentException($"Идентификатор предмета должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (userDao.GetUserById(idUser) == null)
             {
                 var exception = new ArgumentException($"Предмета с таким идентификатором не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -127,19 +133,29 @@ namespace CalendarThematicPlan.BLL.Logic
             return subjectDao.GetSubjectsByWord(word);
         }
 
+        public void LoggerException(object sender, EventArgs e)
+        {
+            loggerException.Error(sender.ToString());
+        }
+
+        public void LoggerUser(object sender, EventArgs e)
+        {
+            loggerUser.Info(sender.ToString());
+        }
+
         public void UpdateSubject(string id, string name, string hours)
         {
             if (!int.TryParse(id, out int idSubject))
             {
                 var exception = new ArgumentException($"Идентификатор урока должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!string.IsNullOrWhiteSpace(hours) & !int.TryParse(hours, out int realHours))
             {
                 var exception = new ArgumentException($"Неправильное количество часов{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -147,7 +163,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (idSubject == default)
             {
                 var exception = new ArgumentException($"Идентификатор урока неправильный{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
             else
@@ -161,12 +177,12 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 subjectDao.UpdateSubject(subject);
-                loggerUser.Info($"Обновлён предмет {subject}");
+                LogUser($"Обновлён предмет {subject}", new EventArgs());
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }

@@ -1,0 +1,12 @@
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.AddSchedule  Error Обязательные поля должны быть заполнены
+ System.ArgumentException: Обязательные поля должны быть заполнены
+ 2019/10/14 20:19:36.123
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.AddSchedule  Error Такого пользователя не существует
+ System.ArgumentException: Такого пользователя не существует
+ 2019/10/14 20:20:44.626
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.AddSchedule  Error Обязательные поля должны быть заполнены
+ System.ArgumentException: Обязательные поля должны быть заполнены
+ 2019/10/14 20:23:23.041
+CalendarThematicPlan.BLL.Logic.ScheduleLogic.LoggerException  Error  System.Exception: Переполнение SqlDateTime. Должно находиться в пределах от 1/1/1753 12:00:00 AM и 12/31/9999 11:59:59 PM.
+Inner Message: 
+ 2019/10/14 20:23:45.118

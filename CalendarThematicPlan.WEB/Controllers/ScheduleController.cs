@@ -28,6 +28,11 @@ namespace CalendarThematicPlan.WEB.Controllers
             return View();
         }
 
+        public ActionResult CreateFromCalendar(string day, string month)
+        {
+            return View();
+        }
+
         public ActionResult Update(int? id)
         {
             try

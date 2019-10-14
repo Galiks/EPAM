@@ -16,7 +16,7 @@
 
         for (var i = 1; i <= Dlast; i++) {
             if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
-                calendar += '<td class="today" onclick="onClick('+ i + ',' + m +')">' + i;
+                calendar += '<td class="today" ondblclick="onClick('+ i + ',' + m +')">' + i;
             } else {
                 if (
                     (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) ||
@@ -78,7 +78,8 @@
 }
 
 function onClick(day, month) {
-    console.log('Dey: ' + day + ' and Month: ' + Number(1 + month));
+    console.log('Day: ' + day + ' and Month: ' + Number(1 + month));
+    
 }
 
 calendarBig(new Date().getFullYear());

@@ -19,9 +19,14 @@ namespace CalendarThematicPlan.BLL.Logic
         private readonly string patternForGradeId = @"\d+";
         private readonly IGradeDao gradeDao;
 
+        public event EventHandler LogException;
+        public event EventHandler LogUser;
+
         public GradeLogic(IGradeDao gradeDao)
         {
             this.gradeDao = gradeDao;
+            LogException += LoggerException;
+            LogUser += LoggerUser;
         }
 
         public int? AddGrade(string number, string letter, string kidsInClass)
@@ -29,21 +34,21 @@ namespace CalendarThematicPlan.BLL.Logic
             if (Validator.IsStringsNull(number, letter, kidsInClass))
             {
                 var exception = new ArgumentException($"Обязательные поля должны быть заполнены{ Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(number, out int realNumber) & realNumber <= 0)
             {
                 var exception = new ArgumentException($"Неправильный номер класса{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             if (!int.TryParse(kidsInClass, out int realKidsInClass) & realKidsInClass <= 0)
             {
                 var exception = new ArgumentException($"Неправильное количество детей в классе{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -52,15 +57,13 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 var result = gradeDao.AddGrade(grade);
-
-                loggerUser.Info($"Доабвлен новый класс {grade}");
-
+                LogUser($"Доабвлен новый класс {grade}", new EventArgs());
                 return result;
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -72,7 +75,7 @@ namespace CalendarThematicPlan.BLL.Logic
             if (!int.TryParse(matches[0].ToString(), out int idGrade))
             {
                 var exception = new ArgumentException($"Идентификатор класса должен быть числом{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
@@ -81,25 +84,25 @@ namespace CalendarThematicPlan.BLL.Logic
             if (grade == null)
             {
                 var exception = new ArgumentException($"Класса с таким идентификатором не существует{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
 
             try
             {
                 gradeDao.DeleteGrade(idGrade);
-
-                loggerUser.Info($"Удалён класс {grade}");
+                LogUser($"Удалён класс {grade}", new EventArgs());
             }
             catch (SqlException e)
-            {    
-                loggerException.Error($"Попытка удалить класс, который является элементом расписания");
+            {
+                var exception = new Exception($"Попытка удалить класс, который является элементом расписания");
+                LogException(exception, new EventArgs());
                 throw e;
             }
             catch (Exception e)
             {
                 var exception = new Exception($"{e.Message}{Environment.NewLine}Inner Message: {e.InnerException?.Message}{Environment.NewLine}");
-                loggerException.Error(exception);
+                LogException(exception, new EventArgs());
                 throw exception;
             }
         }
@@ -171,8 +174,7 @@ namespace CalendarThematicPlan.BLL.Logic
             try
             {
                 gradeDao.UpdateGrade(grade);
-
-                loggerUser.Info($"Обновлён класс {grade}");
+                LogUser($"Обновлён класс {grade}", new EventArgs());
             }
             catch (Exception e)
             {
@@ -180,6 +182,16 @@ namespace CalendarThematicPlan.BLL.Logic
                 loggerException.Error(exception);
                 throw exception;
             }
+        }
+
+        public void LoggerException(object sender, EventArgs e)
+        {
+            loggerException.Error(sender.ToString());
+        }
+
+        public void LoggerUser(object sender, EventArgs e)
+        {
+            loggerUser.Info(sender.ToString()); ;
         }
     }
 }

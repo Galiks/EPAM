@@ -16,5 +16,6 @@ namespace CalendarThematicPlan.Entity
         {
             return $"{Id} : {Number}{Letter}";
         }
+        object Dynamic;
     }
 }
