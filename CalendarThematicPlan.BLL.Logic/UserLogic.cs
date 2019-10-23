@@ -251,5 +251,25 @@ namespace CalendarThematicPlan.BLL.Logic
         {
             loggerUser.Info(sender.ToString());
         }
+
+        public bool Authentication(string email, string password)
+        {
+            var user = GetUserByEmail(email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            string passwordOfStranger = EncryptionPassword(password);
+
+            if (user.Password == passwordOfStranger)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

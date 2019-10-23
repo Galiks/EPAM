@@ -19,5 +19,6 @@ namespace CalendarThematicPlan.BLL.Interface
         IEnumerable<User> GetUsersBySubject(string id);
         void LoggerException(object sender, EventArgs e);
         void LoggerUser(object sender, EventArgs e);
+        bool Authentication(string email, string password);
     }
 }
